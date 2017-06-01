@@ -28,7 +28,7 @@ process.source = cms.Source("PoolSource",
 # Define output file name
 import os
 process.TFileService = cms.Service("TFileService",
-     fileName = cms.string(os.getenv('CMSSW_BASE') + '/test/chargeptdepcorr.root')
+     fileName = cms.string(os.getenv('CMSSW_BASE') + '/src/Analyzers/ChargeDepAndPtCorr/test/chargeptdepcorr.root')
 )
 
 
@@ -61,6 +61,8 @@ process.newCentralityBin = process.centralityBin.clone()
 # Load HI event selection modules
 process.load('HeavyIonsAnalysis.Configuration.collisionEventSelection_cff')
 process.load('HeavyIonsAnalysis.EventAnalysis.HIClusterCompatibilityFilter_cfi')
+process.clusterCompatibilityFilter.clusterPars = cms.vdouble(0.0,0.006)
+process.clusterCompatibilityFilter.clusterTrunc = cms.double(2.0)
 
 
 # __________________ Event selection _________________
