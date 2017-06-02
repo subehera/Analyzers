@@ -40,7 +40,10 @@ ChargeDepAndPtCorr::ChargeDepAndPtCorr(const edm::ParameterSet& iConfig) :
   caloTowersTags_(consumes<CaloTowerCollection>(iConfig.getParameter<edm::InputTag>("caloTower"))),
   //centrality
   centralityTags_(consumes<reco::Centrality>(iConfig.getParameter<edm::InputTag>("centralitySrc"))),
-  centralityBinTags_(consumes<int>(iConfig.getParameter<edm::InputTag>("centralityBinSrc")))
+  centralityBinTags_(consumes<int>(iConfig.getParameter<edm::InputTag>("centralityBinSrc"))),
+  //track selection
+  pTmin_(iConfig.getUntrackedParameter<double>("pTminTrk")),
+  pTmax_(iConfig.getUntrackedParameter<double>("pTmaxTrk"))
 {
    // Now do what ever initialization is needed
    usesResource("TFileService");
@@ -192,6 +195,10 @@ ChargeDepAndPtCorr::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
        if( fabs(dxyvtx / dxyerror) > 3.0 ) continue;
        if( pt < 0.0001 ) continue;
        if( charge == 0 ) continue;
+
+
+       // Track selection for analysis
+       if(pt < pTmin_ || pt > pTmax_) continue;
 
        // Increase N valid tracks
        ++ntrk;
