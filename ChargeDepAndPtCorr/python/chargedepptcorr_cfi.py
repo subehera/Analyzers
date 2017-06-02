@@ -9,5 +9,8 @@ defaultCPDC = cms.EDAnalyzer('ChargeDepAndPtCorr', #Analyzer named: Correspond t
                              caloTower = cms.InputTag('towerMaker'),
                              #Centrality
                              centralitySrc    = cms.InputTag("hiCentrality"),
-                             centralityBinSrc = cms.InputTag("centralityBin","HFtowers")
+                             centralityBinSrc = cms.InputTag("centralityBin","HFtowers"),
+                             #track selection
+                             pTminTrk = cms.untracked.double(0.3),
+                             pTmaxTrk = cms.untracked.double(3.0)
 )

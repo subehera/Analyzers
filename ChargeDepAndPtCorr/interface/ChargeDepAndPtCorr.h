@@ -87,6 +87,9 @@ class ChargeDepAndPtCorr : public edm::one::EDAnalyzer<edm::one::SharedResources
       // used to access centrality bins 
       edm::EDGetTokenT<int> centralityBinTags_;
 
+      // ## track selection ##
+      double pTmin_; //min pt of the tracks
+      double pTmax_; //max pt of the tracks
       
       // ## histograms ##
       TH1F* hXBestVtx_;
