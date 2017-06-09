@@ -8,6 +8,6 @@ rm crab3_*_*.pyc
 for i in `ls crab3_*_*.py`
 do
 	echo $i
-	#crab submit --dryrun -c $i	
-	crab submit -c $i	
+	crab submit --dryrun -c $i	
+	#crab submit -c $i	
 done
