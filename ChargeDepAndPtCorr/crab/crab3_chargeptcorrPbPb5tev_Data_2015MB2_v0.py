@@ -13,7 +13,7 @@ config.JobType.psetName = '/afs/cern.ch/user/m/mguilbau/ForPrabhat/CMSSW_7_5_8_p
 
 config.Data.inputDataset ='/HIMinimumBias2/HIRun2015-25Aug2016-v1/AOD'
 
-config.Data.lumiMask = '/afs/cern.ch/user/m/mguilbau/ForPrabhat/CMSSW_7_5_8_patch3/src/Analyzers/ChargeDepAndPtCorr/data/Cert_262548-263757_PromptReco_HICollisions15_JSON_v2.txt'
+config.Data.lumiMask = '/afs/cern.ch/user/m/mguilbau/ForPrabhat/CMSSW_7_5_8_patch3/src/Analyzers/ChargeDepAndPtCorr/data/JSON/Cert_262548-263757_PromptReco_HICollisions15_JSON_v2.txt'
 config.Data.inputDBS = 'global'
 config.Data.splitting = 'LumiBased'
 config.Data.unitsPerJob = 10
