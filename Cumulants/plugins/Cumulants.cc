@@ -27,6 +27,14 @@
 // user include files
 #include "Analyzers/Cumulants/interface/Cumulants.h"
 
+#include "Analyzers/Cumulants/interface/MultiCumulants/correlations/Types.hh"
+#include "Analyzers/Cumulants/interface/MultiCumulants/correlations/Result.hh"
+#include "Analyzers/Cumulants/interface/MultiCumulants/correlations/QVector.hh"
+#include "Analyzers/Cumulants/interface/MultiCumulants/correlations/recursive/FromQVector.hh"
+#include "Analyzers/Cumulants/interface/MultiCumulants/correlations/recurrence/FromQVector.hh"
+
+#include "Analyzers/Cumulants/interface/MultiCumulants/MultiCumulants/Subsets.h"
+#include "Analyzers/Cumulants/interface/MultiCumulants/MultiCumulants/QVector.h"
 
 //
 // constructors and destructor
@@ -43,16 +51,18 @@ Cumulants::Cumulants(const edm::ParameterSet& iConfig) :
   centralityBinTags_(consumes<int>(iConfig.getParameter<edm::InputTag>("centralityBinSrc"))),
   //track selection
   pTmin_(iConfig.getUntrackedParameter<double>("pTminTrk")),
-  pTmax_(iConfig.getUntrackedParameter<double>("pTmaxTrk"))
+  pTmax_(iConfig.getUntrackedParameter<double>("pTmaxTrk")),
+  //harmonic order
+  harm_(iConfig.getUntrackedParameter<int>("harm"))
 {
    // Now do what ever initialization is needed
    usesResource("TFileService");
    edm::Service<TFileService> fs;
    // Histograms
    TFileDirectory fVtxHist  = fs->mkdir("Vertex");
-   hXBestVtx_   = fVtxHist.make<TH1F>("hXvtx", "", 60,   -3.,  3.);
-   hYBestVtx_   = fVtxHist.make<TH1F>("hYvtx", "", 60,   -3.,  3.);
-   hRhoBestVtx_ = fVtxHist.make<TH1F>("hRvtx", "", 600,  -3.,  3.);
+   hXBestVtx_   = fVtxHist.make<TH1F>("hXvtx", "", 800, -0.2, 0.2);
+   hYBestVtx_   = fVtxHist.make<TH1F>("hYvtx", "", 800, -0.2, 0.2);
+   hRhoBestVtx_ = fVtxHist.make<TH1F>("hRvtx", "", 800, -0.2, 0.2);
    hZBestVtx_   = fVtxHist.make<TH1F>("hZvtx", "", 600, -30., 30.);
    TFileDirectory fTrkHist  = fs->mkdir("Tracks");
    hEtaTrk_ = fTrkHist.make<TH1F>("hEtatrk", "", 300, -3.,   3.);
@@ -90,17 +100,17 @@ Cumulants::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
    using namespace edm;
 
    // ----- centrality selection -----
-   // Get calo centrality collection by token
-   edm::Handle< reco::Centrality > centrality;
-   iEvent.getByToken(centralityTags_, centrality);
-   // Get calo centrality bin by token
-   edm::Handle< int > cbin;
-   iEvent.getByToken(centralityBinTags_,cbin);
-   int centBin = *cbin;
-   if(centBin < 0)
-   {
-       edm::LogWarning ("Invalid value") <<"Invalid centrality value";
-   }
+   //// Get calo centrality collection by token
+   //edm::Handle< reco::Centrality > centrality;
+   //iEvent.getByToken(centralityTags_, centrality);
+   //// Get calo centrality bin by token
+   //edm::Handle< int > cbin;
+   //iEvent.getByToken(centralityBinTags_,cbin);
+   //int centBin = *cbin;
+   //if(centBin < 0)
+   //{
+   //    edm::LogWarning ("Invalid value") <<"Invalid centrality value";
+   //}
 
 
    // ----- Vertex selection -----
@@ -238,7 +248,8 @@ Cumulants::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
    }
 
    // Fill TTree
-   cent_ = centBin;
+   //cent_ = centBin;
+   cent_ = 1;
    nVtx_ = nvtx;
    nTrk_ = ntrk;
    trEvent_->Fill();
@@ -249,6 +260,65 @@ Cumulants::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 void 
 Cumulants::beginJob()
 {
+        //Init standard method
+        correlations::QVector qN(0, 0, false);
+        correlations::HarmonicVector hcN;
+        correlations::FromQVector *cqN;
+        hcN = correlations::HarmonicVector(8);
+        hcN[0] =  1*harm_;
+        hcN[1] = -1*harm_;
+        hcN[2] =  1*harm_;
+        hcN[3] = -1*harm_;
+        hcN[4] =  1*harm_;
+        hcN[5] = -1*harm_;
+        hcN[6] =  1*harm_;
+        hcN[7] = -1*harm_;
+        qN.resize(hcN);
+        cqN = new correlations::recurrence::FromQVector(qN);
+
+
+        //Init subset for subevent method
+        cumulant::Subset sub1(2);
+        sub1.set(0, "pt", 0.3, 3.0);
+        sub1.set(1, "eta", -2.4, 0.);
+        cumulant::Subset sub2(2);
+        sub2.set(0, "pt", 0.3, 3.0);
+        sub2.set(1, "eta", -2.4, 0.);
+        cumulant::Subset sub3(2);
+        sub3.set(0, "pt", 0.3, 3.0);
+        sub3.set(1, "eta", 0., 2.4);
+        cumulant::Subset sub4(2);
+        sub4.set(0, "pt", 0.3, 3.0);
+        sub4.set(1, "eta", 0., 2.4);
+
+        //Init 2-p sub-event method
+        cumulant::Set set2(2);
+        set2.setSubsetParams(0, sub1);
+        set2.setSubsetParams(1, sub3);
+
+        //Init 4-p sub-event method
+        cumulant::Set set4(4);
+        set4.setSubsetParams(0, sub1);
+        set4.setSubsetParams(1, sub2);
+        set4.setSubsetParams(2, sub3);
+        set4.setSubsetParams(3, sub4);
+
+        //Init 2-p method with subset
+        HarmonicVector h(2);
+        h[0] =  1*harm_;
+        h[1] = -1*harm_;
+        //cumulant::QVectorSet q(h, set2, false);
+        //cumulant::impl1::QVectorSet q(h, set2, false);
+        cumulant::impl2::QVectorSet q(h, set2, false);
+        //Init 4-p method with subset
+        HarmonicVector h4(4);
+        h4[0] =  1*harm_;
+        h4[1] =  1*harm_;
+        h4[2] = -1*harm_;
+        h4[3] = -1*harm_;
+        //cumulant::QVectorSet q4(h4, set4, false);
+        //cumulant::impl1::QVectorSet q4(h4, set4, false);
+        cumulant::impl2::QVectorSet q4(h4, set4, false);
 }
 
 // ------------ method called once each job just after ending the event loop  ------------

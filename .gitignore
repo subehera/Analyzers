@@ -1,3 +1,5 @@
 *.pyc
 __*__.py
-
+*.root
+*.swp
+Cumulants/interface/MultiCumulants/
