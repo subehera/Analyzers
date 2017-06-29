@@ -12,7 +12,7 @@ process.MessageLogger.cerr.FwkReport.reportEvery = 1
 # Configure the number of maximum event the analyser run on in interactive mode
 # -1 == ALL
 process.maxEvents = cms.untracked.PSet( 
-    input = cms.untracked.int32(10) 
+    input = cms.untracked.int32(-1) 
 )
 
 
@@ -39,6 +39,15 @@ process.TFileService = cms.Service("TFileService",
 process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
 from Configuration.AlCa.GlobalTag import GlobalTag
 process.GlobalTag = GlobalTag(process.GlobalTag, '80X_dataRun2_Express_v15', '')
+# Getting calib from GT
+#process.GlobalTag.toGet = cms.VPSet(
+#  cms.PSet(
+#    record = cms.string("HeavyIonRcd"),
+#    tag = cms.string("CentralityTable_HFtowersPlusTrunc200_EPOS5TeV_v80x01_mc"),
+#    connect = cms.string("frontier://FrontierProd/CMS_CONDITIONS"),
+#    label = cms.untracked.string("HFtowersPlusTruncEpos")
+#    )
+#)
 
 
 # __________________ Event selection _________________
@@ -50,11 +59,13 @@ process.defaultTrigSel = hltMB.clone()
 # Load HI event selection modules
 process.load('HeavyIonsAnalysis.Configuration.collisionEventSelection_cff')
 process.load('Configuration.EventContent.EventContentHeavyIons_cff')
-#process.defaultEvtSel = process.collisionEventSelectionPA.clone()
+
+#centrality
+#process.load("RecoHI.HiCentralityAlgos.pACentrality_cfi")
 
 #Pileup filter
 process.load("TrackingCode.pileUpFilter.pileUpFilter_cff")
-#process.defaultPUFilter = process.olvFilter_pPb8TeV_dz1p0.clone()
+
 
 # __________________ Analyzer _________________
 
@@ -63,12 +74,8 @@ process.load("Analyzers.Cumulants.cumulants_cfi")
 process.defaultAnalysis = process.defaultCumu.clone()
 process.defaultAnalysis.pTmaxTrk = cms.untracked.double(6.0) 
 
-process.p = cms.Path(#process.hfCoincFilter *
-                     #process.PAprimaryVertexFilter *
-                     #process.NoScraping *
-                     process.defaultTrigSel *  # Select MB events
-                     #process.defaultEvtSel  *  # PA event selection
-                     #process.defaultPUFilter*  # PU filter
-                     process.collisionEventSelectionPA *  # PA event selection
-                     process.olvFilter_pPb8TeV_dz1p0*  # PU filter
-                     process.defaultAnalysis)  # Run the analyzer
+process.p = cms.Path(process.defaultTrigSel *            # Select MB events
+                     process.collisionEventSelectionPA * # PA event selection
+                     process.olvFilter_pPb8TeV_dz1p0*    # PU filter
+                     #process.pACentrality *              # Centrality
+                     process.defaultAnalysis)            # Run the analyzer

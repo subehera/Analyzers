@@ -90,6 +90,9 @@ class Cumulants : public edm::one::EDAnalyzer<edm::one::SharedResources>  {
       // ## track selection ##
       double pTmin_; //min pt of the tracks
       double pTmax_; //max pt of the tracks
+
+      // ## harmonic
+      int harm_;
       
       // ## histograms ##
       TH1F* hXBestVtx_;
