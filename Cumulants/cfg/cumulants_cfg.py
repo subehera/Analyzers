@@ -21,7 +21,7 @@ process.maxEvents = cms.untracked.PSet(
 # Define the input file to run on in interactive mode
 process.source = cms.Source("PoolSource",
     fileNames = cms.untracked.vstring(
-        '/store/user/davidlw/L1MinimumBiasHF1/RecoSkim2015_2015DLowPU_ReTracking_v4/151109_223122/0000/pPb_HM_1.root'
+        'root://cms-xrd-global.cern.ch//store/user/davidlw/L1MinimumBiasHF1/RecoSkim2015_2015DLowPU_ReTracking_v4/151109_223122/0000/pPb_HM_1.root'
     )
 )
 
@@ -48,9 +48,8 @@ from Analyzers.Cumulants.hltFilter_cff import *
 process.defaultTrigSel = hltHMMB.clone()
 
 #Pileup filter
-process.load("TrackingCode.pileUpFilter.pileUpFilter_cff")
-from RefFlowAna.MGCumuv24.PPPileUpVertexFilter_cff import *
-process.PUFliter = pileupVertexFilterCut_dz10_GplusPP
+from Analyzers.Cumulants.PPPileUpVertexFilter_cff import *
+process.PUFilter = pileupVertexFilterCut_dz10_GplusPP
 
 
 # __________________ Analyzer _________________
