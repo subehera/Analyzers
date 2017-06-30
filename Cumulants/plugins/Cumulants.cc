@@ -27,15 +27,6 @@
 // user include files
 #include "Analyzers/Cumulants/interface/Cumulants.h"
 
-#include "Analyzers/Cumulants/interface/MultiCumulants/correlations/Types.hh"
-#include "Analyzers/Cumulants/interface/MultiCumulants/correlations/Result.hh"
-#include "Analyzers/Cumulants/interface/MultiCumulants/correlations/QVector.hh"
-#include "Analyzers/Cumulants/interface/MultiCumulants/correlations/recursive/FromQVector.hh"
-#include "Analyzers/Cumulants/interface/MultiCumulants/correlations/recurrence/FromQVector.hh"
-
-#include "Analyzers/Cumulants/interface/MultiCumulants/MultiCumulants/Subsets.h"
-#include "Analyzers/Cumulants/interface/MultiCumulants/MultiCumulants/QVector.h"
-
 //
 // constructors and destructor
 //
@@ -105,6 +96,44 @@ Cumulants::Cumulants(const edm::ParameterSet& iConfig) :
       }
    }
 
+   //Init cumulants
+   cumulant::Subset sub_1(2);
+   sub_1.set(0, "pt", 0.3, 3.0);
+   sub_1.set(1, "eta", -2.4, 0.);
+   cumulant::Subset sub_2(2);
+   sub_2.set(0, "pt", 0.3, 3.0);
+   sub_2.set(1, "eta", -2.4, 0.);
+   cumulant::Subset sub_3(2);
+   sub_3.set(0, "pt", 0.3, 3.0);
+   sub_3.set(1, "eta", 0., 2.4);
+   cumulant::Subset sub_4(2);
+   sub_4.set(0, "pt", 0.3, 3.0);
+   sub_4.set(1, "eta", 0., 2.4);
+
+   //Init 2-p sub-event method
+   cumulant::Set set2p(2);
+   set2p.setSubsetParams(0, sub_1);
+   set2p.setSubsetParams(1, sub_3);
+   HarmonicVector h2p(2);
+   h2p[0] =  1*harm_;
+   h2p[1] = -1*harm_;
+   
+   //Init 4-p sub-event method
+   cumulant::Set set4p(4);
+   set4p.setSubsetParams(0, sub_1);
+   set4p.setSubsetParams(1, sub_2);
+   set4p.setSubsetParams(2, sub_3);
+   set4p.setSubsetParams(3, sub_4);
+   HarmonicVector h4p(4);
+   h4p[0] =  1*harm_;
+   h4p[1] =  1*harm_;
+   h4p[2] = -1*harm_;
+   h4p[3] = -1*harm_;
+
+   q2p_ = cumulant::impl2::QVectorSet(h2p, set2p, cweight_);
+   q4p_ = cumulant::impl2::QVectorSet(h4p, set4p, cweight_);
+
+   //Ouptut
    usesResource("TFileService");
    edm::Service<TFileService> fs;
    // Histograms
@@ -130,6 +159,10 @@ Cumulants::Cumulants(const edm::ParameterSet& iConfig) :
    trEvent_->Branch("nVtx",       &nvtx_, "nVtx/I");
    trEvent_->Branch("Noff",       &noff_, "Noff/I");
    trEvent_->Branch("Mult",       &mult_, "Mult/I");
+   trEvent_->Branch(Form("C%d4",harm_),  &CN4_,  Form("C%d4/D",harm_));
+   trEvent_->Branch(Form("C%d2",harm_),  &CN2_,  Form("C%d2/D",harm_));
+   trEvent_->Branch(Form("wC%d4",harm_), &wCN4_, Form("wC%d4/D",harm_));
+   trEvent_->Branch(Form("wC%d2",harm_), &wCN2_, Form("wC%d2/D",harm_));
 }
 
 
@@ -219,7 +252,7 @@ Cumulants::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
             ++nvtx_;
 
             //Get the first vertex as the best one (greatest sum p_{T}^{2}) 
-            if( itVtx == vertices->begin() )
+            if( itVtx == verticesColl.begin() )
             {
                 xBestVtx_ = xVtx; 
                 yBestVtx_ = yVtx; 
@@ -298,7 +331,12 @@ Cumulants::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
    //Select event based on Ntrk offline selection
    if( noff_ < noffmin_ || noff_ >= noffmax_) return;
 
+   //Reset QVectors to start fresh
+   q2p_.reset();
+   q4p_.reset();
    mult_ = 0; // Event multiplicity
+   std::vector<double> val(2,0.);
+
    // Loop over tracks to compute cumulants and multiplicity
    for( reco::TrackCollection::const_iterator itTrk = tracks->begin();
         itTrk != tracks->end();
@@ -350,10 +388,16 @@ Cumulants::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
        // Increase N valid tracks
        ++mult_;
 
+       // Fill qvector
+       val[0] = pt;
+       val[1] = eta;
+       q2p_.fill(val, phi, weight);
+       q4p_.fill(val, phi, weight);
+
        // Fill trk histograms
-       hEtaNoff_->Fill(eta);
-       hPtNoff_ ->Fill(pt);
-       hPhiNoff_->Fill(phi);
+       hEtaTrk_->Fill(eta);
+       hPtTrk_ ->Fill(pt);
+       hPhiTrk_->Fill(phi);
    }
 
 
@@ -384,6 +428,41 @@ Cumulants::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
        hEtCTow_ ->Fill(et);
        hPhiCTow_->Fill(phi);
    }
+
+   //Compute cumulants
+   CN2_  = (q2p_.getQ()[0][0].getQV()*q2p_.getQ()[0][1].getQV()).real() - q2p_.getQ()[1][0].getQV().real();
+   wCN2_ = (q2p_.getQ()[0][0].getW() *q2p_.getQ()[0][1].getW()).real()  - q2p_.getQ()[1][0].getW().real();
+
+   CN4_ = (q4p_.getQ()[0][0].getQV()*q4p_.getQ()[0][1].getQV()*q4p_.getQ()[0][2].getQV()*q4p_.getQ()[0][3].getQV()).real()
+        - (q4p_.getQ()[1][0].getQV()*q4p_.getQ()[0][2].getQV()*q4p_.getQ()[0][3].getQV()).real()
+        - (q4p_.getQ()[1][1].getQV()*q4p_.getQ()[0][1].getQV()*q4p_.getQ()[0][3].getQV()).real()
+        - (q4p_.getQ()[1][2].getQV()*q4p_.getQ()[0][0].getQV()*q4p_.getQ()[0][3].getQV()).real()
+        - (q4p_.getQ()[1][3].getQV()*q4p_.getQ()[0][1].getQV()*q4p_.getQ()[0][2].getQV()).real()
+        - (q4p_.getQ()[1][4].getQV()*q4p_.getQ()[0][0].getQV()*q4p_.getQ()[0][2].getQV()).real()
+        - (q4p_.getQ()[1][5].getQV()*q4p_.getQ()[0][0].getQV()*q4p_.getQ()[0][1].getQV()).real()
+        + (q4p_.getQ()[1][0].getQV()*q4p_.getQ()[1][5].getQV()).real()
+        + (q4p_.getQ()[1][1].getQV()*q4p_.getQ()[1][4].getQV()).real()
+        + (q4p_.getQ()[1][2].getQV()*q4p_.getQ()[1][3].getQV()).real()
+        + 2*(q4p_.getQ()[2][0].getQV()*q4p_.getQ()[0][3].getQV()).real()
+        + 2*(q4p_.getQ()[2][1].getQV()*q4p_.getQ()[0][2].getQV()).real()
+        + 2*(q4p_.getQ()[2][2].getQV()*q4p_.getQ()[0][1].getQV()).real()
+        + 2*(q4p_.getQ()[2][3].getQV()*q4p_.getQ()[0][0].getQV()).real()
+        - 6*q4p_.getQ()[3][0].getQV().real();
+   wCN4_ = q4p_.getQ()[0][0].getW().real()*q4p_.getQ()[0][1].getW().real()*q4p_.getQ()[0][2].getW().real()*q4p_.getQ()[0][3].getW().real()
+         - q4p_.getQ()[1][0].getW().real()*q4p_.getQ()[0][2].getW().real()*q4p_.getQ()[0][3].getW().real()
+         - q4p_.getQ()[1][1].getW().real()*q4p_.getQ()[0][1].getW().real()*q4p_.getQ()[0][3].getW().real()
+         - q4p_.getQ()[1][2].getW().real()*q4p_.getQ()[0][0].getW().real()*q4p_.getQ()[0][3].getW().real()
+         - q4p_.getQ()[1][3].getW().real()*q4p_.getQ()[0][1].getW().real()*q4p_.getQ()[0][2].getW().real()
+         - q4p_.getQ()[1][4].getW().real()*q4p_.getQ()[0][0].getW().real()*q4p_.getQ()[0][2].getW().real()
+         - q4p_.getQ()[1][5].getW().real()*q4p_.getQ()[0][0].getW().real()*q4p_.getQ()[0][1].getW().real()
+         + q4p_.getQ()[1][0].getW().real()*q4p_.getQ()[1][5].getW().real()
+         + q4p_.getQ()[1][1].getW().real()*q4p_.getQ()[1][4].getW().real()
+         + q4p_.getQ()[1][2].getW().real()*q4p_.getQ()[1][3].getW().real()
+         + 2*q4p_.getQ()[2][0].getW().real()*q4p_.getQ()[0][3].getW().real()
+         + 2*q4p_.getQ()[2][1].getW().real()*q4p_.getQ()[0][2].getW().real()
+         + 2*q4p_.getQ()[2][2].getW().real()*q4p_.getQ()[0][1].getW().real()
+         + 2*q4p_.getQ()[2][3].getW().real()*q4p_.getQ()[0][0].getW().real()
+         - 6*q4p_.getQ()[3][0].getW().real();
 
    // Fill TTree
    //cent_ = centBin;

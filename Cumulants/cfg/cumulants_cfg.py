@@ -12,7 +12,7 @@ process.MessageLogger.cerr.FwkReport.reportEvery = 1
 # Configure the number of maximum event the analyser run on in interactive mode
 # -1 == ALL
 process.maxEvents = cms.untracked.PSet( 
-    input = cms.untracked.int32(-1) 
+    input = cms.untracked.int32(10) 
 )
 
 
@@ -54,7 +54,7 @@ process.GlobalTag = GlobalTag(process.GlobalTag, '80X_dataRun2_Express_v15', '')
 
 # Define the trigger selection
 from Analyzers.Cumulants.hltFilter_cff import *
-process.defaultTrigSel = hltMB.clone()
+process.defaultTrigSel = hlt120.clone()
 
 # Load HI event selection modules
 process.load('HeavyIonsAnalysis.Configuration.collisionEventSelection_cff')
