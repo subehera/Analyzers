@@ -54,7 +54,7 @@ process.GlobalTag = GlobalTag(process.GlobalTag, '80X_dataRun2_Express_v15', '')
 
 # Define the trigger selection
 from Analyzers.Cumulants.hltFilter_cff import *
-process.defaultTrigSel = hlt120.clone()
+process.defaultTrigSel = hltHMMB.clone()
 
 # Load HI event selection modules
 process.load('HeavyIonsAnalysis.Configuration.collisionEventSelection_cff')
@@ -65,6 +65,8 @@ process.load('Configuration.EventContent.EventContentHeavyIons_cff')
 
 #Pileup filter
 process.load("TrackingCode.pileUpFilter.pileUpFilter_cff")
+from RefFlowAna.MGCumuv24.PPPileUpVertexFilter_cff import *
+process.olvFilter_pPb8TeV_dz1p0 = pileupVertexFilterCut_dz10_GplusPP
 
 
 # __________________ Analyzer _________________
@@ -72,10 +74,9 @@ process.load("TrackingCode.pileUpFilter.pileUpFilter_cff")
 # Load you analyzer with initial configuration
 process.load("Analyzers.Cumulants.cumulants_cfi")
 process.defaultAnalysis = process.defaultCumu.clone()
-process.defaultAnalysis.pTmaxTrk = cms.untracked.double(6.0) 
 
 process.p = cms.Path(process.defaultTrigSel *            # Select MB events
                      process.collisionEventSelectionPA * # PA event selection
-                     process.olvFilter_pPb8TeV_dz1p0*    # PU filter
+                     process.olvFilter_pPb8TeV_dz1p0 *   # PU filter
                      #process.pACentrality *              # Centrality
                      process.defaultAnalysis)            # Run the analyzer
