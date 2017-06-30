@@ -35,6 +35,6 @@ defaultCumu = cms.EDAnalyzer('Cumulants', #Analyzer named: Correspond to the cla
                              harm    = cms.untracked.int32(2),
                              cweight = cms.untracked.bool(True),
                              #Acc X Eff
-                             fname = cms.untracked.InputTag('Hijing_8TeV_dataBS.root'),
+                             fname = cms.untracked.InputTag('trkEff_pp_all_74X_origin.root'),
                              effmultbin = cms.untracked.vint32(0,10000)
 )
