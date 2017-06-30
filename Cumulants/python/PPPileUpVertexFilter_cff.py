@@ -1,6 +1,6 @@
 import FWCore.ParameterSet.Config as cms
-import RefFlowAna.MGCumuv24.PPPileUpVertexFilter_cfi
-pileupVertexFilterCutG = RefFlowAna.MGCumuv24.PPPileUpVertexFilter_cfi.pileupVertexFilter.clone()
+import Analyzers.Cumulants.PPPileUpVertexFilter_cfi
+pileupVertexFilterCutG = Analyzers.Cumulants.PPPileUpVertexFilter_cfi.pileupVertexFilter.clone()
 pileupVertexFilterCutGloose = pileupVertexFilterCutG.clone(
                                                            dzCutByNtrk = cms.vdouble(
                                                                                      999., 4.5, 3.2, 3.0, 1.8, 1.8, 1.35, 0.9
