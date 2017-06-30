@@ -37,10 +37,6 @@
 #include "DataFormats/VertexReco/interface/Vertex.h"
 #include "DataFormats/VertexReco/interface/VertexFwd.h"
 
-#include "DataFormats/CaloTowers/interface/CaloTowerCollection.h"
-
-#include "DataFormats/HeavyIonEvent/interface/Centrality.h"
-
 #include "FWCore/Utilities/interface/InputTag.h"
 
 // user include files
@@ -87,17 +83,6 @@ class Cumulants : public edm::one::EDAnalyzer<edm::one::SharedResources>  {
       // ## vertex ##
       // used to select what vertex to read from configuration file
       edm::EDGetTokenT<reco::VertexCollection> vtxTags_; 
-
-      // ## calotower ##
-      // used to select what calo tower to read from configuration file
-      edm::EDGetTokenT<CaloTowerCollection> caloTowersTags_; 
-
-      // ## centrality ##
-      // used to select what centrality collection to read from configuration file
-      edm::EDGetTokenT<reco::Centrality> centralityTags_;
-      // used to access centrality bins 
-      edm::EDGetTokenT<int> centralityBinTags_;
-      int cent_;
 
       // ## multiplicity selection (Noff)
       int noffmin_;          //minimum multiplicity of an event to be considered
@@ -160,9 +145,6 @@ class Cumulants : public edm::one::EDAnalyzer<edm::one::SharedResources>  {
       TH1F* hEtaNoff_;
       TH1F* hPtNoff_; 
       TH1F* hPhiNoff_;
-      TH1F* hEtaCTow_;
-      TH1F* hEtCTow_;
-      TH1F* hPhiCTow_;
       // ## ttree ##
       TTree* trEvent_;
 };
