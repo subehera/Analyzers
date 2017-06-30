@@ -72,7 +72,6 @@ process.load("TrackingCode.pileUpFilter.pileUpFilter_cff")
 # Load you analyzer with initial configuration
 process.load("Analyzers.Cumulants.cumulants_cfi")
 process.defaultAnalysis = process.defaultCumu.clone()
-process.defaultAnalysis.pTmaxTrk = cms.untracked.double(6.0) 
 
 process.p = cms.Path(process.defaultTrigSel *            # Select MB events
                      process.collisionEventSelectionPA * # PA event selection
