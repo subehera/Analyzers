@@ -48,6 +48,14 @@
 #include "TH2D.h"
 #include "TTree.h"
 
+#include "Analyzers/Cumulants/interface/MultiCumulants/correlations/Types.hh"
+#include "Analyzers/Cumulants/interface/MultiCumulants/correlations/Result.hh"
+#include "Analyzers/Cumulants/interface/MultiCumulants/correlations/QVector.hh"
+#include "Analyzers/Cumulants/interface/MultiCumulants/correlations/recursive/FromQVector.hh"
+#include "Analyzers/Cumulants/interface/MultiCumulants/correlations/recurrence/FromQVector.hh"
+
+#include "Analyzers/Cumulants/interface/MultiCumulants/MultiCumulants/Subsets.h"
+#include "Analyzers/Cumulants/interface/MultiCumulants/MultiCumulants/QVector.h"
 //
 // class declaration
 //
@@ -128,6 +136,12 @@ class Cumulants : public edm::one::EDAnalyzer<edm::one::SharedResources>  {
       // ## harmonic and cumulants ##
       int harm_;     //harmonic order
       bool cweight_; //use particle weight to correct from acc X eff
+      cumulant::impl2::QVectorSet q2p_;
+      cumulant::impl2::QVectorSet q4p_;
+      double CN4_;
+      double wCN4_;
+      double CN2_;
+      double wCN2_;
       
       // ## file acc & eff & fake ##
       edm::InputTag fname_;         //file name that contains acc X eff corrections
