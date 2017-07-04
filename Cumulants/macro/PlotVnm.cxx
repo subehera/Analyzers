@@ -43,6 +43,10 @@ main(int argc, char** argv) {
 	cmdline::parser parser;
 	parser.add<std::string>("output", '\0', "output file name and path", false, "../output/cnm_vnm.root");
 	parser.add<std::string>("input", '\0', "input file name and path", false, "../test/cumulants.root");
+	parser.add<int>("noffmax", '\0', "maximum N_{trk}^offline", false, 500);
+	parser.add<int>("cumumaxorder", '\0', "maximum cumulant order", false, 4);
+	parser.add<int>("harmonicorder", '\0', "maximum cumulant order", false, 2);
+	parser.add<int>("nevents", '\0', "Number of events to be analyzed", false, -1);
 	parser.add("process", '\0', "process TTree");
 	parser.parse_check( argc, argv );
 
@@ -56,8 +60,11 @@ main(int argc, char** argv) {
         std::string inputFileName  = parser.get<std::string>( "input" );
         std::string outputFileName = parser.get<std::string>( "output" );
 
-        const int noffmax = 500;
-        const int multmax = 1000;
+        const int noffmax = parser.get<int>( "noffmax" );
+        const int multmax = 2*noffmax;
+        const int cumumaxorder  = parser.get<int>( "cumumaxorder" );
+        const int harmonicorder = parser.get<int>( "harmonicorder" );
+        const int nevents = parser.get<int>( "nevents" );
 
         const int nbins = 30;
         int binarray[nbins+1] = {0,   10,  20,  30,  40,  50,  60,  70,  80,  90,
@@ -94,7 +101,11 @@ main(int argc, char** argv) {
            fout = TFile::Open(outputFileName.c_str(), "RECREATE");
 
            //process the tree
-           utils::process(fin, fout);
+           utils::process(fin, fout, 
+                          noffmax, multmax, 
+                          cumumaxorder, harmonicorder, 
+                          nbins, binarray,
+                          nevents);
            
         }
         else
