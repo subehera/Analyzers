@@ -1,114 +1,212 @@
 #ifndef MULTICUMULANTS_CORRELATOR_H
 #define MULTICUMULANTS_CORRELATOR_H
 
-#include <iostream>
-#include <stdio.h>
-#include <vector>
-#include <array>
-#include <algorithm>
-#include <math.h>
-#include <set>
-#include <string>
-#include <cstring>
-#include <map>
-#include <stdlib.h>
+#include "Analyzers/Cumulants/interface/MultiCumulants/MultiCumulants/MultiCumulants/QVectorSet.h"
+#include "Analyzers/Cumulants/interface/MultiCumulants/MultiCumulants/MultiCumulants/QTerms.h"
 
-#include "Analyzers/Cumulants/interface/MultiCumulants/MultiCumulants/Types.h"
-#include "Analyzers/Cumulants/interface/MultiCumulants/MultiCumulants/QVector.h"
-
-// logging library
-#define LOGURU_IMPLEMENTATION 1
 #include "vendor/loguru/loguru.hpp"
 
-const int MAX_ORDER = 16;
+#include <set>
+#include <utility> 
+#include <sstream>
+#include <iomanip>
 
 namespace cumulant{
-class Correlator
-{
-public:
-	virtual const char* name() const { return "Correlator"; }
-	virtual const char* classname() const {  return "Correlator"; }
 
-	//Constructors
-	Correlator()
-	{
-            LOG_S(INFO) << "Creating correlator container" << std::endl;
-	}
+    class Correlator{
 
-	//Destructors
-	~Correlator() {}
+    public:
+        bool DEBUG = false;
+        Complex v;
+        Complex w;
 
-        //Function
-        /*
-            next
-                - given the partitioning scheme represented by s and m, generate the next
-            Returns: 1, if a valid partitioning was found 0, otherwise
-        */
-        int next(std::array<int, MAX_ORDER> &s, std::array<int, MAX_ORDER> &m, int n) {
-            /* Update s: 1 1 1 1 -> 2 1 1 1 -> 1 2 1 1 -> 2 2 1 1 -> 3 2 1 1 -> 1 1 2 1 ... */
-            int i = 0;
-            ++s[i];
-            while ((i < n - 1) && (s[i] > m[i] + 1)) {
-                s[i] = 1;
-                ++i;
-                ++s[i];
-            }
-        
-            /* If i has reached the n-1 element, then the last unique partitiong has been found*/
-            if (i == n - 1)
-                return 0;
-        
-            /* Because all the first i elements are now 1, s[i] (i + 1 element) is the largest. 
-            So we update max by copying it to all the first i positions in m.*/
-            int max = s[i];
-            for (i = i - 1; i >= 0; --i)
-                m[i] = max;
-        
-            return 1;
+        std::string repr;
+        NativeMask _m;
+
+        Correlator() : v(0, 0), w(0, 0) {
+
         }
-        
-        void print_as_Qvs( std::array<int, MAX_ORDER> s, int n, int np ){
-        
-            for ( int i = 1; i < np+1; i++ ){
-                printf( "<" );
-                char* space = "";
-                for ( int j =0; j < n; j++ ){
-                    if ( s[j] == i ){
-                        printf( "%sQ_%d", space, j+1 );
-                        space = " ";
-                    }
-                }
-                printf( ">" );
-            }
-            
+        Correlator( NativeMask m, QVectorMap &qvm) : v(0, 0), w(0, 0) {
+            build( m, qvm );
         }
-        
-        int max_in_map( std::map<int, int> &m ){
-        
-            int v = 0;
-            for ( auto kv : m ){
-                if ( kv.second > v ){
-                    v = kv.second;
-                }
-            }
-            return v;
-        }
-        
+
         int factorial( int n ){
             if ( n <= 1 ) return 1;
             return n * factorial( n - 1 );
         }
-        int coeff( int n ){
-            return pow( -1, n-1 ) * factorial( n - 1 );
+
+        size_t countSetBits(NativeMask m){
+            size_t count = 0;
+            while (m){
+                m &= (m-1) ;
+                count++;
+            }
+            return count;
         }
 
-        void calculate(impl2::QVectorSet qvset) {}
+        // im is the one in the compressed space
+        // mm is the mask in the full space
+        // example :
+        // given im=0101, and mm=00110101
+        // returns rm = 00010001, ie 1st and 3rd set bits in mask
+        NativeMask expandMask( NativeMask im, NativeMask mm, size_t start = 0, size_t stop = 8 ){
 
-protected:
-};	
+            vector<size_t> mlut;
+            size_t n = 0;
+            NativeMask rm = 0;
+            for ( size_t i = start; i <stop; i++ ){
+                NativeMask ithbit = (1 << i);
+                NativeMask nthbit = (1 << n);
+                if ( ithbit & mm ){
+                    if ( nthbit & im )
+                        rm |= ithbit;
+                    n++; 
+                }
+            }
+            return rm;
+        }
 
-} // namespace cumulant
+
+        void build( NativeMask m, QVectorMap &qvm){
+            //LOG_SCOPE_FUNCTION(INFO);
+            // just save for printing
+            _m = m;
+            std::string cmsg = "";
+            std::string cdelim = "";
+            std::stringstream sstr;
+            auto bm = std::bitset<8>( m );
+            size_t maskBitsSet = countSetBits( m );
+            LOG_IF_F( INFO, DEBUG, "nSetBits(mask) = %lu", maskBitsSet );
+
+            auto lut = NativeMaskLUTs[ maskBitsSet-2 ];    
+
+            size_t nTerms = lut.size();
+            Complex qv(0, 0);
+            Complex qw(0, 0);
+            for ( size_t i = 0; i < nTerms; i++ ){
+                LOG_IF_F( INFO, DEBUG, "\n\nTERM %lu", i );
+                
+                double totalK = 1.0;
+                Complex tv(0,0);
+                Complex tw(0,0);
+                std::string msg = "";
+                std::string qmsg = "";
+                std::string qvmsg = "";
+                for ( size_t j = 0; j < lut[ i ].size(); j++ ){
+                    NativeMask tm = lut[ i ][ j ];
+                    NativeMask em = expandMask( tm, m );
+                    
+                    auto btm = std::bitset<8>( tm );
+                    auto bem = std::bitset<8>( em );
+                    
+                    LOG_IF_F( INFO, DEBUG, "NativeMask=%s", std::bitset<8>( tm ).to_string().c_str() );
+                    LOG_IF_F( INFO, DEBUG, "expandMask( im=%s, mm=%s ) = %s", btm.to_string().c_str(), bm.to_string().c_str(), bem.to_string().c_str() );
+
+                    if ( qvm.count( bem ) == 0 ){
+                        LOG_F( WARNING, "QVector not found! mask=%s", bem.to_string().c_str() );
+                    }
+                    auto q = qvm[ bem ];
+                    double ck = (pow(-1, q._i) * factorial(q._i));
+                    totalK *= ck;
+                    qmsg += "" + maskString( em );
+                    msg += "*" + bem.to_string();
+
+                    sstr.str("");
+                    sstr << std::setprecision(3) << "Q(" <<q.getQV().real() << "+" << q.getQV().imag() << "i)";
+                    qvmsg += sstr.str();
+
+
+                    if ( 0 == j ){
+                        tv = q.getQV();
+                        tw = q.getW();
+                    } else {
+                        tv *= q.getQV();
+                        tw *= q.getW();
+                    }
+                    
+
+                } // loop on j
+
+                LOG_IF_F( INFO, DEBUG, "%ld * %s", (Coefficient)totalK, qmsg.c_str() );
+                if ( i == 0 || ( i > 0 && totalK < 0 ) )
+                    cmsg += "\n" + std::to_string( (Coefficient)totalK ) + "*" + qmsg + "\t\t = " + qvmsg;
+                else if ( i > 0 && totalK > 0)
+                    cmsg += "\n+" + std::to_string( (Coefficient)totalK ) + "*" + qmsg + "\t\t = " + qvmsg;
+
+                qv += tv * totalK;
+                qw += tw * totalK;
+
+            } // loop on i terms
+    
+            // LOG_F( INFO, "Correlator = %s", cmsg.c_str() );
+            this->repr = cmsg;
+
+            this->v = qv;
+            this->w = qw;
+
+            return;
+
+        }
+
+        Complex calculate(  ){
+            return (this->v.real() / this->w.real());
+        }
+
+
+        inline NativeMask maskAndCompactify( NativeMask &im, NativeMask &mm, size_t start = 0, size_t stop = 8 ){
+
+            // first do a quick check for validity
+            
+            NativeMask rm = im & mm;
+            // require at least one bit to be 1
+            if ( 0 == rm ) return 0;
+            // then require that bits outside of mask are falsy
+            if ( (im & (!mm)) > 0 ) return 0;
+
+            NativeMask frm = 0;
+            size_t n = 0;
+            for ( size_t i = start; i < stop; i++ ){
+                NativeMask ithbit = (1 << i);
+                NativeMask nthbit = (1 << n);
+                if ( ithbit & mm ){
+                    // LOG_F( INFO, "Setting %luth bit", n );
+                    if ( rm & ithbit )
+                        frm |= (nthbit);
+                    n++;
+                }
+            }
+
+            // LOG_IF_F( INFO, DEBUG, "%s = (im=%s, mm=%s, rm=%s)", std::bitset<8>( frm ).to_string().c_str(), std::bitset<8>(im).to_string().c_str(), std::bitset<8>(mm).to_string().c_str(), std::bitset<8>(rm).to_string().c_str() );
+            
+            return frm;
+        } // maskAndCompactify
+    
+        std::string toString(){
+            std::string s = "";
+            s += "Correlator( m=" + std::bitset<8>( _m ).to_string() + " )[ ";
+            s += "v=" + std::to_string( v.real() ) + " + " + std::to_string( v.imag() ) + "i, ";
+            s += "w=" + std::to_string( w.real() ) + " + " + std::to_string( w.imag() ) + "i";
+            s += " ]";
+            return s;
+
+        }
+
+        std::string maskString( NativeMask m){
+            std::string msg = "Q(";
+            std::string delim = "";
+            for ( size_t i = 0; i < 8; i++ ){
+                NativeMask ithbit = (1 << i);
+                if ( ithbit & m ){
+                    msg += delim + "A" + std::to_string( i+1 );
+                    delim=",";
+                }
+            }
+            msg += ")";
+            return msg;
+        }
+        
+    };
+}
+
+
 #endif
-// Local Variables:
-//  mode: C++
-// End:
