@@ -7,14 +7,15 @@
 #include <unordered_map>
 #include <vector>
 
-#include "MultiCumulants/Types.h"
-#include "MultiCumulants/Subsets.h"
-#include "MultiCumulants/Algorithm.h"
+#include "Analyzers/Cumulants/interface/MultiCumulants/MultiCumulants/Types.h"
+#include "Analyzers/Cumulants/interface/MultiCumulants/MultiCumulants/Subsets.h"
+#include "Analyzers/Cumulants/interface/MultiCumulants/MultiCumulants/Algorithm.h"
 
 using std::vector;
 namespace cumulant{
 
-    extern std::vector<const NativeMaskLUT> NativeMaskLUTs;
+    //extern std::vector<const NativeMaskLUT> NativeMaskLUTs;
+    extern const std::vector<NativeMaskLUT> NativeMaskLUTs;
     extern std::vector<CoefficientLUT> CoefficientKs;
 
     class QTerms {

@@ -56,6 +56,9 @@
 
 #include "Analyzers/Cumulants/interface/MultiCumulants/MultiCumulants/Subsets.h"
 #include "Analyzers/Cumulants/interface/MultiCumulants/MultiCumulants/QVector.h"
+#include "Analyzers/Cumulants/interface/MultiCumulants/MultiCumulants/QVectorSet.h"
+#include "Analyzers/Cumulants/interface/MultiCumulants/MultiCumulants/QTerms.h"
+#include "Analyzers/Cumulants/interface/MultiCumulants/MultiCumulants/Correlator.h"
 //
 // class declaration
 //
@@ -136,8 +139,12 @@ class Cumulants : public edm::one::EDAnalyzer<edm::one::SharedResources>  {
       // ## harmonic and cumulants ##
       int harm_;     //harmonic order
       bool cweight_; //use particle weight to correct from acc X eff
-      cumulant::impl2::QVectorSet q2p_;
-      cumulant::impl2::QVectorSet q4p_;
+      cumulant::QVectorSet qN_;
+      double deltaeta_;
+      double CN8_;
+      double wCN8_;
+      double CN6_;
+      double wCN6_;
       double CN4_;
       double wCN4_;
       double CN2_;

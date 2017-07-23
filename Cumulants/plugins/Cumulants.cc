@@ -26,7 +26,7 @@
 
 // user include files
 #include "Analyzers/Cumulants/interface/Cumulants.h"
-
+#include "Analyzers/Cumulants/interface/MultiCumulants/MultiCumulants/NativeMaskLUT.h"
 //
 // constructors and destructor
 //
@@ -72,6 +72,8 @@ Cumulants::Cumulants(const edm::ParameterSet& iConfig) :
   //harmonic order
   harm_(iConfig.getUntrackedParameter<int>("harm")),
   cweight_(iConfig.getUntrackedParameter<bool>("cweight")),
+     //2-sub event relative eta difference
+  deltaeta_(iConfig.getUntrackedParameter<double>("deltaeta")),
   //file acc & eff & fake
   fname_(iConfig.getUntrackedParameter<edm::InputTag>("fname")),
   effmultbin_(iConfig.getUntrackedParameter< std::vector<int> >("effmultbin"))
@@ -96,42 +98,62 @@ Cumulants::Cumulants(const edm::ParameterSet& iConfig) :
       }
    }
 
+   //Calculate relative difference between sub events
+   // deltaeta = M means the upper bound and the lower bound of the sub event 1 and 2 respectively, will be separated by M
+   // if deltaeta < 0 the 2 subevents have an overlap of size M
+   // if M is larger than 4.8, this is the standard cumulant method with full overlap
+   double upper_bound_subset1 = -1.*deltaeta_/2.;
+   if( upper_bound_subset1 > 2.4 ) upper_bound_subset1 = 2.4;
+   double lower_bound_subset2 = +1.*deltaeta_/2.;
+   if( lower_bound_subset2 < -2.4 ) lower_bound_subset2 = -2.4;
+
    //Init cumulants
    cumulant::Subset sub_1(2);
-   sub_1.set(0, "pt", 0.3, 3.0);
-   sub_1.set(1, "eta", -2.4, 0.);
+   sub_1.set(0, "pt", ptmin_, ptmax_);
+   sub_1.set(1, "eta", etamin_, upper_bound_subset1);
    cumulant::Subset sub_2(2);
-   sub_2.set(0, "pt", 0.3, 3.0);
-   sub_2.set(1, "eta", -2.4, 0.);
+   sub_2.set(0, "pt", ptmin_, ptmax_);
+   sub_2.set(1, "eta", etamin_, upper_bound_subset1);
    cumulant::Subset sub_3(2);
-   sub_3.set(0, "pt", 0.3, 3.0);
-   sub_3.set(1, "eta", 0., 2.4);
+   sub_3.set(0, "pt", ptmin_, ptmax_);
+   sub_3.set(1, "eta", etamin_, upper_bound_subset1);
    cumulant::Subset sub_4(2);
-   sub_4.set(0, "pt", 0.3, 3.0);
-   sub_4.set(1, "eta", 0., 2.4);
+   sub_4.set(0, "pt", ptmin_, ptmax_);
+   sub_4.set(1, "eta", etamin_, upper_bound_subset1);
+   cumulant::Subset sub_5(2);
+   sub_5.set(0, "pt", ptmin_, ptmax_);
+   sub_5.set(1, "eta", lower_bound_subset2, etamax_);
+   cumulant::Subset sub_6(2);
+   sub_6.set(0, "pt", ptmin_, ptmax_);
+   sub_6.set(1, "eta", lower_bound_subset2, etamax_);
+   cumulant::Subset sub_7(2);
+   sub_7.set(0, "pt", ptmin_, ptmax_);
+   sub_7.set(1, "eta", lower_bound_subset2, etamax_);
+   cumulant::Subset sub_8(2);
+   sub_8.set(0, "pt", ptmin_, ptmax_);
+   sub_8.set(1, "eta", lower_bound_subset2, etamax_);
 
-   //Init 2-p sub-event method
-   cumulant::Set set2p(2);
-   set2p.setSubsetParams(0, sub_1);
-   set2p.setSubsetParams(1, sub_3);
-   HarmonicVector h2p(2);
-   h2p[0] =  1*harm_;
-   h2p[1] = -1*harm_;
-   
-   //Init 4-p sub-event method
-   cumulant::Set set4p(4);
-   set4p.setSubsetParams(0, sub_1);
-   set4p.setSubsetParams(1, sub_2);
-   set4p.setSubsetParams(2, sub_3);
-   set4p.setSubsetParams(3, sub_4);
-   HarmonicVector h4p(4);
-   h4p[0] =  1*harm_;
-   h4p[1] =  1*harm_;
-   h4p[2] = -1*harm_;
-   h4p[3] = -1*harm_;
+   //Init sub-event method
+   cumulant::Set set(8);
+   set.setSubsetParams(0, sub_1);
+   set.setSubsetParams(1, sub_2);
+   set.setSubsetParams(2, sub_3);
+   set.setSubsetParams(3, sub_4);
+   set.setSubsetParams(4, sub_5);
+   set.setSubsetParams(5, sub_6);
+   set.setSubsetParams(6, sub_7);
+   set.setSubsetParams(7, sub_8);
+   HarmonicVector h(8);
+   h[0] =  1*harm_;
+   h[1] =  1*harm_;
+   h[2] =  1*harm_;
+   h[3] =  1*harm_;
+   h[4] = -1*harm_;
+   h[5] = -1*harm_;
+   h[6] = -1*harm_;
+   h[7] = -1*harm_;
 
-   q2p_ = cumulant::impl2::QVectorSet(h2p, set2p, cweight_);
-   q4p_ = cumulant::impl2::QVectorSet(h4p, set4p, cweight_);
+   qN_ = cumulant::QVectorSet(h, set, cweight_);
 
    //Ouptut
    usesResource("TFileService");
@@ -159,8 +181,12 @@ Cumulants::Cumulants(const edm::ParameterSet& iConfig) :
    trEvent_->Branch("nVtx",       &nvtx_, "nVtx/I");
    trEvent_->Branch("Noff",       &noff_, "Noff/I");
    trEvent_->Branch("Mult",       &mult_, "Mult/I");
+   trEvent_->Branch(Form("C%d8",harm_),  &CN8_,  Form("C%d4/D",harm_));
+   trEvent_->Branch(Form("C%d6",harm_),  &CN6_,  Form("C%d4/D",harm_));
    trEvent_->Branch(Form("C%d4",harm_),  &CN4_,  Form("C%d4/D",harm_));
    trEvent_->Branch(Form("C%d2",harm_),  &CN2_,  Form("C%d2/D",harm_));
+   trEvent_->Branch(Form("wC%d8",harm_), &wCN8_, Form("wC%d4/D",harm_));
+   trEvent_->Branch(Form("wC%d6",harm_), &wCN6_, Form("wC%d4/D",harm_));
    trEvent_->Branch(Form("wC%d4",harm_), &wCN4_, Form("wC%d4/D",harm_));
    trEvent_->Branch(Form("wC%d2",harm_), &wCN2_, Form("wC%d2/D",harm_));
 }
@@ -332,8 +358,7 @@ Cumulants::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
    if( noff_ < noffmin_ || noff_ >= noffmax_) return;
 
    //Reset QVectors to start fresh
-   q2p_.reset();
-   q4p_.reset();
+   qN_.reset();
    mult_ = 0; // Event multiplicity
    std::vector<double> val(2,0.);
 
@@ -391,8 +416,7 @@ Cumulants::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
        // Fill qvector
        val[0] = pt;
        val[1] = eta;
-       q2p_.fill(val, phi, weight);
-       q4p_.fill(val, phi, weight);
+       qN_.fill(val, phi, weight);
 
        // Fill trk histograms
        hEtaTrk_->Fill(eta);
@@ -430,39 +454,29 @@ Cumulants::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
    }
 
    //Compute cumulants
-   CN2_  = (q2p_.getQ()[0][0].getQV()*q2p_.getQ()[0][1].getQV()).real() - q2p_.getQ()[1][0].getQV().real();
-   wCN2_ = (q2p_.getQ()[0][0].getW() *q2p_.getQ()[0][1].getW()).real()  - q2p_.getQ()[1][0].getW().real();
+   //WARNING: Clarity of this step to be improved in the framework
+   //The correlators are represented by a binary number where each bit is one of the subset
+   //In our case here:
+   //   * 17  ~> 00010001
+   //   * 51  ~> 00110011
+   //   * 119 ~> 01110111
+   //   * 255 ~> 11111111
+   //As subset on the same eta region are stricly equal in this analyzer (same eta and pT range) it does not matter a lot
+   //but one as to keep that in mind for further expansion of the analysis
+   cumulant::QVectorMap& qNmap = qN_.getQ();
 
-   CN4_ = (q4p_.getQ()[0][0].getQV()*q4p_.getQ()[0][1].getQV()*q4p_.getQ()[0][2].getQV()*q4p_.getQ()[0][3].getQV()).real()
-        - (q4p_.getQ()[1][0].getQV()*q4p_.getQ()[0][2].getQV()*q4p_.getQ()[0][3].getQV()).real()
-        - (q4p_.getQ()[1][1].getQV()*q4p_.getQ()[0][1].getQV()*q4p_.getQ()[0][3].getQV()).real()
-        - (q4p_.getQ()[1][2].getQV()*q4p_.getQ()[0][0].getQV()*q4p_.getQ()[0][3].getQV()).real()
-        - (q4p_.getQ()[1][3].getQV()*q4p_.getQ()[0][1].getQV()*q4p_.getQ()[0][2].getQV()).real()
-        - (q4p_.getQ()[1][4].getQV()*q4p_.getQ()[0][0].getQV()*q4p_.getQ()[0][2].getQV()).real()
-        - (q4p_.getQ()[1][5].getQV()*q4p_.getQ()[0][0].getQV()*q4p_.getQ()[0][1].getQV()).real()
-        + (q4p_.getQ()[1][0].getQV()*q4p_.getQ()[1][5].getQV()).real()
-        + (q4p_.getQ()[1][1].getQV()*q4p_.getQ()[1][4].getQV()).real()
-        + (q4p_.getQ()[1][2].getQV()*q4p_.getQ()[1][3].getQV()).real()
-        + 2*(q4p_.getQ()[2][0].getQV()*q4p_.getQ()[0][3].getQV()).real()
-        + 2*(q4p_.getQ()[2][1].getQV()*q4p_.getQ()[0][2].getQV()).real()
-        + 2*(q4p_.getQ()[2][2].getQV()*q4p_.getQ()[0][1].getQV()).real()
-        + 2*(q4p_.getQ()[2][3].getQV()*q4p_.getQ()[0][0].getQV()).real()
-        - 6*q4p_.getQ()[3][0].getQV().real();
-   wCN4_ = q4p_.getQ()[0][0].getW().real()*q4p_.getQ()[0][1].getW().real()*q4p_.getQ()[0][2].getW().real()*q4p_.getQ()[0][3].getW().real()
-         - q4p_.getQ()[1][0].getW().real()*q4p_.getQ()[0][2].getW().real()*q4p_.getQ()[0][3].getW().real()
-         - q4p_.getQ()[1][1].getW().real()*q4p_.getQ()[0][1].getW().real()*q4p_.getQ()[0][3].getW().real()
-         - q4p_.getQ()[1][2].getW().real()*q4p_.getQ()[0][0].getW().real()*q4p_.getQ()[0][3].getW().real()
-         - q4p_.getQ()[1][3].getW().real()*q4p_.getQ()[0][1].getW().real()*q4p_.getQ()[0][2].getW().real()
-         - q4p_.getQ()[1][4].getW().real()*q4p_.getQ()[0][0].getW().real()*q4p_.getQ()[0][2].getW().real()
-         - q4p_.getQ()[1][5].getW().real()*q4p_.getQ()[0][0].getW().real()*q4p_.getQ()[0][1].getW().real()
-         + q4p_.getQ()[1][0].getW().real()*q4p_.getQ()[1][5].getW().real()
-         + q4p_.getQ()[1][1].getW().real()*q4p_.getQ()[1][4].getW().real()
-         + q4p_.getQ()[1][2].getW().real()*q4p_.getQ()[1][3].getW().real()
-         + 2*q4p_.getQ()[2][0].getW().real()*q4p_.getQ()[0][3].getW().real()
-         + 2*q4p_.getQ()[2][1].getW().real()*q4p_.getQ()[0][2].getW().real()
-         + 2*q4p_.getQ()[2][2].getW().real()*q4p_.getQ()[0][1].getW().real()
-         + 2*q4p_.getQ()[2][3].getW().real()*q4p_.getQ()[0][0].getW().real()
-         - 6*q4p_.getQ()[3][0].getW().real();
+   cumulant::Correlator c2 = cumulant::Correlator(17, qNmap);
+   CN2_  = c2.v.real(); 
+   wCN2_ = c2.w.real();
+   cumulant::Correlator c4 = cumulant::Correlator(51, qNmap);
+   CN4_  = c4.v.real();
+   wCN4_ = c4.w.real();
+   cumulant::Correlator c6 = cumulant::Correlator(119, qNmap);
+   CN6_  = c6.v.real();
+   wCN6_ = c6.w.real();
+   cumulant::Correlator c8 = cumulant::Correlator(255, qNmap);
+   CN8_  = c8.v.real();
+   wCN8_ = c8.w.real();
 
    // Fill TTree
    //cent_ = centBin;

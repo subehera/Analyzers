@@ -1,10 +1,10 @@
 #ifndef MULTICUMULANTS_CORRELATOR_H
 #define MULTICUMULANTS_CORRELATOR_H
 
-#include "Analyzers/Cumulants/interface/MultiCumulants/MultiCumulants/MultiCumulants/QVectorSet.h"
-#include "Analyzers/Cumulants/interface/MultiCumulants/MultiCumulants/MultiCumulants/QTerms.h"
+#include "Analyzers/Cumulants/interface/MultiCumulants/MultiCumulants/QTerms.h"
+#include "Analyzers/Cumulants/interface/MultiCumulants/MultiCumulants/QVectorSet.h"
 
-#include "vendor/loguru/loguru.hpp"
+#include "Analyzers/Cumulants/interface/MultiCumulants/vendor/loguru/loguru.hpp"
 
 #include <set>
 #include <utility> 

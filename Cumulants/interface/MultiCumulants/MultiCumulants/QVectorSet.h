@@ -8,14 +8,14 @@
 #include <unordered_map>
 #include <vector>
 
-#include "MultiCumulants/Types.h"
-#include "MultiCumulants/Subsets.h"
-#include "MultiCumulants/Algorithm.h"
-#include "MultiCumulants/QVector.h"
+#include "Analyzers/Cumulants/interface/MultiCumulants/MultiCumulants/Types.h"
+#include "Analyzers/Cumulants/interface/MultiCumulants/MultiCumulants/Subsets.h"
+#include "Analyzers/Cumulants/interface/MultiCumulants/MultiCumulants/Algorithm.h"
+#include "Analyzers/Cumulants/interface/MultiCumulants/MultiCumulants/QVector.h"
 
 // logging library
 #define LOGURU_IMPLEMENTATION 1
-#include "vendor/loguru/loguru.hpp"
+#include "Analyzers/Cumulants/interface/MultiCumulants/vendor/loguru/loguru.hpp"
 
 
 namespace cumulant{
