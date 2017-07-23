@@ -1,1 +1,6 @@
 *.pyc
+__*__.py
+*.root
+*.swp
+*.o
+*.log
