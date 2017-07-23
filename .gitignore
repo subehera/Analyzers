@@ -2,3 +2,5 @@
 __*__.py
 *.root
 *.swp
+*.o
+*.log

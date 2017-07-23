@@ -181,12 +181,12 @@ Cumulants::Cumulants(const edm::ParameterSet& iConfig) :
    trEvent_->Branch("nVtx",       &nvtx_, "nVtx/I");
    trEvent_->Branch("Noff",       &noff_, "Noff/I");
    trEvent_->Branch("Mult",       &mult_, "Mult/I");
-   trEvent_->Branch(Form("C%d8",harm_),  &CN8_,  Form("C%d4/D",harm_));
-   trEvent_->Branch(Form("C%d6",harm_),  &CN6_,  Form("C%d4/D",harm_));
+   trEvent_->Branch(Form("C%d8",harm_),  &CN8_,  Form("C%d8/D",harm_));
+   trEvent_->Branch(Form("C%d6",harm_),  &CN6_,  Form("C%d6/D",harm_));
    trEvent_->Branch(Form("C%d4",harm_),  &CN4_,  Form("C%d4/D",harm_));
    trEvent_->Branch(Form("C%d2",harm_),  &CN2_,  Form("C%d2/D",harm_));
-   trEvent_->Branch(Form("wC%d8",harm_), &wCN8_, Form("wC%d4/D",harm_));
-   trEvent_->Branch(Form("wC%d6",harm_), &wCN6_, Form("wC%d4/D",harm_));
+   trEvent_->Branch(Form("wC%d8",harm_), &wCN8_, Form("wC%d8/D",harm_));
+   trEvent_->Branch(Form("wC%d6",harm_), &wCN6_, Form("wC%d6/D",harm_));
    trEvent_->Branch(Form("wC%d4",harm_), &wCN4_, Form("wC%d4/D",harm_));
    trEvent_->Branch(Form("wC%d2",harm_), &wCN2_, Form("wC%d2/D",harm_));
 }
