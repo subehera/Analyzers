@@ -441,11 +441,11 @@ namespace utils
              wqNM_jacknife[ibr][noff][mult] = wqNM[ibr][noff][mult] - wCNM[ibr];
          }        
 
-         //// Rebin
-         rebinning(qNM_jacknife, wqNM_jacknife, 
-                   cNM_jacknife, wcNM_jacknife, 
-                   cNMreb_jacknife, wcNMreb_jacknife, 
-                   nbins, binarray, true);
+      //   //// Rebin
+      //   rebinning(qNM_jacknife, wqNM_jacknife, 
+      //             cNM_jacknife, wcNM_jacknife, 
+      //             cNMreb_jacknife, wcNMreb_jacknife, 
+      //             nbins, binarray, true);
 
          //// Get index for rebinned histogram
          int idx = -1;
@@ -711,7 +711,7 @@ namespace utils
       fillHistograms(cNM, cNMreb, hcN, hcNreb, hvN, hvNreb);
 
       //Jacknife it to get errors
-      //Jacknife(fin, harm, qNM, wqNM, hcN, hcNreb, hvN, hvNreb, nbins, binarray, analyzedEvts);
+      Jacknife(fin, harm, qNM, wqNM, hcN, hcNreb, hvN, hvNreb, nbins, binarray, analyzedEvts);
 
       //Write histo
       fout->cd();
