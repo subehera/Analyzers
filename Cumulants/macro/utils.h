@@ -50,6 +50,7 @@ namespace utils
          return;
       }
 
+<<<<<<< HEAD
       for(int ibr = 0; ibr < static_cast<int>(qNM.size())*2; ibr+=2)
       {
          LOG_S(INFO) << "Trying to get branch " << Form("'C%d%d'", harm, ibr+2);
@@ -62,6 +63,20 @@ namespace utils
          if(!ch->SetBranchAddress(Form("wC%d%d", harm, ibr+2), &wCNM[ibr]))
          {
             LOG_S(ERROR) << "Branch '" << Form("wC%d%d", harm, ibr+2) << "' does not exist!!! Code stopped";
+=======
+      for(int ibr = 0; ibr < static_cast<int>(qNM.size()); ibr++)
+      {
+         LOG_S(INFO) << "Trying to get branch " << Form("'C%d%d'", harm, 2*ibr+2);
+         if(!ch->SetBranchAddress(Form("C%d%d", harm, 2*ibr+2), &CNM[ibr]))
+         {
+            LOG_S(ERROR) << "Branch '" << Form("C%d%d", harm, 2*ibr+2) << "' does not exist!!! Code stopped";
+            return;
+         }
+         LOG_S(INFO) << "Trying to get branch " << Form("wC%d%d", harm, 2*ibr+2);
+         if(!ch->SetBranchAddress(Form("wC%d%d", harm, 2*ibr+2), &wCNM[ibr]))
+         {
+            LOG_S(ERROR) << "Branch '" << Form("wC%d%d", harm, 2*ibr+2) << "' does not exist!!! Code stopped";
+>>>>>>> master
             return;
          }
       }
@@ -264,7 +279,10 @@ namespace utils
              std::vector< std::vector<double> > &wcNMreb,
              int nbins, int binarray[], bool quiet = false)
    {
+<<<<<<< HEAD
 
+=======
+>>>>>>> master
       std::vector< std::vector<double> >(cNM.size(),  std::vector<double>(qNM[0].size(),  0.)).swap(cNM);
       std::vector< std::vector<double> >(wcNM.size(), std::vector<double>(wqNM[0].size(), 0.)).swap(wcNM);
       std::vector< std::vector<double> >(cNMreb.size(),  std::vector<double>(nbins,  0.)).swap(cNMreb);
@@ -359,10 +377,10 @@ namespace utils
       int noff = 0, mult = 0;
       std::vector<double>  CNM( static_cast<int>( qNM.size()), -999.);
       std::vector<double> wCNM( static_cast<int>(wqNM.size()), -999.);
-      std::vector< std::vector< std::vector<double> > > qNM_jacknife  = qNM;
-      std::vector< std::vector< std::vector<double> > > wqNM_jacknife = wqNM;
+      std::vector< std::vector< std::vector<double> > > qNM_jacknife(   qNM.size(), std::vector< std::vector<double> >( qNM[0].size(), std::vector<double>( qNM[0][0].size(), 0.) ) );
+      std::vector< std::vector< std::vector<double> > > wqNM_jacknife( wqNM.size(), std::vector< std::vector<double> >(wqNM[0].size(), std::vector<double>(wqNM[0][0].size(), 0.) ) );
       std::vector< std::vector<double> > cNM_jacknife( qNM.size(), std::vector<double>( qNM[0].size(), 0.) );
-      std::vector< std::vector<double> > wcNM_jacknife( wqNM.size(), std::vector<double>( qNM[0].size(), 0.) );
+      std::vector< std::vector<double> > wcNM_jacknife( wqNM.size(), std::vector<double>( wqNM[0].size(), 0.) );
       std::vector< std::vector<double> > cNMreb_jacknife( qNM.size(), std::vector<double>( nbins, 0.) );
       std::vector< std::vector<double> > wcNMreb_jacknife( wqNM.size(), std::vector<double>( nbins, 0.) );
 
@@ -385,18 +403,18 @@ namespace utils
          return;
       }
 
-      for(int ibr = 0; ibr < static_cast<int>(qNM.size())*2; ibr+=2)
+      for(int ibr = 0; ibr < static_cast<int>(qNM.size()); ibr++)
       {
-         LOG_S(INFO) << "Trying to get branch " << Form("'C%d%d'", harm, ibr+2);
-         if(!ch->SetBranchAddress(Form("C%d%d", harm, ibr+2), &CNM[ibr]))
+         LOG_S(INFO) << "Trying to get branch " << Form("'C%d%d'", harm, 2*ibr+2);
+         if(!ch->SetBranchAddress(Form("C%d%d", harm, 2*ibr+2), &CNM[ibr]))
          {
-            LOG_S(ERROR) << "Branch '" << Form("C%d%d", harm, ibr+2) << "' does not exist!!! Code stopped";
+            LOG_S(ERROR) << "Branch '" << Form("C%d%d", harm, 2*ibr+2) << "' does not exist!!! Code stopped";
             return;
          }
-         LOG_S(INFO) << "Trying to get branch " << Form("wC%d%d", harm, ibr+2);
-         if(!ch->SetBranchAddress(Form("wC%d%d", harm, ibr+2), &wCNM[ibr]))
+         LOG_S(INFO) << "Trying to get branch " << Form("wC%d%d", harm, 2*ibr+2);
+         if(!ch->SetBranchAddress(Form("wC%d%d", harm, 2*ibr+2), &wCNM[ibr]))
          {
-            LOG_S(ERROR) << "Branch '" << Form("wC%d%d", harm, ibr+2) << "' does not exist!!! Code stopped";
+            LOG_S(ERROR) << "Branch '" << Form("wC%d%d", harm, 2*ibr+2) << "' does not exist!!! Code stopped";
             return;
          }
       }
@@ -428,7 +446,7 @@ namespace utils
          }
         
          // Skip event if multiplicity is zero 
-         if(mult <= 4) 
+         if(mult <= 10) 
          {
             ++ievt;
             continue;
@@ -437,17 +455,18 @@ namespace utils
          // Compute cumulants
          for(int ibr = 0; ibr < static_cast<int>(qNM.size()); ibr++)
          {
-             qNM_jacknife[ibr][noff][mult]  -= CNM[ibr];
-             wqNM_jacknife[ibr][noff][mult] -= wCNM[ibr];
+             //LOG_S(INFO) << "Branch: " << ibr;
+             qNM_jacknife[ibr][noff][mult]  = qNM[ibr][noff][mult] - CNM[ibr];
+             wqNM_jacknife[ibr][noff][mult] = wqNM[ibr][noff][mult] - wCNM[ibr];
          }        
 
-         // Rebin
-         rebinning(qNM_jacknife, wqNM_jacknife, 
-                   cNM_jacknife, wcNM_jacknife, 
-                   cNMreb_jacknife, wcNMreb_jacknife, 
-                   nbins, binarray, true);
+      //   //// Rebin
+      //   rebinning(qNM_jacknife, wqNM_jacknife, 
+      //             cNM_jacknife, wcNM_jacknife, 
+      //             cNMreb_jacknife, wcNMreb_jacknife, 
+      //             nbins, binarray, true);
 
-         // Get index for rebinned histogram
+         //// Get index for rebinned histogram
          int idx = -1;
          for(int ibin = 0; ibin < nbins; ++ibin)
          {
@@ -579,6 +598,7 @@ namespace utils
       // Loop for Jacknfe
       LOG_S(INFO) << "Starting error estimation with Jacknife";
       loopJacknife(fin, harm, qNM, wqNM, hcN, hcNreb, cNMvar, noffvar, cNMrebvar, noffrebvar, nbins, binarray, analyzedEvts);
+      LOG_S(INFO) << "End of error estimation with Jacknife";
 
       for(int ibr = 0; ibr < hcN.size(); ++ibr)
       {

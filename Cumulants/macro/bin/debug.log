@@ -1,0 +1,41 @@
+File verbosity level: 9
+date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
+2017-10-19 15:34:34.091 (   0.000s) [MAIN            ]             loguru.hpp:1907     0| Logging to 'bin/debug.log', mode: 'w', verbosity: 9
+2017-10-19 15:34:35.545 (   1.455s) [MAIN            ]            PlotVnm.cxx:82       0| Trying to open file: /afs/cern.ch/user/d/davidlw/public/CumulantTree_pPb_PAMB1_v1.root
+2017-10-19 15:34:35.545 (   1.455s) [MAIN            ]            PlotVnm.cxx:96       0| File /afs/cern.ch/user/d/davidlw/public/CumulantTree_pPb_PAMB1_v1.root successfully opened!
+2017-10-19 15:34:35.550 (   1.460s) [MAIN            ]                utils.h:20       0| TTree named /afs/cern.ch/user/d/davidlw/public/CumulantTree_pPb_PAMB1_v1.root/defaultAnalysis/trEvent will be added to the TChain
+2017-10-19 15:34:35.550 (   1.460s) [MAIN            ]                utils.h:637      0| Number of trees in the TChain: 1
+2017-10-19 15:34:35.550 (   1.460s) [MAIN            ]                utils.h:638      0| Maximum cumulant order to be computed: 8
+2017-10-19 15:34:35.581 (   1.490s) [MAIN            ]                utils.h:666      0| Looping on TChain...
+2017-10-19 15:34:35.581 (   1.490s) [MAIN            ]                utils.h:40       0| Trying to get branch 'Noff'
+2017-10-19 15:34:35.581 (   1.491s) [MAIN            ]                utils.h:46       0| Trying to get branch 'Mult'
+2017-10-19 15:34:35.581 (   1.491s) [MAIN            ]                utils.h:55       0| Trying to get branch 'C22'
+2017-10-19 15:34:35.581 (   1.491s) [MAIN            ]                utils.h:61       0| Trying to get branch wC22
+2017-10-19 15:34:35.581 (   1.491s) [MAIN            ]                utils.h:55       0| Trying to get branch 'C24'
+2017-10-19 15:34:35.581 (   1.491s) [MAIN            ]                utils.h:61       0| Trying to get branch wC24
+2017-10-19 15:34:35.581 (   1.491s) [MAIN            ]                utils.h:55       0| Trying to get branch 'C26'
+2017-10-19 15:34:35.581 (   1.491s) [MAIN            ]                utils.h:61       0| Trying to get branch wC26
+2017-10-19 15:34:35.581 (   1.491s) [MAIN            ]                utils.h:55       0| Trying to get branch 'C28'
+2017-10-19 15:34:35.581 (   1.491s) [MAIN            ]                utils.h:61       0| Trying to get branch wC28
+2017-10-19 15:34:35.593 (   1.503s) [MAIN            ]                utils.h:71       0| Number of events available in the tree is: 478450
+2017-10-19 15:34:35.593 (   1.503s) [MAIN            ]                utils.h:75       0| Number of events that will be analyzed: 478450
+2017-10-19 15:34:35.593 (   1.503s) [MAIN            ]                utils.h:76       0| This represent 100% of the available statistics
+2017-10-19 15:34:36.186 (   2.096s) [MAIN            ]                utils.h:670      0| Rebinning cumulants...
+2017-10-19 15:34:36.188 (   2.098s) [MAIN            ]                utils.h:272      0| Combining multiplicity bin for each N_{trk}^{offline} bin
+2017-10-19 15:34:36.206 (   2.116s) [MAIN            ]                utils.h:293      0| Rebinning in larger N_{trk}_{offline} bins now
+2017-10-19 15:34:36.208 (   2.118s) [MAIN            ]                utils.h:674      0| Fill histograms
+2017-10-19 15:34:36.211 (   2.121s) [MAIN            ]                utils.h:580      0| Starting error estimation with Jacknife
+2017-10-19 15:34:36.280 (   2.190s) [MAIN            ]                utils.h:20       0| TTree named /afs/cern.ch/user/d/davidlw/public/CumulantTree_pPb_PAMB1_v1.root/defaultAnalysis/trEvent will be added to the TChain
+2017-10-19 15:34:36.286 (   2.196s) [MAIN            ]                utils.h:374      0| Trying to get branch 'Noff'
+2017-10-19 15:34:36.287 (   2.197s) [MAIN            ]                utils.h:380      0| Trying to get branch 'Mult'
+2017-10-19 15:34:36.288 (   2.198s) [MAIN            ]                utils.h:389      0| Trying to get branch 'C22'
+2017-10-19 15:34:36.290 (   2.199s) [MAIN            ]                utils.h:395      0| Trying to get branch wC22
+2017-10-19 15:34:36.292 (   2.202s) [MAIN            ]                utils.h:389      0| Trying to get branch 'C24'
+2017-10-19 15:34:36.294 (   2.203s) [MAIN            ]                utils.h:395      0| Trying to get branch wC24
+2017-10-19 15:34:36.295 (   2.205s) [MAIN            ]                utils.h:389      0| Trying to get branch 'C26'
+2017-10-19 15:34:36.296 (   2.206s) [MAIN            ]                utils.h:395      0| Trying to get branch wC26
+2017-10-19 15:34:36.297 (   2.207s) [MAIN            ]                utils.h:389      0| Trying to get branch 'C28'
+2017-10-19 15:34:36.298 (   2.208s) [MAIN            ]                utils.h:395      0| Trying to get branch wC28
+2017-10-19 15:34:36.301 (   2.211s) [MAIN            ]                utils.h:405      0| Number of events available in the tree is: 478450
+2017-10-19 15:34:36.302 (   2.212s) [MAIN            ]                utils.h:409      0| Number of events that will be analyzed: 478450
+2017-10-19 15:34:36.304 (   2.214s) [MAIN            ]                utils.h:410      0| This represent 100% of the available statistics

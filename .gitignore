@@ -3,3 +3,7 @@ __*__.py
 *.root
 *.swp
 *.o
+<<<<<<< HEAD
+=======
+*.log
+>>>>>>> master

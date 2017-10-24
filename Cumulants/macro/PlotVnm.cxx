@@ -42,12 +42,12 @@ main(int argc, char** argv) {
 //--------------------------------------------------------
 	cmdline::parser parser;
 	parser.add<std::string>("output", '\0', "output file name and path", false, "../output/cnm_vnm.root");
-	parser.add<std::string>("input", '\0', "input file name and path", false, "../test/cumulants.root");
-	parser.add<int>("noffmax", '\0', "maximum N_{trk}^offline", false, 500);
-	parser.add<int>("cumumaxorder", '\0', "maximum cumulant order", false, 4);
-	parser.add<int>("harmonicorder", '\0', "maximum cumulant order", false, 2);
-	parser.add<int>("nevents", '\0', "Number of events to be analyzed", false, -1);
-	parser.add("process", '\0', "process TTree");
+	parser.add<std::string>("input" , '\0', "input file name and path", false, "../test/cumulants.root");
+	parser.add<int>("noffmax"       , '\0', "maximum N_{trk}^offline", false, 500);
+	parser.add<int>("cumumaxorder"  , '\0', "maximum cumulant order", false, 8);
+	parser.add<int>("harmonicorder" , '\0', "harmonic order", false, 2);
+	parser.add<int>("nevents"       , '\0', "Number of events to be analyzed", false, -1);
+	parser.add("process"            , '\0', "process TTree");
 	parser.parse_check( argc, argv );
 
 	std::cout << parser.usage() << endl;

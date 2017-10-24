@@ -2,7 +2,7 @@
 #define MULTICUMULANTS_RESULT_HH
 
 #include <iostream>
-#include "Analyzers/Cumulants/interface/MultiCumulants/Types.h"
+#include "Analyzers/Cumulants/interface/MultiCumulants/MultiCumulants/Types.h"
 
 class Result
 {
