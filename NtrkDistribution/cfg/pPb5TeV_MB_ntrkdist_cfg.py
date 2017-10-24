@@ -75,7 +75,7 @@ process.TFileService = cms.Service("TFileService",
 # __________________ Analyzer _________________
 
 # Load you analyzer with initial configuration
-process.load("Analyzers.NtrkDistribution.cumulants_cfi")
+process.load("Analyzers.NtrkDistribution.ntrkdist_cfi")
 process.defaultAnalysis = process.defaultNtrkDist.clone()
 
 process.p = cms.Path(#process.defaultTrigSel *            # Select MB events

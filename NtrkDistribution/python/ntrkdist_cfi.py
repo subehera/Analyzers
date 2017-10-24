@@ -32,6 +32,6 @@ defaultNtrkDist = cms.EDAnalyzer('NtrkDistribution', #Analyzer named: Correspond
                              d0d0error = cms.untracked.double(3.0),
                              pterrorpt = cms.untracked.double(0.1),
                              #Acc X Eff
-                             fname = cms.untracked.InputTag('Hijing_8TeV_dataBS.root'),
+                             fname = cms.untracked.InputTag('TrackCorrections_HIJING_538_OFFICIAL_Mar24.root'),
                              effmultbin = cms.untracked.vint32(0,10000)
 )
