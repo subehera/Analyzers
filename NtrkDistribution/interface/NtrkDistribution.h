@@ -100,7 +100,7 @@ class NtrkDistribution : public edm::one::EDAnalyzer<edm::one::SharedResources> 
       double d0d0errornoff_; //cut on d0/d0error of the tracks to compute Noff
       double pterrorptnoff_; //cut on pterror/pt of the tracks to compute Noff
       int noff_;             //ntrk offline value for a given event
-      int noffcorr_;         //ntrk offline corrected value for a given event
+      double noffcorr_;      //ntrk offline corrected value for a given event
 
       // ## track selection ##
       double etamin_;    //min eta of the tracks
@@ -111,7 +111,7 @@ class NtrkDistribution : public edm::one::EDAnalyzer<edm::one::SharedResources> 
       double d0d0error_; //cut on d0/d0error of the tracks
       double pterrorpt_; //cut on pterror/pt of the tracks
       int mult_;         //multiplicity (Nref) in a given event
-      int multcorr_;     //multiplicity corrected (Nch) in a given event
+      double multcorr_;  //multiplicity corrected (Nch) in a given event
 
       // ## vertex selection ##
       double  minvz_;         //minimum z distance wrt (0,0,0) for the vertex       

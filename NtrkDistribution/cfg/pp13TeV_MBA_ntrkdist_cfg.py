@@ -21,7 +21,7 @@ process.maxEvents = cms.untracked.PSet(
 # Define the input file to run on in interactive mode
 process.source = cms.Source("PoolSource",
     fileNames = cms.untracked.vstring(
-    'root://cms-xrd-global.cern.ch///store/user/davidlw/PAMinBiasUPC/PA2013_FlowCorr_PromptReco_MB_Gplus_ReTracking_v18/25c9a89be536a41c8ccb3c75e9fd9358/pPb_HM_1000_1_Miz.root'
+    'root://cms-xrd-global.cern.ch//store/user/davidlw/L1MinimumBiasHF1/RecoSkim2015_2015DLowPU_ReTracking_v4/151109_223122/0000/pPb_HM_1.root'
     )
 )
 
@@ -33,7 +33,8 @@ process.options = cms.untracked.PSet(
 # Define output file name
 import os
 process.TFileService = cms.Service("TFileService",
-     fileName = cms.string(os.getenv('CMSSW_BASE') + '/src/Analyzers/NtrkDistribution/test/ntrkdist.root')
+     #fileName = cms.string(os.getenv('CMSSW_BASE') + '/src/Analyzers/NtrkDistribution/test/ntrkdist.root')
+     fileName = cms.string('ntrkdist.root')
 )
 
 
@@ -58,8 +59,8 @@ process.TFileService = cms.Service("TFileService",
 # __________________ Event selection _________________
 
 # Define the trigger selection
-#from Analyzers.NtrkDistribution.hltFilter_cff import *
-#process.defaultTrigSel = hlt120.clone()
+from Analyzers.NtrkDistribution.hltFilter_cff import *
+process.defaultTrigSel = hltpp13MBA.clone()
 
 # Load HI event selection modules
 #process.load('HeavyIonsAnalysis.Configuration.collisionEventSelection_cff')
@@ -69,17 +70,18 @@ process.TFileService = cms.Service("TFileService",
 #process.load("RecoHI.HiCentralityAlgos.pACentrality_cfi")
 
 #Pileup filter
-#process.load("TrackingCode.pileUpFilter.pileUpFilter_cff")
+from Analyzers.NtrkDistribution.PPPileUpVertexFilter_cff import *
+process.PUfilter = pileupVertexFilterCut_dz10_GplusPP
 
 
 # __________________ Analyzer _________________
 
 # Load you analyzer with initial configuration
-process.load("Analyzers.NtrkDistribution.cumulants_cfi")
+process.load("Analyzers.NtrkDistribution.ntrkdist_cfi")
 process.defaultAnalysis = process.defaultNtrkDist.clone()
 
-process.p = cms.Path(#process.defaultTrigSel *            # Select MB events
+process.p = cms.Path(process.defaultTrigSel *             # Select MB events
                      #process.collisionEventSelectionPA * # PA event selection
-                     #process.olvFilter_pPb8TeV_dz1p0*    # PU filter
+                     process.PUfilter *                   # PU filter
                      #process.pACentrality *              # Centrality
-                     process.defaultAnalysis)            # Run the analyzer
+                     process.defaultAnalysis)             # Run the analyzer

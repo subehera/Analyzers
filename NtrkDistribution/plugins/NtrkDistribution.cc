@@ -105,20 +105,20 @@ NtrkDistribution::NtrkDistribution(const edm::ParameterSet& iConfig) :
    hRhoBestVtx_ = fVtxHist.make<TH1F>("hRvtx", "", 800, -0.2, 0.2);
    hZBestVtx_   = fVtxHist.make<TH1F>("hZvtx", "", 600, -30., 30.);
    TFileDirectory fTrkHist  = fs->mkdir("Tracks");
-   hTrk_    = fTrkHist.make<TH1F>("hMult", "", 10000, 0., 10000.);
+   hTrk_    = fTrkHist.make<TH1F>("hMult", "", 10000, 2., 10002.);
    hEtaTrk_ = fTrkHist.make<TH1F>("hEtatrk", "", 300, -3.,   3.);
    hPtTrk_  = fTrkHist.make<TH1F>("hPttrk",  "", 100,  0.,  10.);
    hPhiTrk_ = fTrkHist.make<TH1F>("hPhitrk", "", 640, -3.2,  3.2);
-   hNoff_    = fTrkHist.make<TH1F>("hNoff", "", 10000, 0., 10000.);
+   hNoff_    = fTrkHist.make<TH1F>("hNoff", "", 10000, 2., 10002.);
    hEtaNoff_ = fTrkHist.make<TH1F>("hEtaNoff", "", 300, -3.,   3.);
    hPtNoff_  = fTrkHist.make<TH1F>("hPtNoff",  "", 100,  0.,  10.);
    hPhiNoff_ = fTrkHist.make<TH1F>("hPhiNoff", "", 640, -3.2,  3.2);
    TFileDirectory fCorrHist  = fs->mkdir("Corrected");
-   hTrkCorr_    = fTrkHist.make<TH1F>("hMultCorr", "", 10000, 0., 10000.);
+   hTrkCorr_    = fCorrHist.make<TH1F>("hMultCorr", "", 10000, 2., 10002.);
    hEtaTrkCorr_ = fCorrHist.make<TH1F>("hEtatrk", "", 300, -3.,   3.);
    hPtTrkCorr_  = fCorrHist.make<TH1F>("hPttrk",  "", 100,  0.,  10.);
    hPhiTrkCorr_ = fCorrHist.make<TH1F>("hPhitrk", "", 640, -3.2,  3.2);
-   hNoffCorr_    = fTrkHist.make<TH1F>("hNoffCorr", "", 10000, 0., 10000.);
+   hNoffCorr_    = fCorrHist.make<TH1F>("hNoffCorr", "", 10000, 2., 10002.);
    hEtaNoffCorr_ = fCorrHist.make<TH1F>("hEtaNoff", "", 300, -3.,   3.);
    hPtNoffCorr_  = fCorrHist.make<TH1F>("hPtNoff",  "", 100,  0.,  10.);
    hPhiNoffCorr_ = fCorrHist.make<TH1F>("hPhiNoff", "", 640, -3.2,  3.2);
@@ -236,7 +236,8 @@ NtrkDistribution::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetu
        return;
    }
 
-   noff_ = 0; // Ntrk offline
+   noff_ = 0;      // Ntrk offline
+   noffcorr_ = 0.; // Ntrk offline
    // Loop over tracks to compute Noff first
    for( reco::TrackCollection::const_iterator itTrk = tracks->begin();
         itTrk != tracks->end();
@@ -287,7 +288,7 @@ NtrkDistribution::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetu
              weight = 1./heff_[idx]->GetBinContent(heff_[idx]->FindBin(eta,pt));
        }
 
-       noffcorr_ += noff_*weight;
+       noffcorr_ += weight;
 
        // Fill trk histograms
        hNoff_->Fill(noff_);
@@ -303,9 +304,8 @@ NtrkDistribution::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetu
    //Select event based on Ntrk offline selection
    if( noff_ < noffmin_ || noff_ >= noffmax_) return;
 
-   multcorr_ = 0; // Noff multiplicity corrected
-   mult_ = 0;     // Event multiplicity
-   multcorr_ = 0; // Event multiplicity corrected
+   mult_ = 0;      // Event multiplicity
+   multcorr_ = 0.; // Event multiplicity corrected
    // Loop over tracks to compute cumulants and multiplicity
    for( reco::TrackCollection::const_iterator itTrk = tracks->begin();
         itTrk != tracks->end();
@@ -354,7 +354,7 @@ NtrkDistribution::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetu
 
        // Increase N valid tracks
        ++mult_;
-       multcorr_ += mult_*weight;
+       multcorr_ += weight;
 
        // Fill trk histograms
        hTrk_->Fill(mult_);
@@ -370,31 +370,31 @@ NtrkDistribution::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetu
 
    // ----- Calotower selection -----
    // Get calo tower collection by token
-   edm::Handle< CaloTowerCollection > calotowers;
-   iEvent.getByToken(caloTowersTags_, calotowers);
-   if( !calotowers->size() )
-   {
-       edm::LogWarning ("Missing Collection") <<"Invalid or empty caloTower collection!";
-       return;
-   }
-   // Loop over caloTowers
-   for( CaloTowerCollection::const_iterator itCTow = calotowers->begin();
-        itCTow != calotowers->end();
-        ++itCTow )
-   {
-       // Get eta, pt and phi of the calo tower
-       double eta  = itCTow->eta();
-       double et   = itCTow->et();
-       double phi  = itCTow->phi();
+   //edm::Handle< CaloTowerCollection > calotowers;
+   //iEvent.getByToken(caloTowersTags_, calotowers);
+   //if( !calotowers->size() )
+   //{
+   //    edm::LogWarning ("Missing Collection") <<"Invalid or empty caloTower collection!";
+   //    return;
+   //}
+   //// Loop over caloTowers
+   //for( CaloTowerCollection::const_iterator itCTow = calotowers->begin();
+   //     itCTow != calotowers->end();
+   //     ++itCTow )
+   //{
+   //    // Get eta, pt and phi of the calo tower
+   //    double eta  = itCTow->eta();
+   //    double et   = itCTow->et();
+   //    double phi  = itCTow->phi();
 
-       // Select calo tower based on quality
-       if( et < 0.01 ) continue;
+   //    // Select calo tower based on quality
+   //    if( et < 0.01 ) continue;
 
-       // Fill trk histograms
-       hEtaCTow_->Fill(eta);
-       hEtCTow_ ->Fill(et);
-       hPhiCTow_->Fill(phi);
-   }
+   //    // Fill trk histograms
+   //    hEtaCTow_->Fill(eta);
+   //    hEtCTow_ ->Fill(et);
+   //    hPhiCTow_->Fill(phi);
+   //}
 }
 
 
