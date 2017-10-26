@@ -33,7 +33,8 @@ process.options = cms.untracked.PSet(
 # Define output file name
 import os
 process.TFileService = cms.Service("TFileService",
-     fileName = cms.string(os.getenv('CMSSW_BASE') + '/src/Analyzers/NtrkDistribution/test/ntrkdist.root')
+     #fileName = cms.string(os.getenv('CMSSW_BASE') + '/src/Analyzers/NtrkDistribution/test/ntrkdist.root')
+     fileName = cms.string('ntrkdist.root')
 )
 
 
