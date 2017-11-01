@@ -54,7 +54,7 @@ process.GlobalTag = GlobalTag(process.GlobalTag, '80X_dataRun2_Prompt_v15', '')
 
 # Define the trigger selection
 from Analyzers.Cumulants.hltFilter_cff import *
-process.defaultTrigSel = hltMB.clone()
+process.defaultTrigSel = hlt185.clone()
 
 # Load HI event selection modules
 process.load('HeavyIonsAnalysis.Configuration.collisionEventSelection_cff')

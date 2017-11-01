@@ -71,10 +71,15 @@ process.load("TrackingCode.pileUpFilter.pileUpFilter_cff")
 
 # Load you analyzer with initial configuration
 process.load("Analyzers.Cumulants.cumulants_cfi")
-process.defaultAnalysis = process.defaultCumu.clone()
+process.defaultAnalysisSC23 = process.defaultCumu.clone()
+process.defaultAnalysisSC24 = process.defaultCumu.clone()
+process.defaultAnalysisSC23.harmPOS  = cms.untracked.int32(2)
+process.defaultAnalysisSC23.harmNEG  = cms.untracked.int32(3)
+process.defaultAnalysisSC24.harmPOS  = cms.untracked.int32(2)
+process.defaultAnalysisSC24.harmNEG  = cms.untracked.int32(4)
 
 process.p = cms.Path(process.defaultTrigSel *            # Select MB events
                      process.collisionEventSelectionPA * # PA event selection
                      process.olvFilter_pPb8TeV_dz1p0*    # PU filter
                      #process.pACentrality *              # Centrality
-                     process.defaultAnalysis)            # Run the analyzer
+                     process.defaultAnalysisSC23 * process.defaultAnalysisSC24)            # Run the analyzer

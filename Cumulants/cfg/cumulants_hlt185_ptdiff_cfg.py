@@ -54,7 +54,7 @@ process.GlobalTag = GlobalTag(process.GlobalTag, '80X_dataRun2_Prompt_v15', '')
 
 # Define the trigger selection
 from Analyzers.Cumulants.hltFilter_cff import *
-process.defaultTrigSel = hltMB.clone()
+process.defaultTrigSel = hlt185.clone()
 
 # Load HI event selection modules
 process.load('HeavyIonsAnalysis.Configuration.collisionEventSelection_cff')
@@ -71,10 +71,20 @@ process.load("TrackingCode.pileUpFilter.pileUpFilter_cff")
 
 # Load you analyzer with initial configuration
 process.load("Analyzers.Cumulants.cumulants_cfi")
-process.defaultAnalysis = process.defaultCumu.clone()
+process.ana_pt10_inf_pos = process.defaultCumu.clone()
+process.ana_pt10_inf_pos.ptminPOIPOS = cms.untracked.double(10.)
+process.ana_pt10_inf_pos.ptmaxPOIPOS = cms.untracked.double(10000.)
+process.ana_pt10_inf_neg = process.defaultCumu.clone()
+process.ana_pt10_inf_neg.ptminPOINEG = cms.untracked.double(10.)
+process.ana_pt10_inf_neg.ptmaxPOINEG = cms.untracked.double(10000.)
 
-process.p = cms.Path(process.defaultTrigSel *            # Select MB events
+
+process.p_pt10_inf_pos = cms.Path(process.defaultTrigSel *            # Select MB events
                      process.collisionEventSelectionPA * # PA event selection
                      process.olvFilter_pPb8TeV_dz1p0*    # PU filter
-                     #process.pACentrality *              # Centrality
-                     process.defaultAnalysis)            # Run the analyzer
+                     process.ana_pt10_inf_pos)            # Run the analyzer
+
+process.p_pt10_inf_neg = cms.Path(process.defaultTrigSel *            # Select MB events
+                     process.collisionEventSelectionPA * # PA event selection
+                     process.olvFilter_pPb8TeV_dz1p0*    # PU filter
+                     process.ana_pt10_inf_neg)            # Run the analyzer
