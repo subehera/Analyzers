@@ -4,7 +4,7 @@ import FWCore.ParameterSet.Config as cms
 ### Comment out for the timing being assuming running on secondary dataset with trigger bit selected already
 import HLTrigger.HLTfilters.hltHighLevel_cfi
 
-#high multiplicity path
+#pPb 8 TeV
 hltPA8MB = HLTrigger.HLTfilters.hltHighLevel_cfi.hltHighLevel.clone()
 hltPA8MB.HLTPaths = ['HLT_PAL1MinimumBiasHF_OR_SinglePixelTrack_*_v*']
 hltPA8MB.andOr = cms.bool(True)
@@ -29,6 +29,22 @@ hltPA8250 = HLTrigger.HLTfilters.hltHighLevel_cfi.hltHighLevel.clone()
 hltPA8250.HLTPaths = ['HLT_PAFullTracks_Multiplicity250_v*']
 hltPA8250.andOr = cms.bool(True)
 hltPA8250.throw = cms.bool(False)
+
+#pPb 5 TeV
+hltPA5100 = hltPA8MB.clone()
+hltPA5100.HLTPaths = ['HLT_PAPixelTracks_Multiplicity100_v*'] 
+
+hltPA5130 = hltPA8MB.clone()
+hltPA5130.HLTPaths = ['HLT_PAPixelTracks_Multiplicity100_v*','HLT_PAPixelTracks_Multiplicity130_v*']
+
+hltPA5160 = hltPA8MB.clone()
+hltPA5160.HLTPaths = ['HLT_PAPixelTracks_Multiplicity100_v*','HLT_PAPixelTracks_Multiplicity130_v*','HLT_PAPixelTracks_Multiplicity160_v*']
+
+hltPA5190 = hltPA8MB.clone()
+hltPA5190.HLTPaths = ['HLT_PAPixelTracks_Multiplicity100_v*','HLT_PAPixelTracks_Multiplicity130_v*','HLT_PAPixelTracks_Multiplicity160_v*','HLT_PAPixelTracks_Multiplicity190_v*']
+
+hltPA5220 = hltPA8MB.clone()
+hltPA5220.HLTPaths = ['HLT_PAPixelTracks_Multiplicity100_v*','HLT_PAPixelTracks_Multiplicity130_v*','HLT_PAPixelTracks_Multiplicity160_v*','HLT_PAPixelTracks_Multiplicity190_v*','HLT_PAPixelTracks_Multiplicity220_v*']
 
 
 

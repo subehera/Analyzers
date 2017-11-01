@@ -33,7 +33,8 @@ process.options = cms.untracked.PSet(
 # Define output file name
 import os
 process.TFileService = cms.Service("TFileService",
-     fileName = cms.string(os.getenv('CMSSW_BASE') + '/src/Analyzers/NtrkDistribution/test/ntrkdist.root')
+     #fileName = cms.string(os.getenv('CMSSW_BASE') + '/src/Analyzers/NtrkDistribution/test/ntrkdist.root')
+     fileName = cms.string('ntrkdist.root')
 )
 
 
@@ -75,7 +76,7 @@ process.TFileService = cms.Service("TFileService",
 # __________________ Analyzer _________________
 
 # Load you analyzer with initial configuration
-process.load("Analyzers.NtrkDistribution.cumulants_cfi")
+process.load("Analyzers.NtrkDistribution.ntrkdist_cfi")
 process.defaultAnalysis = process.defaultNtrkDist.clone()
 
 process.p = cms.Path(#process.defaultTrigSel *            # Select MB events

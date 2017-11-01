@@ -23,7 +23,7 @@
 
 // CMSSW include files
 #include "FWCore/Framework/interface/Frameworkfwd.h"
-#include "FWCore/Framework/interface/one/EDAnalyzer.h"
+#include "FWCore/Framework/interface/EDAnalyzer.h"
 
 #include "FWCore/Framework/interface/Event.h"
 #include "FWCore/Framework/interface/MakerMacros.h"
@@ -58,7 +58,7 @@
 // constructor "usesResource("TFileService");"
 // This will improve performance in multithreaded jobs.
 
-class NtrkDistribution : public edm::one::EDAnalyzer<edm::one::SharedResources>  {
+class NtrkDistribution : public edm::EDAnalyzer {
    public:
       explicit NtrkDistribution(const edm::ParameterSet&);
       ~NtrkDistribution();
@@ -74,22 +74,15 @@ class NtrkDistribution : public edm::one::EDAnalyzer<edm::one::SharedResources> 
       // ----------member data ---------------------------
       // ## tracks ##
       // used to select what tracks to read from configuration file
-      edm::EDGetTokenT<reco::TrackCollection> trackTags_;
+      edm::InputTag trackTags_;
 
       // ## vertex ##
       // used to select what vertex to read from configuration file
-      edm::EDGetTokenT<reco::VertexCollection> vtxTags_; 
+      edm::InputTag vtxTags_; 
 
       // ## calotower ##
       // used to select what calo tower to read from configuration file
-      edm::EDGetTokenT<CaloTowerCollection> caloTowersTags_; 
-
-      // ## centrality ##
-      // used to select what centrality collection to read from configuration file
-      edm::EDGetTokenT<reco::Centrality> centralityTags_;
-      // used to access centrality bins 
-      edm::EDGetTokenT<int> centralityBinTags_;
-      int cent_;
+      edm::InputTag caloTowersTags_; 
 
       // ## multiplicity selection (Noff)
       int noffmin_;          //minimum multiplicity of an event to be considered
@@ -100,7 +93,7 @@ class NtrkDistribution : public edm::one::EDAnalyzer<edm::one::SharedResources> 
       double d0d0errornoff_; //cut on d0/d0error of the tracks to compute Noff
       double pterrorptnoff_; //cut on pterror/pt of the tracks to compute Noff
       int noff_;             //ntrk offline value for a given event
-      int noffcorr_;         //ntrk offline corrected value for a given event
+      double noffcorr_;      //ntrk offline corrected value for a given event
 
       // ## track selection ##
       double etamin_;    //min eta of the tracks
@@ -111,7 +104,7 @@ class NtrkDistribution : public edm::one::EDAnalyzer<edm::one::SharedResources> 
       double d0d0error_; //cut on d0/d0error of the tracks
       double pterrorpt_; //cut on pterror/pt of the tracks
       int mult_;         //multiplicity (Nref) in a given event
-      int multcorr_;     //multiplicity corrected (Nch) in a given event
+      double multcorr_;  //multiplicity corrected (Nch) in a given event
 
       // ## vertex selection ##
       double  minvz_;         //minimum z distance wrt (0,0,0) for the vertex       
