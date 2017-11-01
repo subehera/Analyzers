@@ -3,7 +3,6 @@ __*__.py
 *.root
 *.swp
 *.o
-<<<<<<< HEAD
-=======
 *.log
->>>>>>> master
+NtrkDistribution/crab/*.py
+NtrkDistribution/crab/pp13TeV*Ana_data
