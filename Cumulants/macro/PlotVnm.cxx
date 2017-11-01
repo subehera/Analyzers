@@ -42,7 +42,7 @@ main(int argc, char** argv) {
 //--------------------------------------------------------
 	cmdline::parser parser;
 	parser.add<std::string>("output", '\0', "output file name and path", false, "../output/cnm_vnm.root");
-	parser.add<std::string>("input" , '\0', "input file name and path", false, "../test/cumulants.root");
+	parser.add<std::string>("input" , '\0', "input file name and path", false, "/afs/cern.ch/user/d/davidlw/public/CumulantTree_pPb_PAMB1_v1.root");
 	parser.add<int>("noffmax"       , '\0', "maximum N_{trk}^offline", false, 500);
 	parser.add<int>("cumumaxorder"  , '\0', "maximum cumulant order", false, 8);
 	parser.add<int>("harmonicorder" , '\0', "harmonic order", false, 2);
@@ -76,7 +76,7 @@ main(int argc, char** argv) {
         TFile* fin  = TFile::Open(inputFileName.c_str(), "READ");
         //output file
         TFile* fout = 0x0;
-        if(parser.exist( "process" ))
+      //  if(parser.exist( "process" ))
         { 
            //Check that inputfile is found and properly open
            LOG_S(INFO) << "Trying to open file: " << inputFileName.c_str();
@@ -108,12 +108,13 @@ main(int argc, char** argv) {
                           nevents);
            
         }
+/*
         else
         {
            //if no process just update the output file
            fout = TFile::Open(outputFileName.c_str(), "UPDATE");
         }
-
+*/
         fin->Close();
         delete fin;
    
