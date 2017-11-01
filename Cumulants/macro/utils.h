@@ -546,18 +546,20 @@ namespace utils
             }
             else
             {
-               hcN[ibr]->SetBinError(ibin+1, 0.);
-               hvN[ibr]->SetBinError(ibin+1, 0.);
+               hcN[ibr]->SetBinError(ibin+1, 0.*hcN[ibr]->GetBinContent(ibin+1));
+               hvN[ibr]->SetBinError(ibin+1, 0.*hvN[ibr]->GetBinContent(ibin+1));
             }
          }
 
          //error rebinning
          for(int ibin = 0; ibin < hcNreb[ibr]->GetNbinsX(); ++ibin)
          {
-            int jbin = 0;
-            while(hcN[ibr]->GetBinCenter(jbin+1) >= hcNreb[ibr]->GetBinLowEdge(ibin+1) &&  hcN[ibr]->GetBinCenter(jbin+1) >= hcNreb[ibr]->GetBinLowEdge(ibin+1))
+            double minbin = hcNreb[ibr]->GetBinLowEdge(ibin+1);
+            double maxbin = hcNreb[ibr]->GetBinLowEdge(ibin+1) + hcNreb[ibr]->GetBinWidth(ibin+1);
+            int jbin = hcNreb[ibr]->GetBinLowEdge(ibin+1);
+            while(hcN[ibr]->GetBinLowEdge(jbin+1) >= minbin &&  hcN[ibr]->GetBinLowEdge(jbin+1) < maxbin)
             {
-               cNMrebvar[ibr][ibin] += hcN[ibr]->GetBinError(jbin+1)*hcN[ibr]->GetBinError(jbin+1);
+               cNMrebvar[ibr][ibin] += hcN[ibr]->GetBinError(jbin+1) * hcN[ibr]->GetBinError(jbin+1);
                ++jbin;
             }
              
@@ -573,8 +575,8 @@ namespace utils
             }
             else
             {
-               hcNreb[ibr]->SetBinError(ibin+1, 0.);
-               hvNreb[ibr]->SetBinError(ibin+1, 0.);
+               hcNreb[ibr]->SetBinError(ibin+1, 0.*hcNreb[ibr]->GetBinContent(ibin+1));
+               hvNreb[ibr]->SetBinError(ibin+1, 0.*hvNreb[ibr]->GetBinContent(ibin+1));
             }
          }
       }
@@ -657,11 +659,17 @@ namespace utils
       {
          hcN[iord]    = new TH1D(Form("hC%d%d",          harm, 2*iord+2), "", 
                                  noffmax, 0., noffmax);
+         hcN[iord]->SetMarkerStyle(20);
+         hcN[iord]->SetMarkerColor(iord+1);
+         hcN[iord]->SetLineColor(iord+1);
          hcNreb[iord] = new TH1D(Form("hC%d%d_rebinned", harm, 2*iord+2), "", 
                                  nbins, tmp);
+         hcNreb[iord]->SetMarkerStyle(21);
+         hcNreb[iord]->SetMarkerColor(iord+1);
+         hcNreb[iord]->SetLineColor(iord+1);
 
-         hvN[iord]    = dynamic_cast<TH1D*>(hcN[iord]->Clone()); 
-         hvNreb[iord] = dynamic_cast<TH1D*>(hcNreb[iord]->Clone());
+         hvN[iord]    = dynamic_cast<TH1D*>(hcN[iord]->Clone(Form("hV%d%d", harm, 2*iord+2))); 
+         hvNreb[iord] = dynamic_cast<TH1D*>(hcNreb[iord]->Clone(Form("hV%d%d_rebinned", harm, 2*iord+2)));
       }
       delete[] tmp;
 
@@ -679,8 +687,10 @@ namespace utils
       fout->cd();
       for(int iord = 0; iord < cNM.size(); ++iord)
       {
-         hcN[iord]  ->Write();
+         hcN[iord]   ->Write();
          hcNreb[iord]->Write();
+         //hvN[iord]   ->Write();
+         //hvNreb[iord]->Write();
       }
 
       // Free memory from huge vectors
