@@ -50,18 +50,18 @@ namespace utils
          return;
       }
 
-      for(int ibr = 0; ibr < static_cast<int>(qNM.size())*2; ibr+=2)
+      for(int ibr = 0; ibr < static_cast<int>(qNM.size()); ibr++)
       {
-         LOG_S(INFO) << "Trying to get branch " << Form("'C%d%d'", harm, ibr+2);
-         if(!ch->SetBranchAddress(Form("C%d%d", harm, ibr+2), &CNM[ibr]))
+         LOG_S(INFO) << "Trying to get branch " << Form("'C%d%d'", harm, 2*ibr+2);
+         if(!ch->SetBranchAddress(Form("C%d%d", harm, 2*ibr+2), &CNM[ibr]))
          {
-            LOG_S(ERROR) << "Branch '" << Form("C%d%d", harm, ibr+2) << "' does not exist!!! Code stopped";
+            LOG_S(ERROR) << "Branch '" << Form("C%d%d", harm, 2*ibr+2) << "' does not exist!!! Code stopped";
             return;
          }
-         LOG_S(INFO) << "Trying to get branch " << Form("wC%d%d", harm, ibr+2);
-         if(!ch->SetBranchAddress(Form("wC%d%d", harm, ibr+2), &wCNM[ibr]))
+         LOG_S(INFO) << "Trying to get branch " << Form("wC%d%d", harm, 2*ibr+2);
+         if(!ch->SetBranchAddress(Form("wC%d%d", harm, 2*ibr+2), &wCNM[ibr]))
          {
-            LOG_S(ERROR) << "Branch '" << Form("wC%d%d", harm, ibr+2) << "' does not exist!!! Code stopped";
+            LOG_S(ERROR) << "Branch '" << Form("wC%d%d", harm, 2*ibr+2) << "' does not exist!!! Code stopped";
             return;
          }
       }
@@ -264,7 +264,6 @@ namespace utils
              std::vector< std::vector<double> > &wcNMreb,
              int nbins, int binarray[], bool quiet = false)
    {
-
       std::vector< std::vector<double> >(cNM.size(),  std::vector<double>(qNM[0].size(),  0.)).swap(cNM);
       std::vector< std::vector<double> >(wcNM.size(), std::vector<double>(wqNM[0].size(), 0.)).swap(wcNM);
       std::vector< std::vector<double> >(cNMreb.size(),  std::vector<double>(nbins,  0.)).swap(cNMreb);
@@ -348,23 +347,18 @@ namespace utils
                 const std::vector< std::vector< std::vector<double> > > &qNM,
                 const std::vector< std::vector< std::vector<double> > > &wqNM,
                 const std::vector<TH1D*> &hcN, 
-                const std::vector<TH1D*> &hcNreb, 
                 std::vector< std::vector<double> > &cNMvar,
                 std::vector<int> &noffvar,
-                std::vector< std::vector<double> > &cNMrebvar,
-                std::vector<int> &noffrebvar,
                 int nbins, int binarray[], 
                 int analyzedEvts)
    {
       int noff = 0, mult = 0;
       std::vector<double>  CNM( static_cast<int>( qNM.size()), -999.);
       std::vector<double> wCNM( static_cast<int>(wqNM.size()), -999.);
-      std::vector< std::vector< std::vector<double> > > qNM_jacknife  = qNM;
-      std::vector< std::vector< std::vector<double> > > wqNM_jacknife = wqNM;
+      std::vector< std::vector< std::vector<double> > > qNM_jacknife(   qNM.size(), std::vector< std::vector<double> >( qNM[0].size(), std::vector<double>( qNM[0][0].size(), 0.) ) );
+      std::vector< std::vector< std::vector<double> > > wqNM_jacknife( wqNM.size(), std::vector< std::vector<double> >(wqNM[0].size(), std::vector<double>(wqNM[0][0].size(), 0.) ) );
       std::vector< std::vector<double> > cNM_jacknife( qNM.size(), std::vector<double>( qNM[0].size(), 0.) );
-      std::vector< std::vector<double> > wcNM_jacknife( wqNM.size(), std::vector<double>( qNM[0].size(), 0.) );
-      std::vector< std::vector<double> > cNMreb_jacknife( qNM.size(), std::vector<double>( nbins, 0.) );
-      std::vector< std::vector<double> > wcNMreb_jacknife( wqNM.size(), std::vector<double>( nbins, 0.) );
+      std::vector< std::vector<double> > wcNM_jacknife( wqNM.size(), std::vector<double>( wqNM[0].size(), 0.) );
 
       //init Tree
       TChain* ch = new TChain();
@@ -385,18 +379,18 @@ namespace utils
          return;
       }
 
-      for(int ibr = 0; ibr < static_cast<int>(qNM.size())*2; ibr+=2)
+      for(int ibr = 0; ibr < static_cast<int>(qNM.size()); ibr++)
       {
-         LOG_S(INFO) << "Trying to get branch " << Form("'C%d%d'", harm, ibr+2);
-         if(!ch->SetBranchAddress(Form("C%d%d", harm, ibr+2), &CNM[ibr]))
+         LOG_S(INFO) << "Trying to get branch " << Form("'C%d%d'", harm, 2*ibr+2);
+         if(!ch->SetBranchAddress(Form("C%d%d", harm, 2*ibr+2), &CNM[ibr]))
          {
-            LOG_S(ERROR) << "Branch '" << Form("C%d%d", harm, ibr+2) << "' does not exist!!! Code stopped";
+            LOG_S(ERROR) << "Branch '" << Form("C%d%d", harm, 2*ibr+2) << "' does not exist!!! Code stopped";
             return;
          }
-         LOG_S(INFO) << "Trying to get branch " << Form("wC%d%d", harm, ibr+2);
-         if(!ch->SetBranchAddress(Form("wC%d%d", harm, ibr+2), &wCNM[ibr]))
+         LOG_S(INFO) << "Trying to get branch " << Form("wC%d%d", harm, 2*ibr+2);
+         if(!ch->SetBranchAddress(Form("wC%d%d", harm, 2*ibr+2), &wCNM[ibr]))
          {
-            LOG_S(ERROR) << "Branch '" << Form("wC%d%d", harm, ibr+2) << "' does not exist!!! Code stopped";
+            LOG_S(ERROR) << "Branch '" << Form("wC%d%d", harm, 2*ibr+2) << "' does not exist!!! Code stopped";
             return;
          }
       }
@@ -428,7 +422,7 @@ namespace utils
          }
         
          // Skip event if multiplicity is zero 
-         if(mult <= 4) 
+         if(mult <= 10) 
          {
             ++ievt;
             continue;
@@ -437,40 +431,19 @@ namespace utils
          // Compute cumulants
          for(int ibr = 0; ibr < static_cast<int>(qNM.size()); ibr++)
          {
-             qNM_jacknife[ibr][noff][mult]  -= CNM[ibr];
-             wqNM_jacknife[ibr][noff][mult] -= wCNM[ibr];
+             //LOG_S(INFO) << "Branch: " << ibr;
+             qNM_jacknife[ibr][noff][mult]  = qNM[ibr][noff][mult] - CNM[ibr];
+             wqNM_jacknife[ibr][noff][mult] = wqNM[ibr][noff][mult] - wCNM[ibr];
          }        
-
-         // Rebin
-         rebinning(qNM_jacknife, wqNM_jacknife, 
-                   cNM_jacknife, wcNM_jacknife, 
-                   cNMreb_jacknife, wcNMreb_jacknife, 
-                   nbins, binarray, true);
-
-         // Get index for rebinned histogram
-         int idx = -1;
-         for(int ibin = 0; ibin < nbins; ++ibin)
-         {
-             if(noff >= binarray[ibin] && noff < binarray[ibin+1]) idx = ibin;
-         }
-         if(idx < 0) 
-         {
-            LOG_S(ERROR) << "No valid index found for rebinned cumulant variance estimation";
-            return;
-         }
 
          // Get number of events in each Noff bins
          noffvar[noff]++;
-         noffrebvar[idx]++;
    
          // Variance
          for(int ibr = 0; ibr < static_cast<int>(qNM.size()); ibr++)
          {
              // Fill variance
              cNMvar[ibr][noff] += TMath::Power(cNM_jacknife[ibr][noff] - hcN[ibr]->GetBinContent(noff+1), 2);
-
-             // -- Filling variance for rebinned calcualtion
-             cNMrebvar[ibr][idx] += TMath::Power(cNMreb_jacknife[ibr][idx] - hcNreb[ibr]->GetBinContent(idx+1), 2);
 
              // Start fresh again for the next event
              qNM_jacknife[ibr][noff][mult]  += CNM[ibr];
@@ -496,18 +469,6 @@ namespace utils
             {
                //LOG_S(WARNING) << "No event in this bin noff = " << inoff << " error calculation will be crap";
                cNMvar[ibr][inoff] *= 0.;
-            }
-         }
-         for(int inoff = 0; inoff < cNMrebvar[ibr].size(); ++inoff)
-         {
-            if(noffrebvar[inoff] != 0)
-            {
-               cNMrebvar[ibr][inoff] *= static_cast<double>(noffrebvar[inoff] - 1.) / static_cast<double>(noffrebvar[inoff]);
-            }
-            else
-            {
-               //LOG_S(WARNING) << "No event in this bin noff = " << inoff << " error calculation will be crap";
-               cNMrebvar[ibr][inoff] *= 0.;
             }
          }
       }
@@ -542,15 +503,6 @@ namespace utils
       wcNM_jacknife.clear();
       std::vector< std::vector<double> >().swap(cNM_jacknife);
       std::vector< std::vector<double> >().swap(wcNM_jacknife);
-      for(int i = 0; i < cNMreb_jacknife.size(); ++i)
-      {
-         cNMreb_jacknife[i].clear();
-         wcNMreb_jacknife[i].clear();
-      }
-      cNMreb_jacknife.clear();
-      wcNMreb_jacknife.clear();
-      std::vector< std::vector<double> >().swap(cNMreb_jacknife);
-      std::vector< std::vector<double> >().swap(wcNMreb_jacknife);
 
       std::cout << std::endl;
    }
@@ -574,11 +526,11 @@ namespace utils
       std::vector< std::vector<double> > cNMvar( qNM.size(), std::vector<double> ( qNM[0].size(), 0.) );
       std::vector<int>                   noffvar( qNM[0].size(), 0 );
       std::vector< std::vector<double> > cNMrebvar( qNM.size(), std::vector<double> ( nbins, 0.) );
-      std::vector<int>                   noffrebvar( nbins, 0 );
 
-      // Loop for Jacknfe
+      // Loop for Jacknife
       LOG_S(INFO) << "Starting error estimation with Jacknife";
-      loopJacknife(fin, harm, qNM, wqNM, hcN, hcNreb, cNMvar, noffvar, cNMrebvar, noffrebvar, nbins, binarray, analyzedEvts);
+      loopJacknife(fin, harm, qNM, wqNM, hcN, cNMvar, noffvar, nbins, binarray, analyzedEvts);
+      LOG_S(INFO) << "End of error estimation with Jacknife";
 
       for(int ibr = 0; ibr < hcN.size(); ++ibr)
       {
@@ -598,8 +550,19 @@ namespace utils
                hvN[ibr]->SetBinError(ibin+1, 0.);
             }
          }
+
+         //error rebinning
          for(int ibin = 0; ibin < hcNreb[ibr]->GetNbinsX(); ++ibin)
          {
+            int jbin = 0;
+            while(hcN[ibr]->GetBinCenter(jbin+1) >= hcNreb[ibr]->GetBinLowEdge(ibin+1) &&  hcN[ibr]->GetBinCenter(jbin+1) >= hcNreb[ibr]->GetBinLowEdge(ibin+1))
+            {
+               cNMrebvar[ibr][ibin] += hcN[ibr]->GetBinError(jbin+1)*hcN[ibr]->GetBinError(jbin+1);
+               ++jbin;
+            }
+             
+            cNMrebvar[ibr][ibin] /= hcNreb[ibr]->GetBinWidth(ibin+1);
+
             if(cNMrebvar[ibr][ibin] > 0)
             { 
                hcNreb[ibr]->SetBinError(ibin+1, TMath::Sqrt(cNMrebvar[ibr][ibin]));
