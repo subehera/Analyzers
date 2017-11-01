@@ -664,7 +664,7 @@ namespace utils
          hcN[iord]->SetLineColor(iord+1);
          hcNreb[iord] = new TH1D(Form("hC%d%d_rebinned", harm, 2*iord+2), "", 
                                  nbins, tmp);
-         hcNreb[iord]->SetMarkerStyle(21);
+         hcNreb[iord]->SetMarkerStyle(24);
          hcNreb[iord]->SetMarkerColor(iord+1);
          hcNreb[iord]->SetLineColor(iord+1);
 
