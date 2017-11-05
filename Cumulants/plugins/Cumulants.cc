@@ -196,21 +196,21 @@ Cumulants::Cumulants(const edm::ParameterSet& iConfig) :
 void Cumulants::beginJob()
 {
    TFileDirectory fVtxHist  = fs->mkdir("Vertex");
-   hXBestVtx_   = fVtxHist.make<TH1F>("hXvtx", "", 800, -0.2, 0.2);
-   hYBestVtx_   = fVtxHist.make<TH1F>("hYvtx", "", 800, -0.2, 0.2);
-   hRhoBestVtx_ = fVtxHist.make<TH1F>("hRvtx", "", 800, -0.2, 0.2);
-   hZBestVtx_   = fVtxHist.make<TH1F>("hZvtx", "", 600, -30., 30.);
+   hXBestVtx_   = fVtxHist.make<TH1F>("hXvtx", "", 80, -0.2, 0.2);
+   hYBestVtx_   = fVtxHist.make<TH1F>("hYvtx", "", 80, -0.2, 0.2);
+   hRhoBestVtx_ = fVtxHist.make<TH1F>("hRvtx", "", 80, -0.2, 0.2);
+   hZBestVtx_   = fVtxHist.make<TH1F>("hZvtx", "", 60, -30., 30.);
    TFileDirectory fTrkHist  = fs->mkdir("Tracks");
-   hEtaTrk_ = fTrkHist.make<TH1F>("hEtatrk", "", 300, -3.,   3.);
-   hPtTrk_  = fTrkHist.make<TH1F>("hPttrk",  "", 100,  0.,  10.);
-   hPhiTrk_ = fTrkHist.make<TH1F>("hPhitrk", "", 640, -3.2,  3.2);
-   hEtaNoff_ = fTrkHist.make<TH1F>("hEtaNoff", "", 300, -3.,   3.);
-   hPtNoff_  = fTrkHist.make<TH1F>("hPtNoff",  "", 100,  0.,  10.);
-   hPhiNoff_ = fTrkHist.make<TH1F>("hPhiNoff", "", 640, -3.2,  3.2);
+   hEtaTrk_ = fTrkHist.make<TH1F>("hEtatrk", "", 30, -3.,   3.);
+   hPtTrk_  = fTrkHist.make<TH1F>("hPttrk",  "", 10,  0.,  10.);
+   hPhiTrk_ = fTrkHist.make<TH1F>("hPhitrk", "", 64, -3.2,  3.2);
+   hEtaNoff_ = fTrkHist.make<TH1F>("hEtaNoff", "", 30, -3.,   3.);
+   hPtNoff_  = fTrkHist.make<TH1F>("hPtNoff",  "", 10,  0.,  10.);
+   hPhiNoff_ = fTrkHist.make<TH1F>("hPhiNoff", "", 64, -3.2,  3.2);
    TFileDirectory fCTowHist = fs->mkdir("CaloTowers");
-   hEtaCTow_ = fCTowHist.make<TH1F>("hEtatow", "", 120, -6.,   6.);
-   hEtCTow_  = fCTowHist.make<TH1F>("hEttow",  "", 100,  0.,  10.);
-   hPhiCTow_ = fCTowHist.make<TH1F>("hPhitow", "", 640, -3.2,  3.2);
+   hEtaCTow_ = fCTowHist.make<TH1F>("hEtatow", "", 12, -6.,   6.);
+   hEtCTow_  = fCTowHist.make<TH1F>("hEttow",  "", 10,  0.,  10.);
+   hPhiCTow_ = fCTowHist.make<TH1F>("hPhitow", "", 64, -3.2,  3.2);
    // TTree
    trEvent_ = fs->make<TTree>("trEvent", "trEvent");
    trEvent_->Branch("centrality", &cent_, "centrality/I");
