@@ -51,8 +51,8 @@ namespace utils
       brnames.push_back(Form("C%d%d%d_34", harm1, harm1, 2));
       brnames.push_back(Form("C%d%d%d_18", harm1, harm0, 2));
       brnames.push_back(Form("C%d%d%d_33", harm0, harm1, 2));
-      brnames.push_back(Form("C%d%d%d", harm0, harm1, 4));
-      brnames.push_back(Form("C%d%d%d", harm0, harm1, 6));
+      brnames.push_back(Form("C%d%d%d_51", harm0, harm1, 4));
+      brnames.push_back(Form("C%d%d%d_119", harm0, harm1, 6));
       brnames.push_back(Form("C%d%d%d", harm0, harm1, 8));
 
       std::vector<TString> wbrnames;
@@ -60,8 +60,8 @@ namespace utils
       wbrnames.push_back(Form("wC%d%d%d_34", harm1, harm1, 2));
       wbrnames.push_back(Form("wC%d%d%d_18", harm1, harm0, 2));
       wbrnames.push_back(Form("wC%d%d%d_33", harm0, harm1, 2));
-      wbrnames.push_back(Form("wC%d%d%d", harm0, harm1, 4));
-      wbrnames.push_back(Form("wC%d%d%d", harm0, harm1, 6));
+      wbrnames.push_back(Form("wC%d%d%d_51", harm0, harm1, 4));
+      wbrnames.push_back(Form("wC%d%d%d_119", harm0, harm1, 6));
       wbrnames.push_back(Form("wC%d%d%d", harm0, harm1, 8));
 
       for(int ibr = 0; ibr < static_cast<int>(qNM.size()); ibr++)
@@ -446,8 +446,8 @@ namespace utils
       brnames.push_back(Form("C%d%d%d_34", harm1, harm1, 2));
       brnames.push_back(Form("C%d%d%d_18", harm1, harm0, 2));
       brnames.push_back(Form("C%d%d%d_33", harm0, harm1, 2));
-      brnames.push_back(Form("C%d%d%d", harm0, harm1, 4));
-      brnames.push_back(Form("C%d%d%d", harm0, harm1, 6));
+      brnames.push_back(Form("C%d%d%d_51", harm0, harm1, 4));
+      brnames.push_back(Form("C%d%d%d_119", harm0, harm1, 6));
       brnames.push_back(Form("C%d%d%d", harm0, harm1, 8));
 
       std::vector<TString> wbrnames;
@@ -455,8 +455,8 @@ namespace utils
       wbrnames.push_back(Form("wC%d%d%d_34", harm1, harm1, 2));
       wbrnames.push_back(Form("wC%d%d%d_18", harm1, harm0, 2));
       wbrnames.push_back(Form("wC%d%d%d_33", harm0, harm1, 2));
-      wbrnames.push_back(Form("wC%d%d%d", harm0, harm1, 4));
-      wbrnames.push_back(Form("wC%d%d%d", harm0, harm1, 6));
+      wbrnames.push_back(Form("wC%d%d%d_51", harm0, harm1, 4));
+      wbrnames.push_back(Form("wC%d%d%d_119", harm0, harm1, 6));
       wbrnames.push_back(Form("wC%d%d%d", harm0, harm1, 8));
 
       for(int ibr = 0; ibr < static_cast<int>(qNM.size()); ibr++)
@@ -753,8 +753,8 @@ namespace utils
       brnames.push_back(Form("hC%d%d%d_34", harm1, harm1, 2));
       brnames.push_back(Form("hC%d%d%d_18", harm1, harm0, 2));
       brnames.push_back(Form("hC%d%d%d_33", harm0, harm1, 2));
-      brnames.push_back(Form("hC%d%d%d", harm0, harm1, 4));
-      brnames.push_back(Form("hC%d%d%d", harm0, harm1, 6));
+      brnames.push_back(Form("hC%d%d%d_51", harm0, harm1, 4));
+      brnames.push_back(Form("hC%d%d%d_119", harm0, harm1, 6));
       brnames.push_back(Form("hC%d%d%d", harm0, harm1, 8));
 
       for(int iord = 0; iord < hcN.size(); ++iord)

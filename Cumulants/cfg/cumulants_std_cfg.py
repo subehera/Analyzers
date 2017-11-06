@@ -12,7 +12,7 @@ process.MessageLogger.cerr.FwkReport.reportEvery = 100
 # Configure the number of maximum event the analyser run on in interactive mode
 # -1 == ALL
 process.maxEvents = cms.untracked.PSet( 
-    input = cms.untracked.int32(2000) 
+    input = cms.untracked.int32(1000) 
 )
 
 process.Timing = cms.Service("Timing",
@@ -110,4 +110,3 @@ process.p4 = cms.Path(process.defaultTrigSel *            # Select MB events
                      process.olvFilter_pPb8TeV_dz1p0*    # PU filter
                      #process.pACentrality *              # Centrality
                      process.anaSC24)            # Run the analyzer
-

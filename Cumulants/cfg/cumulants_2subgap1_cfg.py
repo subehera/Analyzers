@@ -7,14 +7,18 @@ process = cms.Process("Cumulants")
 
 # Configure the logger
 process.load("FWCore.MessageService.MessageLogger_cfi")
-process.MessageLogger.cerr.FwkReport.reportEvery = 1
+process.MessageLogger.cerr.FwkReport.reportEvery = 100
 
 # Configure the number of maximum event the analyser run on in interactive mode
 # -1 == ALL
 process.maxEvents = cms.untracked.PSet( 
-    input = cms.untracked.int32(-1) 
+    input = cms.untracked.int32(1000) 
 )
 
+process.Timing = cms.Service("Timing",
+  summaryOnly = cms.untracked.bool(True),
+  useJobReport = cms.untracked.bool(False)
+)
 
 # __________________ I/O files _________________
 
@@ -28,7 +32,6 @@ process.source = cms.Source("PoolSource",
 # Define output file name
 import os
 process.TFileService = cms.Service("TFileService",
-#     fileName = cms.string(os.getenv('CMSSW_BASE') + '/src/Analyzers/Cumulants/test/cumulants.root')
      fileName = cms.string('cumulants.root')
 )
 
@@ -50,9 +53,6 @@ process.GlobalTag = GlobalTag(process.GlobalTag, '80X_dataRun2_Express_v15', '')
 #    )
 #)
 
-process.SimpleMemoryCheck = cms.Service("SimpleMemoryCheck",
-    ignoreTotal = cms.untracked.int32(1)
-)
 
 # __________________ Event selection _________________
 
@@ -78,7 +78,8 @@ process.load("Analyzers.Cumulants.cumulants_cff")
 process.anaV2 = process.sub2gap1Analysis.clone()
 process.anaV3 = process.sub2gap1V3Analysis.clone()
 process.anaV4 = process.sub2gap1V4Analysis.clone()
-
+process.anaSC23 = process.sub2gap1AnalysisSC23.clone()
+process.anaSC24 = process.sub2gap1AnalysisSC24.clone()
 
 process.p = cms.Path(process.defaultTrigSel *            # Select MB events
                      process.collisionEventSelectionPA * # PA event selection
@@ -97,3 +98,15 @@ process.p2 = cms.Path(process.defaultTrigSel *            # Select MB events
                      process.olvFilter_pPb8TeV_dz1p0*    # PU filter
                      #process.pACentrality *              # Centrality
                      process.anaV4)            # Run the analyzer
+
+process.p3 = cms.Path(process.defaultTrigSel *            # Select MB events
+                     process.collisionEventSelectionPA * # PA event selection
+                     process.olvFilter_pPb8TeV_dz1p0*    # PU filter
+                     #process.pACentrality *              # Centrality
+                     process.anaSC23)            # Run the analyzer
+
+process.p4 = cms.Path(process.defaultTrigSel *            # Select MB events
+                     process.collisionEventSelectionPA * # PA event selection
+                     process.olvFilter_pPb8TeV_dz1p0*    # PU filter
+                     #process.pACentrality *              # Centrality
+                     process.anaSC24)            # Run the analyzer

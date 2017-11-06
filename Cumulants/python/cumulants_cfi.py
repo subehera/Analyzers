@@ -37,8 +37,9 @@ defaultCumu = cms.EDAnalyzer('Cumulants', #Analyzer named: Correspond to the cla
                              pterrorpt = cms.untracked.double(0.1),
                              #Cumulant
                              harm     = cms.untracked.vint32(2,2,2,2),
+                             nsubevt     = cms.untracked.int32(2),
                              cweight  = cms.untracked.bool(True),
-                             deltaeta = cms.untracked.double(0.),
+                             #deltaeta = cms.untracked.double(0.),
                              #Acc X Eff
                              fname = cms.untracked.InputTag('Hijing_8TeV_dataBS.root'),
                              effmultbin = cms.untracked.vint32(0,10000)

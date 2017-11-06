@@ -12,7 +12,7 @@ process.MessageLogger.cerr.FwkReport.reportEvery = 100
 # Configure the number of maximum event the analyser run on in interactive mode
 # -1 == ALL
 process.maxEvents = cms.untracked.PSet( 
-    input = cms.untracked.int32(2000) 
+    input = cms.untracked.int32(1000) 
 )
 
 process.Timing = cms.Service("Timing",
@@ -75,11 +75,11 @@ process.load("TrackingCode.pileUpFilter.pileUpFilter_cff")
 
 # Load you analyzer with initial configuration
 process.load("Analyzers.Cumulants.cumulants_cff")
-process.anaV2 = process.defaultCumu.clone()
-process.anaV3 = process.defaultV3Analysis.clone()
-process.anaV4 = process.defaultV4Analysis.clone()
-process.anaSC23 = process.defaultAnalysisSC23.clone()
-process.anaSC24 = process.defaultAnalysisSC24.clone()
+process.anaV2 = process.sub2Analysis.clone()
+process.anaV3 = process.sub2V3Analysis.clone()
+process.anaV4 = process.sub2V4Analysis.clone()
+process.anaSC23 = process.sub2AnalysisSC23.clone()
+process.anaSC24 = process.sub2AnalysisSC24.clone()
 
 process.p = cms.Path(process.defaultTrigSel *            # Select MB events
                      process.collisionEventSelectionPA * # PA event selection
