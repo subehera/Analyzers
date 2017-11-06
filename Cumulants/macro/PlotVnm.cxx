@@ -43,9 +43,11 @@ main(int argc, char** argv) {
 	cmdline::parser parser;
 	parser.add<std::string>("output", '\0', "output file name and path", false, "../output/cnm_vnm.root");
 	parser.add<std::string>("input" , '\0', "input file name and path", false, "../test/cumulants.root");
+        parser.add<std::string>("folder" , '\0', "folder of tree", false, "anaV2");
 	parser.add<int>("noffmax"       , '\0', "maximum N_{trk}^offline", false, 500);
-	parser.add<int>("cumumaxorder"  , '\0', "maximum cumulant order", false, 8);
-	parser.add<int>("harmonicorder" , '\0', "harmonic order", false, 2);
+	parser.add<int>("cumumaxorder"  , '\0', "maximum cumulant order", false, 14);
+	parser.add<int>("harmonicorder0" , '\0', "harmonic order", false, 2);
+        parser.add<int>("harmonicorder1" , '\0', "harmonic order", false, 2);
 	parser.add<int>("nevents"       , '\0', "Number of events to be analyzed", false, -1);
 	parser.add("process"            , '\0', "process TTree");
 	parser.parse_check( argc, argv );
@@ -59,11 +61,13 @@ main(int argc, char** argv) {
         gStyle->SetOptStat(110);
         std::string inputFileName  = parser.get<std::string>( "input" );
         std::string outputFileName = parser.get<std::string>( "output" );
+        std::string folderName = parser.get<std::string>( "folder" );
 
         const int noffmax = parser.get<int>( "noffmax" );
         const int multmax = 2*noffmax;
         const int cumumaxorder  = parser.get<int>( "cumumaxorder" );
-        const int harmonicorder = parser.get<int>( "harmonicorder" );
+        const int harmonicorder0 = parser.get<int>( "harmonicorder0" );
+        const int harmonicorder1 = parser.get<int>( "harmonicorder1" );
         const int nevents = parser.get<int>( "nevents" );
 
         const int nbins = 30;
@@ -76,7 +80,7 @@ main(int argc, char** argv) {
         TFile* fin  = TFile::Open(inputFileName.c_str(), "READ");
         //output file
         TFile* fout = 0x0;
-        if(parser.exist( "process" ))
+//        if(parser.exist( "process" ))
         { 
            //Check that inputfile is found and properly open
            LOG_S(INFO) << "Trying to open file: " << inputFileName.c_str();
@@ -101,19 +105,20 @@ main(int argc, char** argv) {
            fout = TFile::Open(outputFileName.c_str(), "RECREATE");
 
            //process the tree
-           utils::process(fin, fout, 
+           utils::process(fin, fout, folderName, 
                           noffmax, multmax, 
-                          cumumaxorder, harmonicorder, 
+                          cumumaxorder, harmonicorder0, harmonicorder1, 
                           nbins, binarray,
                           nevents);
            
         }
+/*
         else
         {
            //if no process just update the output file
            fout = TFile::Open(outputFileName.c_str(), "UPDATE");
         }
-
+*/
         fin->Close();
         delete fin;
    

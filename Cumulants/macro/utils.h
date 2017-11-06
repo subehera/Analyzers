@@ -7,19 +7,15 @@ namespace utils
    // InitChain
    //___________________________________________________
    void 
-   initChain(TFile* fin, TChain* ch)
+   initChain(TFile* fin, TString folder, TChain* ch)
    {
-      const int nkey = fin->GetNkeys();
-      for(int ikey = 0; ikey < nkey; ++ikey)
-      {
-         TString keyName = fin->GetName();
-         keyName.Append("/");
-         keyName.Append(fin->GetListOfKeys()->At(ikey)->GetName());
-         keyName.Append("/trEvent");
+      TString keyName = fin->GetName();
+      keyName.Append("/");
+      keyName.Append(folder.Data());
+      keyName.Append("/trEvent");
    
-         LOG_S(INFO) << "TTree named " << keyName.Data() << " will be added to the TChain";
-         ch->Add(keyName.Data());
-      }
+      LOG_S(INFO) << "TTree named " << keyName.Data() << " will be added to the TChain";
+      ch->Add(keyName.Data());
    }
 
    //___________________________________________________
@@ -27,7 +23,7 @@ namespace utils
    // loop on TChain: correlator calculation
    //___________________________________________________
    void
-   loopOnChain(TChain* ch, int harm, 
+   loopOnChain(TChain* ch, int harm0, int harm1, 
                std::vector< std::vector< std::vector<double> > > &qNM,
                std::vector< std::vector< std::vector<double> > > &wqNM,
                int analyzedEvts)
@@ -50,18 +46,36 @@ namespace utils
          return;
       }
 
+      std::vector<TString> brnames;
+      brnames.push_back(Form("C%d%d%d_17", harm0, harm0, 2));
+      brnames.push_back(Form("C%d%d%d_34", harm1, harm1, 2));
+      brnames.push_back(Form("C%d%d%d_18", harm1, harm0, 2));
+      brnames.push_back(Form("C%d%d%d_33", harm0, harm1, 2));
+      brnames.push_back(Form("C%d%d%d_51", harm0, harm1, 4));
+      brnames.push_back(Form("C%d%d%d_119", harm0, harm1, 6));
+      brnames.push_back(Form("C%d%d%d", harm0, harm1, 8));
+
+      std::vector<TString> wbrnames;
+      wbrnames.push_back(Form("wC%d%d%d_17", harm0, harm0, 2));
+      wbrnames.push_back(Form("wC%d%d%d_34", harm1, harm1, 2));
+      wbrnames.push_back(Form("wC%d%d%d_18", harm1, harm0, 2));
+      wbrnames.push_back(Form("wC%d%d%d_33", harm0, harm1, 2));
+      wbrnames.push_back(Form("wC%d%d%d_51", harm0, harm1, 4));
+      wbrnames.push_back(Form("wC%d%d%d_119", harm0, harm1, 6));
+      wbrnames.push_back(Form("wC%d%d%d", harm0, harm1, 8));
+
       for(int ibr = 0; ibr < static_cast<int>(qNM.size()); ibr++)
       {
-         LOG_S(INFO) << "Trying to get branch " << Form("'C%d%d'", harm, 2*ibr+2);
-         if(!ch->SetBranchAddress(Form("C%d%d", harm, 2*ibr+2), &CNM[ibr]))
+         LOG_S(INFO) << "Trying to get branch " << brnames[ibr].Data(); 
+         if(!ch->SetBranchAddress(brnames[ibr], &CNM[ibr]))
          {
-            LOG_S(ERROR) << "Branch '" << Form("C%d%d", harm, 2*ibr+2) << "' does not exist!!! Code stopped";
+            LOG_S(ERROR) << "Branch '" << brnames[ibr] << "' does not exist!!! Code stopped";
             return;
          }
-         LOG_S(INFO) << "Trying to get branch " << Form("wC%d%d", harm, 2*ibr+2);
-         if(!ch->SetBranchAddress(Form("wC%d%d", harm, 2*ibr+2), &wCNM[ibr]))
+         LOG_S(INFO) << "Trying to get branch " << wbrnames[ibr].Data();
+         if(!ch->SetBranchAddress(wbrnames[ibr], &wCNM[ibr]))
          {
-            LOG_S(ERROR) << "Branch '" << Form("wC%d%d", harm, 2*ibr+2) << "' does not exist!!! Code stopped";
+            LOG_S(ERROR) << "Branch '" << wbrnames[ibr].Data() << "' does not exist!!! Code stopped";
             return;
          }
       }
@@ -69,6 +83,13 @@ namespace utils
       // Get N entries
       int nentries = ch->GetEntries();
       LOG_S(INFO) << "Number of events available in the tree is: " << nentries;
+
+      if(nentries == 0)
+      {
+         LOG_S(ERROR) << "No entries in this TTree! Are you kidding ME?";
+         LOG_S(ERROR) << "Please check you are using the right FOLDER that contains the TTree you want to look at!!!";
+         return;
+      }
 
       int ievt = 0;
       if(analyzedEvts <= 0) analyzedEvts = nentries;
@@ -134,55 +155,91 @@ namespace utils
          case 0:
             if( wqNM[order][inoff][iref] != 0. )
             {
-               cNM[order][inoff]  += ( qNM[order][inoff][iref] / wqNM[order][inoff][iref] ) // <<2>> 
+               cNM[order][inoff]  += ( qNM[order][inoff][iref] / wqNM[order][inoff][iref] ) // <<2>>_17 
                                       *wqNM[order][inoff][iref];
                wcNM[order][inoff] += wqNM[order][inoff][iref];
             }
             break;
          case 1:
-            if( wqNM[order][inoff][iref]   != 0. && 
-                wqNM[order-1][inoff][iref] != 0. )
+            if( wqNM[order][inoff][iref] != 0. )
             {
-               cNM[order][inoff]  += ( qNM[order][inoff][iref]   / wqNM[order][inoff][iref] -   //   <<4>>
-                                     2*qNM[order-1][inoff][iref] / wqNM[order-1][inoff][iref]   //-2*<<2>>^{2}
-                                      *qNM[order-1][inoff][iref] / wqNM[order-1][inoff][iref] ) 
+               cNM[order][inoff]  += ( qNM[order][inoff][iref] / wqNM[order][inoff][iref] ) // <<2>>_34 
                                       *wqNM[order][inoff][iref];
                wcNM[order][inoff] += wqNM[order][inoff][iref];
             }
             break;
          case 2:
-            if( wqNM[order][inoff][iref]   != 0. && 
-                wqNM[order-1][inoff][iref] != 0. &&
-                wqNM[order-2][inoff][iref] != 0. )
+            if( wqNM[order][inoff][iref] != 0. )
             {
-               cNM[order][inoff]  += ( qNM[order][inoff][iref]   / wqNM[order][inoff][iref]   - //    <<6>>
-                                     9*qNM[order-1][inoff][iref] / wqNM[order-1][inoff][iref]   //- 9*<<4>><<2>>
-                                      *qNM[order-2][inoff][iref] / wqNM[order-2][inoff][iref] + //
-                                    12*qNM[order-2][inoff][iref] / wqNM[order-2][inoff][iref]   //+12*<<2>>^{3}
-                                      *qNM[order-2][inoff][iref] / wqNM[order-2][inoff][iref]
-                                      *qNM[order-2][inoff][iref] / wqNM[order-2][inoff][iref] ) 
+               cNM[order][inoff]  += ( qNM[order][inoff][iref] / wqNM[order][inoff][iref] ) // <<2>>_18 
                                       *wqNM[order][inoff][iref];
                wcNM[order][inoff] += wqNM[order][inoff][iref];
             }
             break;
          case 3:
+            if( wqNM[order][inoff][iref] != 0. )
+            {
+               cNM[order][inoff]  += ( qNM[order][inoff][iref] / wqNM[order][inoff][iref] ) // <<2>>_33 
+                                      *wqNM[order][inoff][iref];
+               wcNM[order][inoff] += wqNM[order][inoff][iref];
+            }
+            break;
+         case 4:
+            if( wqNM[order][inoff][iref] != 0. &&
+                wqNM[order-3][inoff][iref] != 0. &&
+                wqNM[order-4][inoff][iref] != 0. &&
+                wqNM[order-2][inoff][iref] != 0. &&
+                wqNM[order-1][inoff][iref] != 0. )
+            {
+               cNM[order][inoff]  += ( qNM[order][inoff][iref]   / wqNM[order][inoff][iref] -   //   <<4>>
+                                       qNM[order-4][inoff][iref] / wqNM[order-4][inoff][iref]
+                                      *qNM[order-3][inoff][iref] / wqNM[order-3][inoff][iref] -
+                                       qNM[order-1][inoff][iref] / wqNM[order-1][inoff][iref]
+                                      *qNM[order-2][inoff][iref] / wqNM[order-2][inoff][iref] )
+                                      *wqNM[order][inoff][iref];
+               wcNM[order][inoff] += wqNM[order][inoff][iref];
+            }
+//            {
+//               cNM[order][inoff]  += ( qNM[order][inoff][iref]   / wqNM[order][inoff][iref] -   //   <<4>>
+//                                     2*qNM[order-4][inoff][iref] / wqNM[order-4][inoff][iref]   //-2*<<2>>^{2}
+//                                      *qNM[order-3][inoff][iref] / wqNM[order-3][inoff][iref] ) 
+//                                      *wqNM[order][inoff][iref];
+//               wcNM[order][inoff] += wqNM[order][inoff][iref];
+//            }
+            break;
+         case 5:
+            if( wqNM[order][inoff][iref]   != 0. && 
+                wqNM[order-1][inoff][iref] != 0. &&
+                wqNM[order-5][inoff][iref] != 0. )
+            {
+               cNM[order][inoff]  += ( qNM[order][inoff][iref]   / wqNM[order][inoff][iref]   - //    <<6>>
+                                     9*qNM[order-1][inoff][iref] / wqNM[order-1][inoff][iref]   //- 9*<<4>><<2>>
+                                      *qNM[order-5][inoff][iref] / wqNM[order-5][inoff][iref] + //
+                                    12*qNM[order-5][inoff][iref] / wqNM[order-5][inoff][iref]   //+12*<<2>>^{3}
+                                      *qNM[order-5][inoff][iref] / wqNM[order-5][inoff][iref]
+                                      *qNM[order-5][inoff][iref] / wqNM[order-5][inoff][iref] ) 
+                                      *wqNM[order][inoff][iref];
+               wcNM[order][inoff] += wqNM[order][inoff][iref];
+            }
+            break;
+         case 6:
             if( wqNM[order][inoff][iref]   != 0. && 
                 wqNM[order-1][inoff][iref] != 0. &&
                 wqNM[order-2][inoff][iref] != 0. &&
-                wqNM[order-3][inoff][iref] != 0. )
+                wqNM[order-6][inoff][iref] != 0. )
             {
                cNM[order][inoff]  += ( qNM[order][inoff][iref]   / wqNM[order][inoff][iref]   - //     <<8>>
                                     16*qNM[order-1][inoff][iref] / wqNM[order-1][inoff][iref]   //- 16*<<6>><<2>>
-                                      *qNM[order-3][inoff][iref] / wqNM[order-3][inoff][iref] - //
+                                      *qNM[order-6][inoff][iref] / wqNM[order-6][inoff][iref] - //
                                     18*qNM[order-2][inoff][iref] / wqNM[order-2][inoff][iref]   //- 18*<<4>>^{2}
                                       *qNM[order-2][inoff][iref] / wqNM[order-2][inoff][iref] + //
                                    144*qNM[order-2][inoff][iref] / wqNM[order-2][inoff][iref]   //+144*<<4>><<2>>^{2}
-                                      *qNM[order-3][inoff][iref] / wqNM[order-3][inoff][iref]   //
-                                      *qNM[order-3][inoff][iref] / wqNM[order-3][inoff][iref] - //-144*<<2>>^{4}
-                                   144*qNM[order-3][inoff][iref] / wqNM[order-3][inoff][iref]
-                                      *qNM[order-3][inoff][iref] / wqNM[order-3][inoff][iref]
-                                      *qNM[order-3][inoff][iref] / wqNM[order-3][inoff][iref]
-                                      *qNM[order-3][inoff][iref] / wqNM[order-3][inoff][iref] )
+                                      *qNM[order-6][inoff][iref] / wqNM[order-6][inoff][iref]   //
+                                      *qNM[order-6][inoff][iref] / wqNM[order-6][inoff][iref] - //-144*<<2>>^{4}
+                                   144*qNM[order-6][inoff][iref] / wqNM[order-6][inoff][iref]
+                                      *qNM[order-6][inoff][iref] / wqNM[order-6][inoff][iref]
+                                      *qNM[order-6][inoff][iref] / wqNM[order-6][inoff][iref]
+                                      *qNM[order-6][inoff][iref] / wqNM[order-6][inoff][iref] )
                                       *wqNM[order][inoff][iref];
                wcNM[order][inoff] += wqNM[order][inoff][iref];
             }
@@ -207,12 +264,21 @@ namespace utils
             val = TMath::Sqrt(cval);
             break;
          case 1:
-            val = TMath::Power(-1*cval, 1./4.);
+            val = TMath::Sqrt(cval);
             break;
          case 2:
-            val = TMath::Power(cval/4., 1./6.);
+            val = TMath::Sqrt(cval);
             break;
          case 3:
+            val = TMath::Sqrt(cval);
+            break;
+         case 4:
+            val = TMath::Power(-1*cval, 1./4.);
+            break;
+         case 5:
+            val = TMath::Power(cval/4., 1./6.);
+            break;
+         case 6:
             val = TMath::Power(-1*cval/33., 1./8.);
             break;
          default:
@@ -236,12 +302,21 @@ namespace utils
             val = 1./2. * 1./TMath::Sqrt(cval) * cvalerr * vval;
             break;
          case 1:
-            val = 1./4. * 1./TMath::Power(cval, 3./4.) * cvalerr * vval;
+            val = 1./2. * 1./TMath::Sqrt(cval) * cvalerr * vval;
             break;
          case 2:
-            val = 1./6. * 1./TMath::Power(cval*cval*cval*cval*cval/4., 1./6.) * cvalerr * vval;
+            val = 1./2. * 1./TMath::Sqrt(cval) * cvalerr * vval;
             break;
          case 3:
+            val = 1./2. * 1./TMath::Sqrt(cval) * cvalerr * vval;
+            break;
+         case 4:
+            val = 1./4. * 1./TMath::Power(cval, 3./4.) * cvalerr * vval;
+            break;
+         case 5:
+            val = 1./6. * 1./TMath::Power(cval*cval*cval*cval*cval/4., 1./6.) * cvalerr * vval;
+            break;
+         case 6:
             val = 1./8. * 1./TMath::Power(cval*cval*cval*cval*cval*cval*cval/33., 1./8.) * cvalerr * vval;
             break;
          default:
@@ -343,15 +418,12 @@ namespace utils
    // loop on TChain: Jacknife
    //___________________________________________________
    void
-   loopJacknife(TFile* fin, int harm, 
+   loopJacknife(TFile* fin, TString folder, int harm0, int harm1, 
                 const std::vector< std::vector< std::vector<double> > > &qNM,
                 const std::vector< std::vector< std::vector<double> > > &wqNM,
                 const std::vector<TH1D*> &hcN, 
-                const std::vector<TH1D*> &hcNreb, 
                 std::vector< std::vector<double> > &cNMvar,
                 std::vector<int> &noffvar,
-                std::vector< std::vector<double> > &cNMrebvar,
-                std::vector<int> &noffrebvar,
                 int nbins, int binarray[], 
                 int analyzedEvts)
    {
@@ -362,17 +434,32 @@ namespace utils
       std::vector< std::vector< std::vector<double> > > wqNM_jacknife( wqNM.size(), std::vector< std::vector<double> >(wqNM[0].size(), std::vector<double>(wqNM[0][0].size(), 0.) ) );
       std::vector< std::vector<double> > cNM_jacknife( qNM.size(), std::vector<double>( qNM[0].size(), 0.) );
       std::vector< std::vector<double> > wcNM_jacknife( wqNM.size(), std::vector<double>( wqNM[0].size(), 0.) );
-      std::vector< std::vector<double> > cNMreb_jacknife( qNM.size(), std::vector<double>( nbins, 0.) );
-      std::vector< std::vector<double> > wcNMreb_jacknife( wqNM.size(), std::vector<double>( nbins, 0.) );
 
       //init Tree
       TChain* ch = new TChain();
-      initChain(fin, ch);
+      initChain(fin, folder, ch);
       ch->Print();
 
       // Init branches
-      LOG_S(INFO) << "Trying to get branch 'Noff'";
-      if(!ch->SetBranchAddress("Noff", &noff))
+      std::vector<TString> brnames;
+      brnames.push_back(Form("C%d%d%d_17", harm0, harm0, 2));
+      brnames.push_back(Form("C%d%d%d_34", harm1, harm1, 2));
+      brnames.push_back(Form("C%d%d%d_18", harm1, harm0, 2));
+      brnames.push_back(Form("C%d%d%d_33", harm0, harm1, 2));
+      brnames.push_back(Form("C%d%d%d_51", harm0, harm1, 4));
+      brnames.push_back(Form("C%d%d%d_119", harm0, harm1, 6));
+      brnames.push_back(Form("C%d%d%d", harm0, harm1, 8));
+
+      std::vector<TString> wbrnames;
+      wbrnames.push_back(Form("wC%d%d%d_17", harm0, harm0, 2));
+      wbrnames.push_back(Form("wC%d%d%d_34", harm1, harm1, 2));
+      wbrnames.push_back(Form("wC%d%d%d_18", harm1, harm0, 2));
+      wbrnames.push_back(Form("wC%d%d%d_33", harm0, harm1, 2));
+      wbrnames.push_back(Form("wC%d%d%d_51", harm0, harm1, 4));
+      wbrnames.push_back(Form("wC%d%d%d_119", harm0, harm1, 6));
+      wbrnames.push_back(Form("wC%d%d%d", harm0, harm1, 8));
+
+      for(int ibr = 0; ibr < static_cast<int>(qNM.size()); ibr++)
       {
          LOG_S(ERROR) << "Branch 'Noff' does not exist!!! Code stopped";
          return;
@@ -386,16 +473,16 @@ namespace utils
 
       for(int ibr = 0; ibr < static_cast<int>(qNM.size()); ibr++)
       {
-         LOG_S(INFO) << "Trying to get branch " << Form("'C%d%d'", harm, 2*ibr+2);
-         if(!ch->SetBranchAddress(Form("C%d%d", harm, 2*ibr+2), &CNM[ibr]))
+         LOG_S(INFO) << "Trying to get branch " << brnames[ibr].Data();
+         if(!ch->SetBranchAddress(brnames[ibr], &CNM[ibr]))
          {
-            LOG_S(ERROR) << "Branch '" << Form("C%d%d", harm, 2*ibr+2) << "' does not exist!!! Code stopped";
+            LOG_S(ERROR) << "Branch '" << brnames[ibr].Data() << "' does not exist!!! Code stopped";
             return;
          }
-         LOG_S(INFO) << "Trying to get branch " << Form("wC%d%d", harm, 2*ibr+2);
-         if(!ch->SetBranchAddress(Form("wC%d%d", harm, 2*ibr+2), &wCNM[ibr]))
+         LOG_S(INFO) << "Trying to get branch " << wbrnames[ibr].Data();
+         if(!ch->SetBranchAddress(wbrnames[ibr], &wCNM[ibr]))
          {
-            LOG_S(ERROR) << "Branch '" << Form("wC%d%d", harm, 2*ibr+2) << "' does not exist!!! Code stopped";
+            LOG_S(ERROR) << "Branch '" << wbrnames[ibr].Data() << "' does not exist!!! Code stopped";
             return;
          }
       }
@@ -441,36 +528,14 @@ namespace utils
              wqNM_jacknife[ibr][noff][mult] = wqNM[ibr][noff][mult] - wCNM[ibr];
          }        
 
-      //   //// Rebin
-      //   rebinning(qNM_jacknife, wqNM_jacknife, 
-      //             cNM_jacknife, wcNM_jacknife, 
-      //             cNMreb_jacknife, wcNMreb_jacknife, 
-      //             nbins, binarray, true);
-
-         //// Get index for rebinned histogram
-         int idx = -1;
-         for(int ibin = 0; ibin < nbins; ++ibin)
-         {
-             if(noff >= binarray[ibin] && noff < binarray[ibin+1]) idx = ibin;
-         }
-         if(idx < 0) 
-         {
-            LOG_S(ERROR) << "No valid index found for rebinned cumulant variance estimation";
-            return;
-         }
-
          // Get number of events in each Noff bins
          noffvar[noff]++;
-         noffrebvar[idx]++;
    
          // Variance
          for(int ibr = 0; ibr < static_cast<int>(qNM.size()); ibr++)
          {
              // Fill variance
              cNMvar[ibr][noff] += TMath::Power(cNM_jacknife[ibr][noff] - hcN[ibr]->GetBinContent(noff+1), 2);
-
-             // -- Filling variance for rebinned calcualtion
-             cNMrebvar[ibr][idx] += TMath::Power(cNMreb_jacknife[ibr][idx] - hcNreb[ibr]->GetBinContent(idx+1), 2);
 
              // Start fresh again for the next event
              qNM_jacknife[ibr][noff][mult]  += CNM[ibr];
@@ -496,18 +561,6 @@ namespace utils
             {
                //LOG_S(WARNING) << "No event in this bin noff = " << inoff << " error calculation will be crap";
                cNMvar[ibr][inoff] *= 0.;
-            }
-         }
-         for(int inoff = 0; inoff < cNMrebvar[ibr].size(); ++inoff)
-         {
-            if(noffrebvar[inoff] != 0)
-            {
-               cNMrebvar[ibr][inoff] *= static_cast<double>(noffrebvar[inoff] - 1.) / static_cast<double>(noffrebvar[inoff]);
-            }
-            else
-            {
-               //LOG_S(WARNING) << "No event in this bin noff = " << inoff << " error calculation will be crap";
-               cNMrebvar[ibr][inoff] *= 0.;
             }
          }
       }
@@ -542,15 +595,6 @@ namespace utils
       wcNM_jacknife.clear();
       std::vector< std::vector<double> >().swap(cNM_jacknife);
       std::vector< std::vector<double> >().swap(wcNM_jacknife);
-      for(int i = 0; i < cNMreb_jacknife.size(); ++i)
-      {
-         cNMreb_jacknife[i].clear();
-         wcNMreb_jacknife[i].clear();
-      }
-      cNMreb_jacknife.clear();
-      wcNMreb_jacknife.clear();
-      std::vector< std::vector<double> >().swap(cNMreb_jacknife);
-      std::vector< std::vector<double> >().swap(wcNMreb_jacknife);
 
       std::cout << std::endl;
    }
@@ -561,7 +605,7 @@ namespace utils
    // jacknife
    //___________________________________________________
    void
-   Jacknife(TFile* fin, int harm, 
+   Jacknife(TFile* fin, TString folder, int harm0, int harm1, 
             const std::vector < std::vector< std::vector<double> > > &qNM, 
             const std::vector < std::vector< std::vector<double> > > &wqNM, 
             std::vector<TH1D*> hcN, 
@@ -574,11 +618,10 @@ namespace utils
       std::vector< std::vector<double> > cNMvar( qNM.size(), std::vector<double> ( qNM[0].size(), 0.) );
       std::vector<int>                   noffvar( qNM[0].size(), 0 );
       std::vector< std::vector<double> > cNMrebvar( qNM.size(), std::vector<double> ( nbins, 0.) );
-      std::vector<int>                   noffrebvar( nbins, 0 );
 
-      // Loop for Jacknfe
+      // Loop for Jacknife
       LOG_S(INFO) << "Starting error estimation with Jacknife";
-      loopJacknife(fin, harm, qNM, wqNM, hcN, hcNreb, cNMvar, noffvar, cNMrebvar, noffrebvar, nbins, binarray, analyzedEvts);
+      loopJacknife(fin, folder, harm0, harm1, qNM, wqNM, hcN, cNMvar, noffvar, nbins, binarray, analyzedEvts);
       LOG_S(INFO) << "End of error estimation with Jacknife";
 
       for(int ibr = 0; ibr < hcN.size(); ++ibr)
@@ -595,12 +638,25 @@ namespace utils
             }
             else
             {
-               hcN[ibr]->SetBinError(ibin+1, 0.);
-               hvN[ibr]->SetBinError(ibin+1, 0.);
+               hcN[ibr]->SetBinError(ibin+1, 0.*hcN[ibr]->GetBinContent(ibin+1));
+               hvN[ibr]->SetBinError(ibin+1, 0.*hvN[ibr]->GetBinContent(ibin+1));
             }
          }
+
+         //error rebinning
          for(int ibin = 0; ibin < hcNreb[ibr]->GetNbinsX(); ++ibin)
          {
+            double minbin = hcNreb[ibr]->GetBinLowEdge(ibin+1);
+            double maxbin = hcNreb[ibr]->GetBinLowEdge(ibin+1) + hcNreb[ibr]->GetBinWidth(ibin+1);
+            int jbin = hcNreb[ibr]->GetBinLowEdge(ibin+1);
+            while(hcN[ibr]->GetBinLowEdge(jbin+1) >= minbin &&  hcN[ibr]->GetBinLowEdge(jbin+1) < maxbin)
+            {
+               cNMrebvar[ibr][ibin] += hcN[ibr]->GetBinError(jbin+1) * hcN[ibr]->GetBinError(jbin+1);
+               ++jbin;
+            }
+             
+            cNMrebvar[ibr][ibin] /= hcNreb[ibr]->GetBinWidth(ibin+1);
+
             if(cNMrebvar[ibr][ibin] > 0)
             { 
                hcNreb[ibr]->SetBinError(ibin+1, TMath::Sqrt(cNMrebvar[ibr][ibin]));
@@ -611,8 +667,8 @@ namespace utils
             }
             else
             {
-               hcNreb[ibr]->SetBinError(ibin+1, 0.);
-               hvNreb[ibr]->SetBinError(ibin+1, 0.);
+               hcNreb[ibr]->SetBinError(ibin+1, 0.*hcNreb[ibr]->GetBinContent(ibin+1));
+               hvNreb[ibr]->SetBinError(ibin+1, 0.*hvNreb[ibr]->GetBinContent(ibin+1));
             }
          }
       }
@@ -625,14 +681,15 @@ namespace utils
    //___________________________________________________
    void 
    process(TFile* fin,       TFile* fout, 
+           TString folder,
            int noffmax,      int multmax, 
-           int cumumaxorder, int harm, 
+           int cumumaxorder, int harm0, int harm1, 
            int nbins,        int binarray[], 
            int analyzedEvts) 
    {
       //init Tree
       TChain* ch = new TChain();
-      initChain(fin, ch);
+      initChain(fin, folder, ch);
 
       LOG_S(INFO) << "Number of trees in the TChain: " << ch->GetNtrees();
       LOG_S(INFO) << "Maximum cumulant order to be computed: " << cumumaxorder;
@@ -664,7 +721,7 @@ namespace utils
 
       //Loop on chain an fill stuff!!!
       LOG_S(INFO) << "Looping on TChain...";
-      loopOnChain(ch, harm, qNM, wqNM, analyzedEvts);
+      loopOnChain(ch, harm0, harm1, qNM, wqNM, analyzedEvts);
 
       //Rebinning
       LOG_S(INFO) << "Rebinning cumulants...";
@@ -691,15 +748,31 @@ namespace utils
          tmp[i] = (double) binarray[i];
       }
       // ---- Allocate memory for histograms
+      std::vector<TString> brnames;
+      brnames.push_back(Form("hC%d%d%d_17", harm0, harm0, 2));
+      brnames.push_back(Form("hC%d%d%d_34", harm1, harm1, 2));
+      brnames.push_back(Form("hC%d%d%d_18", harm1, harm0, 2));
+      brnames.push_back(Form("hC%d%d%d_33", harm0, harm1, 2));
+      brnames.push_back(Form("hC%d%d%d_51", harm0, harm1, 4));
+      brnames.push_back(Form("hC%d%d%d_119", harm0, harm1, 6));
+      brnames.push_back(Form("hC%d%d%d", harm0, harm1, 8));
+
       for(int iord = 0; iord < hcN.size(); ++iord)
       {
-         hcN[iord]    = new TH1D(Form("hC%d%d",          harm, 2*iord+2), "", 
+         hcN[iord]    = new TH1D(brnames[iord], "", 
                                  noffmax, 0., noffmax);
-         hcNreb[iord] = new TH1D(Form("hC%d%d_rebinned", harm, 2*iord+2), "", 
-                                 nbins, tmp);
+         hcN[iord]->SetMarkerStyle(20);
+         hcN[iord]->SetMarkerColor(iord+1);
+         hcN[iord]->SetLineColor(iord+1);
 
-         hvN[iord]    = dynamic_cast<TH1D*>(hcN[iord]->Clone()); 
-         hvNreb[iord] = dynamic_cast<TH1D*>(hcNreb[iord]->Clone());
+         hcNreb[iord] = new TH1D(Form("%s_rebinned", brnames[iord].Data()), "", 
+                                 nbins, tmp);
+         hcNreb[iord]->SetMarkerStyle(24);
+         hcNreb[iord]->SetMarkerColor(iord+1);
+         hcNreb[iord]->SetLineColor(iord+1);
+
+         hvN[iord]    = dynamic_cast<TH1D*>(hcN[iord]->Clone(Form("hV%d%d%d", harm0, harm1, 2*iord+2))); 
+         hvNreb[iord] = dynamic_cast<TH1D*>(hcNreb[iord]->Clone(Form("hV%d%d%d_rebinned", harm0, harm1, 2*iord+2)));
       }
       delete[] tmp;
 
@@ -711,14 +784,16 @@ namespace utils
       fillHistograms(cNM, cNMreb, hcN, hcNreb, hvN, hvNreb);
 
       //Jacknife it to get errors
-      Jacknife(fin, harm, qNM, wqNM, hcN, hcNreb, hvN, hvNreb, nbins, binarray, analyzedEvts);
+      //Jacknife(fin, harm0, harm1, qNM, wqNM, hcN, hcNreb, hvN, hvNreb, nbins, binarray, analyzedEvts);
 
       //Write histo
       fout->cd();
       for(int iord = 0; iord < cNM.size(); ++iord)
       {
-         hcN[iord]  ->Write();
+         hcN[iord]   ->Write();
          hcNreb[iord]->Write();
+         //hvN[iord]   ->Write();
+         //hvNreb[iord]->Write();
       }
 
       // Free memory from huge vectors

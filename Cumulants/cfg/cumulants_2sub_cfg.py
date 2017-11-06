@@ -6,14 +6,16 @@ process = cms.Process("Cumulants")
 # __________________ General _________________
 
 # Configure the logger
+process.load('Configuration.StandardSequences.Services_cff')
 process.load("FWCore.MessageService.MessageLogger_cfi")
 process.MessageLogger.cerr.FwkReport.reportEvery = 100
 
 # Configure the number of maximum event the analyser run on in interactive mode
 # -1 == ALL
 process.maxEvents = cms.untracked.PSet( 
-    input = cms.untracked.int32(300) 
+    input = cms.untracked.int32(1000) 
 )
+process.options = cms.untracked.PSet(wantSummary = cms.untracked.bool(True))
 
 process.Timing = cms.Service("Timing",
   summaryOnly = cms.untracked.bool(True),
@@ -25,7 +27,7 @@ process.Timing = cms.Service("Timing",
 # Define the input file to run on in interactive mode
 process.source = cms.Source("PoolSource",
     fileNames = cms.untracked.vstring(
-        'root://cms-xrd-global.cern.ch//store/hidata/PARun2016C/PAHighMultiplicity0/AOD/PromptReco-v1/000/285/479/00000/3AB7179C-DCAE-E611-980E-FA163EC8DDF7.root'
+        'root://cms-xrd-global.cern.ch//store/data/Run2015E/MinimumBias1/AOD/PromptReco-v1/000/262/157/00000/4EEE7A2C-9991-E511-B8AA-02163E011EF7.root'
     )
 )
 
@@ -42,7 +44,7 @@ process.TFileService = cms.Service("TFileService",
 # Global tag contains information about detector geometry, calibration, alignement, ...
 process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
 from Configuration.AlCa.GlobalTag import GlobalTag
-process.GlobalTag = GlobalTag(process.GlobalTag, '80X_dataRun2_Express_v15', '')
+process.GlobalTag = GlobalTag(process.GlobalTag, '75X_dataRun2_Prompt_ppAt5TeV_v1', '')
 # Getting calib from GT
 #process.GlobalTag.toGet = cms.VPSet(
 #  cms.PSet(
@@ -57,8 +59,8 @@ process.GlobalTag = GlobalTag(process.GlobalTag, '80X_dataRun2_Express_v15', '')
 # __________________ Event selection _________________
 
 # Define the trigger selection
-from Analyzers.Cumulants.hltFilter_cff import *
-process.defaultTrigSel = hltMB.clone()
+process.load('Analyzers.Cumulants.hltFilter_cff')
+process.defaultTrigSel = process.hltMB.clone()
 
 # Load HI event selection modules
 process.load('HeavyIonsAnalysis.Configuration.collisionEventSelection_cff')
@@ -68,8 +70,8 @@ process.load('Configuration.EventContent.EventContentHeavyIons_cff')
 #process.load("RecoHI.HiCentralityAlgos.pACentrality_cfi")
 
 #Pileup filter
-process.load("TrackingCode.pileUpFilter.pileUpFilter_cff")
-
+from Analyzers.Cumulants.PPPileUpVertexFilter_cff import *
+process.PUFilter = pileupVertexFilterCut_dz10_GplusPP
 
 # __________________ Analyzer _________________
 
@@ -81,32 +83,32 @@ process.anaV4 = process.sub2V4Analysis.clone()
 process.anaSC23 = process.sub2AnalysisSC23.clone()
 process.anaSC24 = process.sub2AnalysisSC24.clone()
 
-process.p = cms.Path(process.defaultTrigSel *            # Select MB events
-                     process.collisionEventSelectionPA * # PA event selection
-                     process.olvFilter_pPb8TeV_dz1p0*    # PU filter
-                     #process.pACentrality *              # Centrality
+process.p = cms.Path(
+                     #process.defaultTrigSel *            # Select MB events
+                     process.collisionEventSelectionPP * # PP event selection
+                     process.PUFilter *    # PU filter
                      process.anaV2)            # Run the analyzer
 
-process.p1 = cms.Path(process.defaultTrigSel *            # Select MB events
-                     process.collisionEventSelectionPA * # PA event selection
-                     process.olvFilter_pPb8TeV_dz1p0*    # PU filter
-                     #process.pACentrality *              # Centrality
+process.p1 = cms.Path(
+                     #process.defaultTrigSel *            # Select MB events
+                     process.collisionEventSelectionPP * # PP event selection
+                     process.PUFilter *    # PU filter
                      process.anaV3)            # Run the analyzer
 
-process.p2 = cms.Path(process.defaultTrigSel *            # Select MB events
-                     process.collisionEventSelectionPA * # PA event selection
-                     process.olvFilter_pPb8TeV_dz1p0*    # PU filter
-                     #process.pACentrality *              # Centrality
+process.p2 = cms.Path(
+                     #process.defaultTrigSel *            # Select MB events
+                     process.collisionEventSelectionPP * # PP event selection
+                     process.PUFilter *    # PU filter
                      process.anaV4)            # Run the analyzer
 
-process.p3 = cms.Path(process.defaultTrigSel *            # Select MB events
-                     process.collisionEventSelectionPA * # PA event selection
-                     process.olvFilter_pPb8TeV_dz1p0*    # PU filter
-                     #process.pACentrality *              # Centrality
+process.p3 = cms.Path(
+                     #process.defaultTrigSel *            # Select MB events
+                     process.collisionEventSelectionPP * # PP event selection
+                     process.PUFilter *    # PU filter
                      process.anaSC23)            # Run the analyzer
 
-process.p4 = cms.Path(process.defaultTrigSel *            # Select MB events
-                     process.collisionEventSelectionPA * # PA event selection
-                     process.olvFilter_pPb8TeV_dz1p0*    # PU filter
-                     #process.pACentrality *              # Centrality
+process.p4 = cms.Path(
+                     #process.defaultTrigSel *            # Select MB events
+                     process.collisionEventSelectionPP * # PP event selection
+                     process.PUFilter *    # PU filter
                      process.anaSC24)            # Run the analyzer

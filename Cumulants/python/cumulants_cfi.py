@@ -5,8 +5,6 @@ defaultCumu = cms.EDAnalyzer('Cumulants', #Analyzer named: Correspond to the cla
                              tracks    = cms.InputTag('generalTracks'),
                              #Vertex collection
                              vertex    = cms.InputTag('offlinePrimaryVertices'),
-                             #Calorimeter tower collection
-                             caloTower = cms.InputTag('towerMaker'),
                              #Centrality
                              centralitySrc    = cms.InputTag("hiCentrality"),
                              centralityBinSrc = cms.InputTag("centralityBin","HFtowers"),
@@ -28,13 +26,18 @@ defaultCumu = cms.EDAnalyzer('Cumulants', #Analyzer named: Correspond to the cla
                              etamax    = cms.untracked.double(2.4),
                              ptmin     = cms.untracked.double(0.3),
                              ptmax     = cms.untracked.double(3.0),
+                             etasubmin = cms.vdouble(-2.4,-2.4,-2.4,-2.4,0.,0.,0.,0.),
+                             etasubmax = cms.vdouble(0.,0.,0.,0.,2.4,2.4,2.4,2.4),
+                             ptsubmin = cms.vdouble(0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3),
+                             ptsubmax = cms.vdouble(3.0,3.0,3.0,3.0,3.0,3.0,3.0,3.0),
                              dzdzerror = cms.untracked.double(3.0),
                              d0d0error = cms.untracked.double(3.0),
                              pterrorpt = cms.untracked.double(0.1),
                              #Cumulant
-                             harm     = cms.untracked.int32(2),
+                             harm     = cms.untracked.vint32(2,2,2,2),
+                             nsubevt     = cms.untracked.int32(2),
                              cweight  = cms.untracked.bool(True),
-                             deltaeta = cms.untracked.double(0.),
+                             #deltaeta = cms.untracked.double(0.),
                              #Acc X Eff
                              fname = cms.untracked.InputTag('Hijing_8TeV_dataBS.root'),
                              effmultbin = cms.untracked.vint32(0,10000)
