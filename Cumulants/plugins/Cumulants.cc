@@ -195,20 +195,23 @@ void Cumulants::beginJob()
    trEvent_->Branch(Form("C%d%d8",harm_[0],harm_[1]),  &CN8_,  Form("C%d%d8/D",harm_[0],harm_[1]));
    trEvent_->Branch(Form("C%d%d6_119",harm_[0],harm_[1]),  &CN6_119_,  Form("C%d%d6_119/D",harm_[0],harm_[1])); // 01110111
    trEvent_->Branch(Form("C%d%d4_51",harm_[0],harm_[1]),  &CN4_51_,  Form("C%d%d4_51/D",harm_[0],harm_[1])); // 00110011
-   trEvent_->Branch(Form("C%d%d2_17",harm_[0],harm_[0]),  &CN2_17_,  Form("C%d%d2_17/D",harm_[0],harm_[0])); // 00100001
-   trEvent_->Branch(Form("C%d%d2_33",harm_[0],harm_[1]),  &CN2_33_,  Form("C%d%d2_33/D",harm_[0],harm_[1])); // 00010001
-   trEvent_->Branch(Form("C%d%d2_18",harm_[1],harm_[0]),  &CN2_18_,  Form("C%d%d2_18/D",harm_[1],harm_[0])); // 00010010
-   trEvent_->Branch(Form("C%d%d2_34",harm_[1],harm_[1]),  &CN2_34_,  Form("C%d%d2_34/D",harm_[1],harm_[1])); // 00100010
-
+   trEvent_->Branch(Form("C%d%d2_17",harm_[0],harm_[0]),  &CN2_17_,  Form("C%d%d2_17/D",harm_[0],harm_[0])); // 00010001
    trEvent_->Branch(Form("wC%d%d8",harm_[0],harm_[1]), &wCN8_, Form("wC%d%d8/D",harm_[0],harm_[1]));
    trEvent_->Branch(Form("wC%d%d6_119",harm_[0],harm_[1]),  &wCN6_119_,  Form("wC%d%d6_119/D",harm_[0],harm_[1])); // 01110111
    trEvent_->Branch(Form("wC%d%d4_51",harm_[0],harm_[1]),  &wCN4_51_,  Form("wC%d%d4_51/D",harm_[0],harm_[1])); // 00110011
    trEvent_->Branch(Form("wC%d%d2_17",harm_[0],harm_[0]), &wCN2_17_, Form("wC%d%d2_17/D",harm_[0],harm_[0])); // 00010001 
-   trEvent_->Branch(Form("wC%d%d2_33",harm_[0],harm_[1]), &wCN2_33_, Form("wC%d%d2_33/D",harm_[0],harm_[1])); // 00100001
-   trEvent_->Branch(Form("wC%d%d2_18",harm_[1],harm_[0]), &wCN2_18_, Form("wC%d%d2_18/D",harm_[1],harm_[0])); // 00010010
-   trEvent_->Branch(Form("wC%d%d2_34",harm_[1],harm_[1]), &wCN2_34_, Form("wC%d%d2_34/D",harm_[1],harm_[1])); // 00100010
 
-   if(nsubevt_>2)
+   if((nsubevt_<=2 && harm_[0]!=harm_[1]) || (nsubevt_>2)) // calculate for SC with 2sub or std method; Or higher cumulants with >2 subevents
+   {
+     trEvent_->Branch(Form("C%d%d2_33",harm_[0],harm_[1]),  &CN2_33_,  Form("C%d%d2_33/D",harm_[0],harm_[1])); // 00100001
+     trEvent_->Branch(Form("C%d%d2_18",harm_[1],harm_[0]),  &CN2_18_,  Form("C%d%d2_18/D",harm_[1],harm_[0])); // 00010010
+     trEvent_->Branch(Form("C%d%d2_34",harm_[1],harm_[1]),  &CN2_34_,  Form("C%d%d2_34/D",harm_[1],harm_[1])); // 00100010
+     trEvent_->Branch(Form("wC%d%d2_33",harm_[0],harm_[1]), &wCN2_33_, Form("wC%d%d2_33/D",harm_[0],harm_[1])); // 00100001
+     trEvent_->Branch(Form("wC%d%d2_18",harm_[1],harm_[0]), &wCN2_18_, Form("wC%d%d2_18/D",harm_[1],harm_[0])); // 00010010
+     trEvent_->Branch(Form("wC%d%d2_34",harm_[1],harm_[1]), &wCN2_34_, Form("wC%d%d2_34/D",harm_[1],harm_[1])); // 00100010
+   }
+
+   if(nsubevt_>2 && harm_[0]==harm_[1]) // calculate for higher cumulants with >2 subevents
    {
      trEvent_->Branch(Form("C%d%d6_123",harm_[0],harm_[1]),  &CN6_123_,  Form("C%d%d6_123/D",harm_[0],harm_[1])); // 01111011
      trEvent_->Branch(Form("C%d%d6_125",harm_[0],harm_[1]),  &CN6_125_,  Form("C%d%d6_125/D",harm_[0],harm_[1])); // 01111101

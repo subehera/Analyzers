@@ -12,7 +12,7 @@ process.MessageLogger.cerr.FwkReport.reportEvery = 100
 # Configure the number of maximum event the analyser run on in interactive mode
 # -1 == ALL
 process.maxEvents = cms.untracked.PSet( 
-    input = cms.untracked.int32(2000) 
+    input = cms.untracked.int32(300) 
 )
 
 process.Timing = cms.Service("Timing",
@@ -32,7 +32,7 @@ process.source = cms.Source("PoolSource",
 # Define output file name
 import os
 process.TFileService = cms.Service("TFileService",
-     fileName = cms.string('cumulants.root')
+     fileName = cms.string('cumulants_3sub.root')
 )
 
 
