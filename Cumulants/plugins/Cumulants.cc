@@ -533,15 +533,6 @@ Cumulants::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
    cumulant::Correlator c2_17 = cumulant::Correlator(17, qNmap);
    CN2_17_  = c2_17.v.real(); 
    wCN2_17_ = c2_17.w.real();
-   cumulant::Correlator c2_18 = cumulant::Correlator(18, qNmap);
-   CN2_18_  = c2_18.v.real();
-   wCN2_18_ = c2_18.w.real();
-   cumulant::Correlator c2_33 = cumulant::Correlator(33, qNmap);
-   CN2_33_  = c2_33.v.real();
-   wCN2_33_ = c2_33.w.real();
-   cumulant::Correlator c2_34 = cumulant::Correlator(34, qNmap);
-   CN2_34_  = c2_34.v.real();
-   wCN2_34_ = c2_34.w.real();
    cumulant::Correlator c4_51 = cumulant::Correlator(51, qNmap);
    CN4_51_  = c4_51.v.real();
    wCN4_51_ = c4_51.w.real();
@@ -552,7 +543,20 @@ Cumulants::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
    CN8_  = c8.v.real();
    wCN8_ = c8.w.real();
 
-   if(nsubevt_>2)
+   if((nsubevt_<=2 && harm_[0]!=harm_[1]) || (nsubevt_>2))
+   {
+     cumulant::Correlator c2_18 = cumulant::Correlator(18, qNmap);
+     CN2_18_  = c2_18.v.real();
+     wCN2_18_ = c2_18.w.real();
+     cumulant::Correlator c2_33 = cumulant::Correlator(33, qNmap);
+     CN2_33_  = c2_33.v.real();
+     wCN2_33_ = c2_33.w.real();
+     cumulant::Correlator c2_34 = cumulant::Correlator(34, qNmap);
+     CN2_34_  = c2_34.v.real();
+     wCN2_34_ = c2_34.w.real();
+   }
+
+   if(nsubevt_>2 && harm_[0]==harm_[1])
    {
      cumulant::Correlator c4_53 = cumulant::Correlator(53, qNmap);
      CN4_53_  = c4_53.v.real();
