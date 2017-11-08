@@ -18,8 +18,8 @@ defaultCumu = cms.EDAnalyzer('Cumulants', #Analyzer named: Correspond to the cla
                              #Multiplicity selection
                              noffmin       = cms.untracked.int32(0),
                              noffmax       = cms.untracked.int32(10000),
-                             ptnoffmin     = cms.untracked.double(0.3),
-                             ptnoffmax     = cms.untracked.double(3.0),
+                             ptnoffmin     = cms.untracked.double(0.4),
+                             ptnoffmax     = cms.untracked.double(10000.0),
                              dzdzerrornoff = cms.untracked.double(3.0),
                              d0d0errornoff = cms.untracked.double(3.0),
                              pterrorptnoff = cms.untracked.double(0.1),
