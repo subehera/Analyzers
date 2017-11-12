@@ -43,8 +43,33 @@ ChargeDepAndPtCorr::ChargeDepAndPtCorr(const edm::ParameterSet& iConfig) :
   centralityBinTags_(consumes<int>(iConfig.getParameter<edm::InputTag>("centralityBinSrc"))),
   //track selection
   pTmin_(iConfig.getUntrackedParameter<double>("pTminTrk")),
-  pTmax_(iConfig.getUntrackedParameter<double>("pTmaxTrk"))
+  pTmax_(iConfig.getUntrackedParameter<double>("pTmaxTrk")),
+  //efficiency / fake rate corrections
+  cweight_(iConfig.getUntrackedParameter<bool>("cweight")),
+  fname_(iConfig.getUntrackedParameter<edm::InputTag>("fname")),
+  effmultbin_(iConfig.getUntrackedParameter< std::vector<int> >("effmultbin"))
 {
+   TString filename(fname_.label().c_str());
+   feff_ = 0x0;
+   if(cweight_ && !filename.IsNull())
+   {
+      edm::FileInPath fip(Form("Analyzers/Cumulants/data/EFF/%s",filename.Data()));
+      feff_ = new TFile(fip.fullPath().c_str(),"READ");
+
+      heff_.resize(feff_->GetNkeys());
+      if(heff_.size() != effmultbin_.size() - 1)
+      {
+         edm::LogWarning ("Inconsitent binning") << " Inconsistent binning for the acc X eff correction..."
+                                                 << " You might have wrong setting here";
+      }
+
+      for(unsigned short ik = 0; ik < heff_.size(); ++ik)
+      {
+         heff_[ik] = (TH2D*) feff_->Get(feff_->GetListOfKeys()->At(ik)->GetName());
+      }
+      feff_->Close();
+   }
+
    // Now do what ever initialization is needed
    usesResource("TFileService");
    edm::Service<TFileService> fs;
