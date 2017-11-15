@@ -43,6 +43,8 @@
 
 // user include files
 #include "TH1F.h"
+#include "TH1D.h"
+#include "TH2D.h"
 #include "TTree.h"
 
 //
@@ -62,6 +64,11 @@ class ChargeDepAndPtCorr : public edm::one::EDAnalyzer<edm::one::SharedResources
 
       static void fillDescriptions(edm::ConfigurationDescriptions& descriptions);
 
+      void LoopVertices(const edm::Event& iEvent, const edm::EventSetup& iSetup);
+      void LoopTracks(const edm::Event& iEvent, const edm::EventSetup& iSetup, bool istrg);
+      void LoopCaloTower(const edm::Event& iEvent, const edm::EventSetup& iSetup); 
+
+      double GetEffWeight(double eta, double pt, int evtclass);
 
    private:
       virtual void beginJob() override;
@@ -87,26 +94,55 @@ class ChargeDepAndPtCorr : public edm::one::EDAnalyzer<edm::one::SharedResources
       // used to access centrality bins 
       edm::EDGetTokenT<int> centralityBinTags_;
 
+      // ## Eff/Fake coorection
+      bool cweight_; //Apply (True) or not (False) the eff/fake correction
+      edm::InputTag fname_; //Name of the file that contains the eff corrections
+      bool effCorrByCent_; //Switch to centrality dependent correction instead of mult
+      std::vector<int> effCorrBinMin_; //Mult/Cent binning of the eff/coor tables 
+      std::vector<int> effCorrBinMax_; //Mult/Cent binning of the eff/coor tables
+      TFile* feff_; //ROOT File that contains histograms used for corrections
+      std::vector<TH2D*> heff_; //Histograms used for corrections (eta, pT)
+
+      // ## Vertex variables
+      int nVtx_;
+      double xBestVtx_; //Best vertex X position 
+      double yBestVtx_; //Best vertex Y position
+      double zBestVtx_; //Best vertex Z position
+      double rhoBestVtx_; //Best vertex XY position
+      double xBestVtxError_; //Best vertex X error 
+      double yBestVtxError_; //Best vertex Y error
+      double zBestVtxError_; //Best vertex Z error
+      unsigned int nTrkAssoToVtx_; //number of track requiered to be associated to a vertex
+      bool selectVtxByMult_;       //False: sel best vtx by sum pT^2 True: sel best vtx with highest multiplicity
+
       // ## track selection ##
-      double pTmin_; //min pt of the tracks
-      double pTmax_; //max pt of the tracks
+      int nTrk_;
+      double dzdzerror_; //DCA - z  significance 
+      double d0dz0rror_; //DCA - xy significance
+      double pTerrorpT_; //DCA - pT resolution
+      std::vector< double > pTmin_trg_; //min pt of the trigger tracks
+      std::vector< double > pTmax_trg_; //max pt of the trigger tracks
+      std::vector< double > pTmin_asso_; //min pt of the associated tracks
+      std::vector< double > pTmax_asso_; //max pt of the associated tracks
       
       // ## histograms ##
+      //~~~> Vertex
       TH1F* hXBestVtx_;
       TH1F* hYBestVtx_;
       TH1F* hRhoBestVtx_;
       TH1F* hZBestVtx_;
+      //~~~> Trigger tracks
       TH1F* hEtaTrk_;
       TH1F* hPtTrk_; 
       TH1F* hPhiTrk_;
+      //~~~> Associated tracks
+      //~~~> Calo towers
       TH1F* hEtaCTow_;
       TH1F* hEtCTow_;
       TH1F* hPhiCTow_;
       // ## ttree ##
-      TTree* trEvent_;
-      int cent_;
-      int nVtx_;
-      int nTrk_;
+      //TTree* trEvent_;
+      //int cent_;
 };
 
 //
