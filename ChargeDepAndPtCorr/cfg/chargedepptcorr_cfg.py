@@ -7,12 +7,13 @@ process = cms.Process("ChargeDepAndPtCorr")
 
 # Configure the logger
 process.load("FWCore.MessageService.MessageLogger_cfi")
-process.MessageLogger.cerr.FwkReport.reportEvery = 1
+process.MessageLogger.cerr.FwkReport.reportEvery = 10
 
 # Configure the number of maximum event the analyser run on in interactive mode
 # -1 == ALL
 process.maxEvents = cms.untracked.PSet( 
-    input = cms.untracked.int32(10) 
+    input = cms.untracked.int32(-1) 
+    #input = cms.untracked.int32(1) 
 )
 
 
@@ -70,7 +71,6 @@ process.clusterCompatibilityFilter.clusterTrunc = cms.double(2.0)
 # Load you analyzer with initial configuration
 process.load("Analyzers.ChargeDepAndPtCorr.chargedepptcorr_cfi")
 process.defaultAnalysis = process.defaultCPDC.clone()
-process.defaultAnalysis.pTmaxTrk = cms.untracked.double(6.0) 
 
 process.p = cms.Path(process.hfCoincFilter3 *             # Requier HF coincidence with 3 GeV  
                      process.primaryVertexFilter *        # Clean up on vertices

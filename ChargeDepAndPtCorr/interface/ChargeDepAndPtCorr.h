@@ -47,6 +47,7 @@
 #include "TH2D.h"
 #include "TTree.h"
 
+#include "Analyzers/ChargeDepAndPtCorr/interface/DiHadronCorrelationEvt.h"
 //
 // class declaration
 //
@@ -64,11 +65,25 @@ class ChargeDepAndPtCorr : public edm::one::EDAnalyzer<edm::one::SharedResources
 
       static void fillDescriptions(edm::ConfigurationDescriptions& descriptions);
 
-      void LoopVertices(const edm::Event& iEvent, const edm::EventSetup& iSetup);
-      void LoopTracks(const edm::Event& iEvent, const edm::EventSetup& iSetup, bool istrg);
-      void LoopCaloTower(const edm::Event& iEvent, const edm::EventSetup& iSetup); 
+      void   LoopVertices(const edm::Event& iEvent, const edm::EventSetup& iSetup);
+      double LoopNoff(const edm::Event& iEvent, const edm::EventSetup& iSetup);
+      void   LoopTracks(const edm::Event& iEvent, const edm::EventSetup& iSetup, 
+                        bool istrg, int evtclass);
+      void   LoopCaloTower(const edm::Event& iEvent, const edm::EventSetup& iSetup);
 
       double GetEffWeight(double eta, double pt, int evtclass);
+      int    GetpTbin(double pt, bool istrig);
+      void   AssignpTbins(double pt,  double eta, 
+                          double phi, int charge, 
+                          double eff, bool istrg,
+                          int idx);
+
+      double GetDeltaEta(double eta_trg, double eta_ass);
+      double GetDeltaPhi(double phi_trg, double phi_ass);
+
+      void FillHistsSignal(int ievt);
+      void FillHistsBackground(int ievt_trg, int jevt_ass);
+      void NormalizeHists();
 
    private:
       virtual void beginJob() override;
@@ -94,10 +109,16 @@ class ChargeDepAndPtCorr : public edm::one::EDAnalyzer<edm::one::SharedResources
       // used to access centrality bins 
       edm::EDGetTokenT<int> centralityBinTags_;
 
+      // ## event classifier ##
+      int evtclassifier_;//Switch to centrality dependent correction instead of mult
+      int centmin_;
+      int centmax_;
+      int noffmin_;
+      int noffmax_;
+
       // ## Eff/Fake coorection
       bool cweight_; //Apply (True) or not (False) the eff/fake correction
       edm::InputTag fname_; //Name of the file that contains the eff corrections
-      bool effCorrByCent_; //Switch to centrality dependent correction instead of mult
       std::vector<int> effCorrBinMin_; //Mult/Cent binning of the eff/coor tables 
       std::vector<int> effCorrBinMax_; //Mult/Cent binning of the eff/coor tables
       TFile* feff_; //ROOT File that contains histograms used for corrections
@@ -112,37 +133,95 @@ class ChargeDepAndPtCorr : public edm::one::EDAnalyzer<edm::one::SharedResources
       double xBestVtxError_; //Best vertex X error 
       double yBestVtxError_; //Best vertex Y error
       double zBestVtxError_; //Best vertex Z error
+      double zminVtx_; //min value for Z cut on vtx position
+      double zmaxVtx_; //max value for Z cut on vtx position
+      double rhomaxVtx_; //max value for XY cut on vtx position
       unsigned int nTrkAssoToVtx_; //number of track requiered to be associated to a vertex
       bool selectVtxByMult_;       //False: sel best vtx by sum pT^2 True: sel best vtx with highest multiplicity
 
       // ## track selection ##
-      int nTrk_;
+      int    nTrkTot_trg_; 
+      double nTrkTot_corr_trg_; 
+      int    nTrkTot_ass_; 
+      double nTrkTot_corr_ass_; 
+      std::vector<int>    nTrk_trg_; 
+      std::vector<double> nTrk_corr_trg_; 
+      std::vector<int>    nTrk_ass_; 
+      std::vector<double> nTrk_corr_ass_; 
       double dzdzerror_; //DCA - z  significance 
       double d0dz0rror_; //DCA - xy significance
       double pTerrorpT_; //DCA - pT resolution
       std::vector< double > pTmin_trg_; //min pt of the trigger tracks
       std::vector< double > pTmax_trg_; //max pt of the trigger tracks
-      std::vector< double > pTmin_asso_; //min pt of the associated tracks
-      std::vector< double > pTmax_asso_; //max pt of the associated tracks
+      std::vector< double > pTmin_ass_; //min pt of the associated tracks
+      std::vector< double > pTmax_ass_; //max pt of the associated tracks
+      double etamin_trg_; //min eta of the trigger tracks
+      double etamax_trg_; //max eta of the trigger tracks
+      double etamin_ass_; //min eta of the associated tracks
+      double etamax_ass_; //max eta of the associated tracks
       
+      // ## Dihardon corr events ##
+      DiHadronCorrelationEvt* evt_;
+      std::vector< DiHadronCorrelationEvt > evtVec_;
+      unsigned int bkgFactor_;
+
       // ## histograms ##
       //~~~> Vertex
       TH1F* hXBestVtx_;
       TH1F* hYBestVtx_;
       TH1F* hRhoBestVtx_;
       TH1F* hZBestVtx_;
-      //~~~> Trigger tracks
-      TH1F* hEtaTrk_;
-      TH1F* hPtTrk_; 
-      TH1F* hPhiTrk_;
-      //~~~> Associated tracks
+      TH1I* hNVtx_;
+      //~~~> Global 
+      TH1I* hCent_;
+      TH1I* hNoff_;
+      TH1I* hMult_trg_;
+      TH1F* hMult_corr_trg_;
+      TH1I* hMult_ass_;
+      TH1F* hMult_corr_ass_;
+      //~~~> Trigger tracks RAW
+      std::vector<TH1F*> hEtaTrk_trg_;
+      std::vector<TH1F*> hPtTrk_trg_; 
+      std::vector<TH1F*> hPhiTrk_trg_;
+      std::vector<TH1I*> hMultTrk_trg_;
+      //~~~> Trigger tracks CORR
+      std::vector<TH1F*> hEtaTrk_corr_trg_;
+      std::vector<TH1F*> hPtTrk_corr_trg_; 
+      std::vector<TH1F*> hPhiTrk_corr_trg_;
+      std::vector<TH1F*> hMultTrk_corr_trg_;
+      //~~~> Associated tracks RAW
+      std::vector<TH1F*> hEtaTrk_ass_;
+      std::vector<TH1F*> hPtTrk_ass_; 
+      std::vector<TH1F*> hPhiTrk_ass_;
+      std::vector<TH1I*> hMultTrk_ass_;
+      //~~~> Associated tracks CORR
+      std::vector<TH1F*> hEtaTrk_corr_ass_;
+      std::vector<TH1F*> hPtTrk_corr_ass_; 
+      std::vector<TH1F*> hPhiTrk_corr_ass_;
+      std::vector<TH1F*> hMultTrk_corr_ass_;
       //~~~> Calo towers
       TH1F* hEtaCTow_;
       TH1F* hEtCTow_;
       TH1F* hPhiCTow_;
-      // ## ttree ##
-      //TTree* trEvent_;
-      //int cent_;
+      //~~~> Signal, background, correlation
+      std::vector< std::vector<TH2D*> > hSignal_;
+      std::vector< std::vector<TH2D*> > hSignalPP_;
+      std::vector< std::vector<TH2D*> > hSignalMM_;
+      std::vector< std::vector<TH2D*> > hSignalPM_;
+      std::vector< std::vector<TH2D*> > hSignalMP_;
+      TH1D* hDeltaZvtx_;
+      std::vector< std::vector<TH2D*> > hBackground_;
+      std::vector< std::vector<TH2D*> > hBackgroundPP_;
+      std::vector< std::vector<TH2D*> > hBackgroundMM_;
+      std::vector< std::vector<TH2D*> > hBackgroundPM_;
+      std::vector< std::vector<TH2D*> > hBackgroundMP_;
+      std::vector< std::vector<TH2D*> > hCorrelation_;
+      std::vector< std::vector<TH2D*> > hCorrelationPP_;
+      std::vector< std::vector<TH2D*> > hCorrelationMM_;
+      std::vector< std::vector<TH2D*> > hCorrelationPM_;
+      std::vector< std::vector<TH2D*> > hCorrelationMP_;
+      int nEtaBins_;
+      int nPhiBins_;
 };
 
 //
