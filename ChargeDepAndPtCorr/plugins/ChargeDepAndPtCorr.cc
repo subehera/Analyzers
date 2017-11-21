@@ -69,6 +69,15 @@ ChargeDepAndPtCorr::ChargeDepAndPtCorr(const edm::ParameterSet& iConfig) :
   etamax_trg_(iConfig.getUntrackedParameter<double>("etamaxTrk_trg")),
   etamin_ass_(iConfig.getUntrackedParameter<double>("etaminTrk_ass")),
   etamax_ass_(iConfig.getUntrackedParameter<double>("etamaxTrk_ass")),
+  isHI_(iConfig.getUntrackedParameter<bool>("isHI")),
+  isPix_(iConfig.getUntrackedParameter<bool>("isPix")),
+  pTmax_pix_(iConfig.getUntrackedParameter<double>("pTmax_pix")),
+  nhitsmin_pix_(iConfig.getUntrackedParameter<int>("nhitsmin_pix")),
+  nhitsmax_pix_(iConfig.getUntrackedParameter<int>("nhitsmax_pix")),
+  chi2nmax_pix_(iConfig.getUntrackedParameter<double>("chi2nmax_pix")),
+  dzdzerror_pix_(iConfig.getUntrackedParameter<double>("dzdzerror_pix")),
+  nhitsmin_(iConfig.getUntrackedParameter<int>("nhitsmin")),
+  algo_(iConfig.getUntrackedParameter< std::vector<int> >("algo")),
   //Mixing
   bkgFactor_(iConfig.getUntrackedParameter<unsigned int>("bkgFactor")),
   //Histogram binning
@@ -709,9 +718,9 @@ ChargeDepAndPtCorr::LoopNoff(const edm::Event& iEvent,
 
        // Select track based on quality
        if( !itTrk->quality(reco::TrackBase::highPurity) ) continue;
-       if( fabs(pterror) / pt      > 3.0 ) continue;
        if( fabs(dzvtx / dzerror)   > 3.0 ) continue;
-       if( fabs(dxyvtx / dxyerror) > 0.1 ) continue;
+       if( fabs(dxyvtx / dxyerror) > 3.0 ) continue;
+       if( fabs(pterror) / pt      > 1.0 ) continue;
        if( pt <= 0.4 ) continue;
        if( eta < -2.4 || eta > 2.4 ) continue;
        if( charge == 0 ) continue;
@@ -754,15 +763,61 @@ ChargeDepAndPtCorr::LoopTracks(const edm::Event& iEvent, const edm::EventSetup& 
        double pt     = itTrk->pt();
        double phi    = itTrk->phi();
        double charge = itTrk->charge();
+       // HI specific cuts
+       double chi2n   = itTrk->normalizedChi2();
+       double nlayers = itTrk->hitPattern().trackerLayersWithMeasurement();
+       chi2n = chi2n/nlayers;
+       int nHits = itTrk->numberOfValidHits();
+       int algo  = itTrk->originalAlgo();        
 
        // Select track based on quality
        if( !itTrk->quality(reco::TrackBase::highPurity) ) continue;
-       if( fabs(pterror) / pt      > dzdzerror_ ) continue;
-       if( fabs(dzvtx / dzerror)   > d0dz0rror_ ) continue;
-       if( fabs(dxyvtx / dxyerror) > pTerrorpT_ ) continue;
        if( pt < 0.0001 ) continue;
        if( charge == 0 ) continue;
 
+       if(isHI_ && isPix_ )
+       {
+          bool goodpixtrk = false; // specific cuts for 
+          if( pt <= pTmax_pix_         &&
+              nHits >= nhitsmin_pix_  && 
+              nHits <= nhitsmax_pix_ &&
+              chi2n <= chi2nmax_pix_   &&
+              fabs(dzvtx / dzerror) <  dzdzerror_pix_ );
+              goodpixtrk = true;
+
+          if( !goodpixtrk )
+          {
+             if( nHits < nhitsmin_ ) continue;
+             if( pt > pTmax_pix_ )
+             {
+                 if( std::find(algo_.begin(), algo_.end(), algo) == algo_.end() )
+                    continue;
+             }
+             if( chi2n > chi2nmax_ ) continue;
+             if( fabs(pterror) / pt      > pTerrorpT_ ) continue;
+             if( fabs(dzvtx / dzerror)   > dzdzerror_ ) continue;
+             if( fabs(dxyvtx / dxyerror) > d0dz0rror_ ) continue;
+          }
+       }
+       else if(isHI_)
+       {
+           if( nHits < nhitsmin_ ) continue;
+           if( pt > pTmax_pix_ )
+           {
+               if( std::find(algo_.begin(), algo_.end(), algo) == algo_.end() )
+                  continue;
+           }
+           if( chi2n > chi2nmax_ ) continue;
+           if( fabs(pterror) / pt      > pTerrorpT_ ) continue;
+           if( fabs(dzvtx / dzerror)   > dzdzerror_ ) continue;
+           if( fabs(dxyvtx / dxyerror) > d0dz0rror_ ) continue;
+       }
+       else
+       {       
+           if( fabs(pterror) / pt      > pTerrorpT_ ) continue;
+           if( fabs(dzvtx / dzerror)   > dzdzerror_ ) continue;
+           if( fabs(dxyvtx / dxyerror) > d0dz0rror_ ) continue;
+       }
 
        // Track selection for analysis
        int index = GetpTbin(pt, istrg);

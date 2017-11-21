@@ -159,6 +159,16 @@ class ChargeDepAndPtCorr : public edm::one::EDAnalyzer<edm::one::SharedResources
       double etamax_trg_; //max eta of the trigger tracks
       double etamin_ass_; //min eta of the associated tracks
       double etamax_ass_; //max eta of the associated tracks
+      bool isHI_; //Specific set of cuts PbPb data
+      bool isPix_;//Specific set of cuts for pixel tracks in PbPb data
+      double pTmax_pix_; //maximum pT to be a pixel track
+      int nhitsmin_pix_; //min number of hits to be a pix trk
+      int nhitsmax_pix_; //max number of hits to be a pix trk
+      double chi2nmax_pix_;  //maximum chi2n/nlayer to be a pixel track
+      double dzdzerror_pix_; //maximum DCA - z significance to be a pixel track
+      int nhitsmin_; //min number of hits for general tracks
+      std::vector<int> algo_; //algo for general tracks
+      double chi2nmax_; //maximum chi2 for general track
       
       // ## Dihardon corr events ##
       DiHadronCorrelationEvt* evt_;
