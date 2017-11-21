@@ -17,7 +17,16 @@ echo "config.General.transferLogs = False" >> crab3_chargeptcorrPbPb5tev_Data_20
 echo "config.JobType.pluginName = 'Analysis'" >> crab3_chargeptcorrPbPb5tev_Data_2015MB${1}_v${2}.py 
 if [ ${2} -eq 0 ]
 then
-  echo "config.JobType.psetName = '$CMSSW_BASE/src/Analyzers/ChargeDepAndPtCorr/cfg/chargedepptcorr_cfg.py'" >> crab3_chargeptcorrPbPb5tev_Data_2015MB${1}_v${2}.py
+  echo "config.JobType.psetName = '$CMSSW_BASE/src/Analyzers/ChargeDepAndPtCorr/cfg/chargedepptcorr_central_cfg.py'" >> crab3_chargeptcorrPbPb5tev_Data_2015MB${1}_v${2}.py
+elif [ ${2} -eq 1 ]
+then
+  echo "config.JobType.psetName = '$CMSSW_BASE/src/Analyzers/ChargeDepAndPtCorr/cfg/chargedepptcorr_midcentral_cfg.py'" >> crab3_chargeptcorrPbPb5tev_Data_2015MB${1}_v${2}.py
+elif [ ${2} -eq 2 ]
+then
+  echo "config.JobType.psetName = '$CMSSW_BASE/src/Analyzers/ChargeDepAndPtCorr/cfg/chargedepptcorr_midperipheral_cfg.py'" >> crab3_chargeptcorrPbPb5tev_Data_2015MB${1}_v${2}.py
+elif [ ${2} -eq 3 ]
+then
+  echo "config.JobType.psetName = '$CMSSW_BASE/src/Analyzers/ChargeDepAndPtCorr/cfg/chargedepptcorr_peripheral_cfg.py'" >> crab3_chargeptcorrPbPb5tev_Data_2015MB${1}_v${2}.py
 else
   echo "WARNING!!! unkown version!!!!"
 fi
@@ -28,7 +37,7 @@ echo "" >> crab3_chargeptcorrPbPb5tev_Data_2015MB${1}_v${2}.py
 echo "config.Data.lumiMask = '$CMSSW_BASE/src/Analyzers/ChargeDepAndPtCorr/data/JSON/Cert_262548-263757_PromptReco_HICollisions15_JSON_v2.txt'" >> crab3_chargeptcorrPbPb5tev_Data_2015MB${1}_v${2}.py
 echo "config.Data.inputDBS = 'global'" >> crab3_chargeptcorrPbPb5tev_Data_2015MB${1}_v${2}.py 
 echo "config.Data.splitting = 'LumiBased'" >> crab3_chargeptcorrPbPb5tev_Data_2015MB${1}_v${2}.py 
-echo "config.Data.unitsPerJob = 10" >> crab3_chargeptcorrPbPb5tev_Data_2015MB${1}_v${2}.py 
+echo "config.Data.unitsPerJob = 20" >> crab3_chargeptcorrPbPb5tev_Data_2015MB${1}_v${2}.py 
 echo "config.Data.outLFNDirBase = '/store/user/%s/' % (getUsernameFromSiteDB())" >> crab3_chargeptcorrPbPb5tev_Data_2015MB${1}_v${2}.py 
 #echo "config.Data.outLFNDirBase = '/store/group/phys_heavyions/flowcorr/'" >> crab3_chargeptcorrPbPb5tev_Data_2015MB${1}_v${2}.py 
 echo "config.Data.publication = False" >> crab3_chargeptcorrPbPb5tev_Data_2015MB${1}_v${2}.py 
