@@ -24,10 +24,12 @@ if __name__ == '__main__':
     config.Data.unitsPerJob = 2
 #    config.Data.totalUnits = 100
     config.Data.splitting = 'LumiBased'
-    config.Data.outLFNDirBase = '/store/user/%s/' % (getUsernameFromSiteDB())
-    config.Data.publication = True
-    config.Site.storageSite = 'T2_US_MIT'
+#    config.Data.outLFNDirBase = '/store/user/%s/' % (getUsernameFromSiteDB())
+    config.Data.outLFNDirBase = '/store/group/phys_heavyions/flowcorr/SubCumu/'
+    config.Data.publication = False
+#    config.Site.storageSite = 'T2_US_MIT'
 #    config.Site.storageSite = 'T3_US_Rice'
+    config.Site.storageSite = 'T2_CH_CERN'
 
     def submit(config):
         try:

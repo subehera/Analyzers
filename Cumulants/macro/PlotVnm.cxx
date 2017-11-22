@@ -22,6 +22,7 @@
 #include "../interface/MultiCumulants/vendor/cmdline.h"
 //utlis include
 #include "utils.h"
+#include "ChainBuilder.h"
 
 using namespace std;
 
@@ -42,12 +43,12 @@ main(int argc, char** argv) {
 //--------------------------------------------------------
 	cmdline::parser parser;
 	parser.add<std::string>("output", '\0', "output file name and path", false, "../output/cnm_vnm.root");
-	parser.add<std::string>("input" , '\0', "input file name and path", false, "../test/cumulants.root");
-        parser.add<std::string>("folder" , '\0', "folder of tree", false, "anaV2");
+	parser.add<std::string>("input",  '\0', "input file name and path", false, "../test/cumulants.root");
+        parser.add<std::string>("folder", '\0', "folder of tree", false, "anaV2");
 	parser.add<int>("noffmax"       , '\0', "maximum N_{trk}^offline", false, 500);
 	parser.add<int>("cumumaxorder"  , '\0', "maximum cumulant order", false, 14);
-	parser.add<int>("harmonicorder0" , '\0', "harmonic order", false, 2);
-        parser.add<int>("harmonicorder1" , '\0', "harmonic order", false, 2);
+	parser.add<int>("harmonicorder0", '\0', "harmonic order", false, 2);
+        parser.add<int>("harmonicorder1", '\0', "harmonic order", false, 2);
 	parser.add<int>("nevents"       , '\0', "Number of events to be analyzed", false, -1);
 	parser.add("process"            , '\0', "process TTree");
 	parser.parse_check( argc, argv );
@@ -75,6 +76,15 @@ main(int argc, char** argv) {
                                  100, 110, 120, 130, 140, 150, 160, 170, 180, 190,
                                  200, 210, 220, 230, 240, 250, 260, 270, 280, 290,
                                  noffmax};
+
+        //---------------------------------------------------------
+        //================== Chainer builder ======================
+        //---------------------------------------------------------
+        ChainBuilder b;
+        b.AddDir("/eos/cms/store/group/phys_heavyions/flowcorr/SubCumu/PAHighMultiplicity*/*_std_*/*/*");
+        b.ReadDir();
+        b.PrintList();
+        b.BuildChain(folderName);
 
         //input file
         TFile* fin  = TFile::Open(inputFileName.c_str(), "READ");

@@ -38,57 +38,57 @@ if __name__ == '__main__':
     ## From now on that's what users should modify: this is the a-la-CRAB2 configuration part. ##
     #############################################################################################
 
-    #config.General.requestName = 'pPb2016_pPb185_cumulants_std_b1_v10'
-    #config.Data.inputDataset = '/PAHighMultiplicity1/PARun2016C-PromptReco-v1/AOD'
-    #config.Data.lumiMask = 'Cert_285479-285832_HI8TeV_PromptReco_pPb_Collisions16_JSON_NoL1T.txt'
-    #config.Data.outputDatasetTag = 'RecoSkim2016_pPb185_cumulants_std_v10'
-    #submit(config)
+    config.General.requestName = 'pPb2016_pPb185_cumulants_std_b1_v10'
+    config.Data.inputDataset = '/PAHighMultiplicity1/PARun2016C-PromptReco-v1/AOD'
+    config.Data.lumiMask = 'Cert_285479-285832_HI8TeV_PromptReco_pPb_Collisions16_JSON_NoL1T.txt'
+    config.Data.outputDatasetTag = 'RecoSkim2016_pPb185_cumulants_std_v10'
+    submit(config)
 
-    #config.General.requestName = 'pPb2016_pPb185_cumulants_std_b2_v10'
-    #config.Data.inputDataset = '/PAHighMultiplicity2/PARun2016C-PromptReco-v1/AOD'
-    #submit(config)
+    config.General.requestName = 'pPb2016_pPb185_cumulants_std_b2_v10'
+    config.Data.inputDataset = '/PAHighMultiplicity2/PARun2016C-PromptReco-v1/AOD'
+    submit(config)
 
-    #config.General.requestName = 'pPb2016_pPb185_cumulants_std_b3_v10'
-    #config.Data.inputDataset = '/PAHighMultiplicity3/PARun2016C-PromptReco-v1/AOD'
-    #submit(config)
+    config.General.requestName = 'pPb2016_pPb185_cumulants_std_b3_v10'
+    config.Data.inputDataset = '/PAHighMultiplicity3/PARun2016C-PromptReco-v1/AOD'
+    submit(config)
 
-    #config.General.requestName = 'pPb2016_pPb185_cumulants_std_b4_v10'
-    #config.Data.inputDataset = '/PAHighMultiplicity4/PARun2016C-PromptReco-v1/AOD'
-    #submit(config)
+    config.General.requestName = 'pPb2016_pPb185_cumulants_std_b4_v10'
+    config.Data.inputDataset = '/PAHighMultiplicity4/PARun2016C-PromptReco-v1/AOD'
+    submit(config)
 
-    #config.General.requestName = 'pPb2016_pPb185_cumulants_std_b5_v10'
-    #config.Data.inputDataset = '/PAHighMultiplicity5/PARun2016C-PromptReco-v1/AOD'
-    #submit(config)
+    config.General.requestName = 'pPb2016_pPb185_cumulants_std_b5_v10'
+    config.Data.inputDataset = '/PAHighMultiplicity5/PARun2016C-PromptReco-v1/AOD'
+    submit(config)
 
-    #config.General.requestName = 'pPb2016_pPb185_cumulants_std_b6_v10'
-    #config.Data.inputDataset = '/PAHighMultiplicity6/PARun2016C-PromptReco-v1/AOD'
-    #submit(config)
+    config.General.requestName = 'pPb2016_pPb185_cumulants_std_b6_v10'
+    config.Data.inputDataset = '/PAHighMultiplicity6/PARun2016C-PromptReco-v1/AOD'
+    submit(config)
 
-    #config.General.requestName = 'pPb2016_Pbp185_cumulants_std_b1_v10'
-    #config.Data.inputDataset = '/PAHighMultiplicity1/PARun2016C-PromptReco-v1/AOD'
-    #config.Data.lumiMask = 'Cert_285952-286496_HI8TeV_PromptReco_Pbp_Collisions16_JSON_NoL1T.txt'
-    #config.Data.outputDatasetTag = 'RecoSkim2016_Pbp185_cumulants_std_v10'
-    #submit(config)
+    config.General.requestName = 'pPb2016_Pbp185_cumulants_std_b1_v10'
+    config.Data.inputDataset = '/PAHighMultiplicity1/PARun2016C-PromptReco-v1/AOD'
+    config.Data.lumiMask = 'Cert_285952-286496_HI8TeV_PromptReco_Pbp_Collisions16_JSON_NoL1T.txt'
+    config.Data.outputDatasetTag = 'RecoSkim2016_Pbp185_cumulants_std_v10'
+    submit(config)
 
-    #config.General.requestName = 'pPb2016_Pbp185_cumulants_std_b2_v10'
-    #config.Data.inputDataset = '/PAHighMultiplicity2/PARun2016C-PromptReco-v1/AOD'
-    #submit(config)
+    config.General.requestName = 'pPb2016_Pbp185_cumulants_std_b2_v10'
+    config.Data.inputDataset = '/PAHighMultiplicity2/PARun2016C-PromptReco-v1/AOD'
+    submit(config)
 
-    #config.General.requestName = 'pPb2016_Pbp185_cumulants_std_b3_v10'
-    #config.Data.inputDataset = '/PAHighMultiplicity3/PARun2016C-PromptReco-v1/AOD'
-    #submit(config)
+    config.General.requestName = 'pPb2016_Pbp185_cumulants_std_b3_v10'
+    config.Data.inputDataset = '/PAHighMultiplicity3/PARun2016C-PromptReco-v1/AOD'
+    submit(config)
 
-    #config.General.requestName = 'pPb2016_Pbp185_cumulants_std_b4_v10'
-    #config.Data.inputDataset = '/PAHighMultiplicity4/PARun2016C-PromptReco-v1/AOD'
-    #submit(config)
+    config.General.requestName = 'pPb2016_Pbp185_cumulants_std_b4_v10'
+    config.Data.inputDataset = '/PAHighMultiplicity4/PARun2016C-PromptReco-v1/AOD'
+    submit(config)
 
-    #config.General.requestName = 'pPb2016_Pbp185_cumulants_std_b5_v10'
-    #config.Data.inputDataset = '/PAHighMultiplicity5/PARun2016C-PromptReco-v1/AOD'
-    #submit(config)
+    config.General.requestName = 'pPb2016_Pbp185_cumulants_std_b5_v10'
+    config.Data.inputDataset = '/PAHighMultiplicity5/PARun2016C-PromptReco-v1/AOD'
+    submit(config)
 
-    #config.General.requestName = 'pPb2016_Pbp185_cumulants_std_b6_v10'
-    #config.Data.inputDataset = '/PAHighMultiplicity6/PARun2016C-PromptReco-v1/AOD'
-    #submit(config)
+    config.General.requestName = 'pPb2016_Pbp185_cumulants_std_b6_v10'
+    config.Data.inputDataset = '/PAHighMultiplicity6/PARun2016C-PromptReco-v1/AOD'
+    submit(config)
 
     config.General.requestName = 'pPb2016_pPb250_cumulants_std_b7_v10'
     config.Data.inputDataset = '/PAHighMultiplicity7/PARun2016C-PromptReco-v1/AOD'
@@ -102,25 +102,25 @@ if __name__ == '__main__':
     config.Data.outputDatasetTag = 'RecoSkim2016_Pbp250_cumulants_std_v10'
     submit(config)
 
-    #config.General.requestName = 'pPb2016_pPb120_cumulants_std_b0_v10'
-    #config.Data.inputDataset = '/PAHighMultiplicity0/PARun2016C-PromptReco-v1/AOD'
-    #config.Data.lumiMask = 'Cert_285479-285832_HI8TeV_PromptReco_pPb_Collisions16_JSON_NoL1T.txt'
-    #config.Data.outputDatasetTag = 'RecoSkim2016_pPb120_cumulants_std_v10'
-    #config.JobType.psetName = '../cfg/cumulants_hlt120_std_cfg.py'
-    #submit(config)
+    config.General.requestName = 'pPb2016_pPb120_cumulants_std_b0_v10'
+    config.Data.inputDataset = '/PAHighMultiplicity0/PARun2016C-PromptReco-v1/AOD'
+    config.Data.lumiMask = 'Cert_285479-285832_HI8TeV_PromptReco_pPb_Collisions16_JSON_NoL1T.txt'
+    config.Data.outputDatasetTag = 'RecoSkim2016_pPb120_cumulants_std_v10'
+    config.JobType.psetName = '../cfg/cumulants_hlt120_std_cfg.py'
+    submit(config)
 
-    #config.General.requestName = 'pPb2016_pPb150_cumulants_std_b0_v10'
-    #config.Data.outputDatasetTag = 'RecoSkim2016_pPb150_cumulants_std_v10'
-    #config.JobType.psetName = '../cfg/cumulants_hlt150_std_cfg.py'
-    #submit(config)
+    config.General.requestName = 'pPb2016_pPb150_cumulants_std_b0_v10'
+    config.Data.outputDatasetTag = 'RecoSkim2016_pPb150_cumulants_std_v10'
+    config.JobType.psetName = '../cfg/cumulants_hlt150_std_cfg.py'
+    submit(config)
 
-    #config.General.requestName = 'pPb2016_Pbp120_cumulants_std_b0_v10'
-    #config.Data.lumiMask = 'Cert_285952-286496_HI8TeV_PromptReco_Pbp_Collisions16_JSON_NoL1T.txt'
-    #config.JobType.psetName = '../cfg/cumulants_hlt120_std_cfg.py'
-    #config.Data.outputDatasetTag = 'RecoSkim2016_Pbp120_cumulants_std_v10'
-    #submit(config)
+    config.General.requestName = 'pPb2016_Pbp120_cumulants_std_b0_v10'
+    config.Data.lumiMask = 'Cert_285952-286496_HI8TeV_PromptReco_Pbp_Collisions16_JSON_NoL1T.txt'
+    config.JobType.psetName = '../cfg/cumulants_hlt120_std_cfg.py'
+    config.Data.outputDatasetTag = 'RecoSkim2016_Pbp120_cumulants_std_v10'
+    submit(config)
 
-    #config.General.requestName = 'pPb2016_Pbp150_cumulants_std_b0_v10'
-    #config.JobType.psetName = '../cfg/cumulants_hlt150_std_cfg.py'
-    #config.Data.outputDatasetTag = 'RecoSkim2016_Pbp150_cumulants_std_v10'
-    #submit(config)
+    config.General.requestName = 'pPb2016_Pbp150_cumulants_std_b0_v10'
+    config.JobType.psetName = '../cfg/cumulants_hlt150_std_cfg.py'
+    config.Data.outputDatasetTag = 'RecoSkim2016_Pbp150_cumulants_std_v10'
+    submit(config)
