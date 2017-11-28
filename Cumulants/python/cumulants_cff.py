@@ -85,7 +85,7 @@ sub2Analysis_Pt10NEG.ptsubmin = cms.vdouble(0.3,0.3,0.3,10.0,0.3,0.3,0.3,0.3)
 sub2Analysis_Pt10NEG.ptsubmax = cms.vdouble(3.0,3.0,3.0,10000.0,3.0,3.0,3.0,3.0)
 
 sub3Analysis_Pt10MID = sub3Analysis.clone()
-sub2Analysis_Pt10MID.saveBranch = cms.untracked.int32(2)
+sub3Analysis_Pt10MID.saveBranch = cms.untracked.int32(2)
 sub3Analysis_Pt10MID.ptsubmin = cms.vdouble(0.3,0.3,0.3,10.,0.3,0.3,0.3,0.3)
 sub3Analysis_Pt10MID.ptsubmax = cms.vdouble(3.0,3.0,3.0,10000.,3.0,3.0,3.0,3.0)
 
