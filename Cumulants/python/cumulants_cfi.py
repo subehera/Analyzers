@@ -39,7 +39,7 @@ defaultCumu = cms.EDAnalyzer('Cumulants', #Analyzer named: Correspond to the cla
                              harm       = cms.untracked.vint32(2,2,2,2),
                              nsubevt    = cms.untracked.int32(2),
                              cweight    = cms.untracked.bool(True),
-                             saveBranch = cms.untracked.int32(0),
+                             branchSave = cms.untracked.int32(0),
                              #deltaeta = cms.untracked.double(0.),
                              #Acc X Eff
                              fname = cms.untracked.InputTag('Hijing_8TeV_dataBS.root'),
