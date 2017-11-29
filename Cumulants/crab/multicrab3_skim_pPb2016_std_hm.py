@@ -13,7 +13,8 @@ if __name__ == '__main__':
     config.General.transferOutputs = True
     config.General.transferLogs = False
     config.JobType.pluginName = 'Analysis'
-#    config.JobType.maxMemoryMB = 3000
+#    config.JobType.numCores = 8
+    config.JobType.maxMemoryMB = 2500
     config.JobType.psetName = '../cfg/cumulants_hlt185_std_cfg.py'
     config.Data.unitsPerJob = 10
 #    config.Data.unitsPerJob = 40 for V0 only

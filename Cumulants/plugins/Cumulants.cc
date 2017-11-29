@@ -163,7 +163,7 @@ Cumulants::Cumulants(const edm::ParameterSet& iConfig) :
    qN_ = cumulant::QVectorSet(h, set, cweight_);
 
    //Ouptut
-//   usesResource("TFileService");
+   usesResource("TFileService");
 //   edm::Service<TFileService> fs;
    // Histograms
 }

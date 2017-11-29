@@ -15,7 +15,8 @@ public:
    }
 
    ~ChainBuilder() 
-   { 
+   {
+      ch_->Reset(); 
       delete ch_;
       fileList_.clear();
       std::vector<std::string>().swap(fileList_);
@@ -34,7 +35,7 @@ public:
          keyName.Append(folder.Data());
          keyName.Append("/trEvent");
 
-         LOG_S(INFO) << "TTree named " << keyName.Data() << " will be added to the TChain";
+         //LOG_S(INFO) << "TTree named " << keyName.Data() << " will be added to the TChain";
          ch_->Add(keyName.Data());
       }
    }
@@ -48,7 +49,7 @@ public:
    {
       for(unsigned idir = 0; idir < paths_.size(); ++idir)
       {
-         std::string pattern = paths_[idir] + "/*.root";
+         std::string pattern = paths_[idir];
 
          std::vector<std::string> tmp = FindFiles(pattern);
          fileList_.insert( fileList_.end(), tmp.begin(), tmp.end());
