@@ -1,3 +1,5 @@
+import FWCore.ParameterSet.Config as cms
+
 NoScraping = cms.EDFilter("FilterOutScraping",
     applyfilter = cms.untracked.bool(True),
     debugOn = cms.untracked.bool(False),
