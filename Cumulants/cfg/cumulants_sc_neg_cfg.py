@@ -59,6 +59,7 @@ process.defaultTrigSel = hltMB.clone()
 # Load HI event selection modules
 process.load('HeavyIonsAnalysis.Configuration.collisionEventSelection_cff')
 process.load('Configuration.EventContent.EventContentHeavyIons_cff')
+process.load("Analyzers.Cumulants.ppEvtSelection_cff")
 
 #centrality
 #process.load("RecoHI.HiCentralityAlgos.pACentrality_cfi")
