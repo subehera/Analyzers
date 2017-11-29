@@ -13,17 +13,16 @@ if __name__ == '__main__':
     config.General.transferOutputs = True
     config.General.transferLogs = False
     config.JobType.pluginName = 'Analysis'
-#    config.JobType.maxMemoryMB = 3000
+    config.JobType.maxMemoryMB = 2500
     config.JobType.psetName = '../cfg/cumulants_std_cfg.py'
     config.Data.unitsPerJob = 10
-#    config.Data.unitsPerJob = 40 for V0 only
     config.Data.totalUnits = -1
     config.Data.splitting = 'LumiBased'
-    config.Data.outLFNDirBase = '/store/user/%s/' % (getUsernameFromSiteDB())
+    #config.Data.outLFNDirBase = '/store/user/%s/' % (getUsernameFromSiteDB())
+    config.Data.outLFNDirBase = '/store/group/phys_heavyions/flowcorr/SubCumu/'
     config.Data.lumiMask = 'Cert_262081-262328_5TeV_PromptReco_Collisions15_25ns_JSON.txt'
     config.Data.publication = False
-    config.Site.storageSite = 'T2_US_MIT'
-#    config.Site.storageSite = 'T3_US_Rice'
+    config.Site.storageSite = 'T2_CH_CERN'
 
     def submit(config):
         try:
