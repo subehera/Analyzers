@@ -43,6 +43,7 @@
 
 // user include files
 #include "TH1F.h"
+#include "TH2D.h"
 #include "TTree.h"
 
 //
@@ -90,7 +91,14 @@ class ChargeDepAndPtCorr : public edm::one::EDAnalyzer<edm::one::SharedResources
       // ## track selection ##
       double pTmin_; //min pt of the tracks
       double pTmax_; //max pt of the tracks
-      
+     
+      // ## efficiency correction ##
+      bool cweight_;            //Apply correction or not
+      edm::InputTag fname_;     //ROOT file name that contains eff/(1-fake) corrections
+      TFile* feff_;             //ROOT file that contains eff/(1-fake) corrections
+      std::vector<TH2D*> heff_; //histograms with eff/(1-fake) correction factors
+      std::vector<int> effmultbin_; //multiplicity/centrality binning for the heff histograms
+ 
       // ## histograms ##
       TH1F* hXBestVtx_;
       TH1F* hYBestVtx_;

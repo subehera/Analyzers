@@ -34,9 +34,10 @@ defaultCumu = cms.EDAnalyzer('Cumulants', #Analyzer named: Correspond to the cla
                              d0d0error = cms.untracked.double(3.0),
                              pterrorpt = cms.untracked.double(0.1),
                              #Cumulant
-                             harm     = cms.untracked.vint32(2,2,2,2),
-                             nsubevt     = cms.untracked.int32(2),
-                             cweight  = cms.untracked.bool(True),
+                             harm       = cms.untracked.vint32(2,2,2,2),
+                             nsubevt    = cms.untracked.int32(2),
+                             cweight    = cms.untracked.bool(True),
+                             branchSave = cms.untracked.int32(0),
                              #deltaeta = cms.untracked.double(0.),
                              #Acc X Eff
                              fname = cms.untracked.InputTag('trkEff_pp_all_75X_origin.root'),

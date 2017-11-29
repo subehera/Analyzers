@@ -7,7 +7,6 @@
 //ROOT headers
 #include <TStyle.h>
 #include <TChain.h>
-#include <TTreeIndex.h>
 #include <TH1.h>
 #include <TH2.h>
 #include <TMath.h>
@@ -42,13 +41,15 @@ main(int argc, char** argv) {
 //--------------------------------------------------------
 	cmdline::parser parser;
 	parser.add<std::string>("output", '\0', "output file name and path", false, "../output/cnm_vnm.root");
-	parser.add<std::string>("input" , '\0', "input file name and path", false, "../test/cumulants.root");
-        parser.add<std::string>("folder" , '\0', "folder of tree", false, "anaV2");
-	parser.add<int>("noffmax"       , '\0', "maximum N_{trk}^offline", false, 500);
-	parser.add<int>("cumumaxorder"  , '\0', "maximum cumulant order", false, 14);
-	parser.add<int>("harmonicorder0" , '\0', "harmonic order", false, 2);
-        parser.add<int>("harmonicorder1" , '\0', "harmonic order", false, 2);
+	parser.add<std::string>("input",  '\0', "input file name and path", false, "../test/cumulants.root");
+        parser.add<std::string>("folder", '\0', "folder of tree", false, "anaV2");
+	parser.add<int>("noffmin"       , '\0', "minimum N_{trk}^offline", false, 0);
+	parser.add<int>("noffmax"       , '\0', "maximum N_{trk}^offline", false, 800);
+	parser.add<int>("cumumaxorder"  , '\0', "maximum cumulant order", false, 8);
+	parser.add<int>("harmonicorder0", '\0', "harmonic order", false, 2);
+        parser.add<int>("harmonicorder1", '\0', "harmonic order", false, 2);
 	parser.add<int>("nevents"       , '\0', "Number of events to be analyzed", false, -1);
+	parser.add<int>("subevt"        , '\0', "Number of sub-events", false, 1);
 	parser.add("process"            , '\0', "process TTree");
 	parser.parse_check( argc, argv );
 
@@ -59,71 +60,80 @@ main(int argc, char** argv) {
 //--------------------------------------------------------
 
         gStyle->SetOptStat(110);
-        std::string inputFileName  = parser.get<std::string>( "input" );
+        std::string inputFileNames = parser.get<std::string>( "input" );
         std::string outputFileName = parser.get<std::string>( "output" );
         std::string folderName = parser.get<std::string>( "folder" );
 
+        const int noffmin = parser.get<int>( "noffmin" );
         const int noffmax = parser.get<int>( "noffmax" );
-        const int multmax = 2*noffmax;
+        const int multmax = 3*noffmax;
         const int cumumaxorder  = parser.get<int>( "cumumaxorder" );
         const int harmonicorder0 = parser.get<int>( "harmonicorder0" );
         const int harmonicorder1 = parser.get<int>( "harmonicorder1" );
-        const int nevents = parser.get<int>( "nevents" );
+        int nevents = parser.get<int>( "nevents" );
+        int subevts = parser.get<int>( "subevt" );
 
-        const int nbins = 30;
-        int binarray[nbins+1] = {0,   10,  20,  30,  40,  50,  60,  70,  80,  90,
-                                 100, 110, 120, 130, 140, 150, 160, 170, 180, 190,
-                                 200, 210, 220, 230, 240, 250, 260, 270, 280, 290,
-                                 noffmax};
+//pPb 8TeV: 0, 10, 30, 50, 70, 90, 120, 150, 185, 220, 250, 300, 320, 350,
+        const int nbins = 15;
+        int binarray[nbins+1] = {0,   10,  30,  50,  70,  90,
+                                 120, 150, 185, 190, 220, 250, 
+                                 300, 320, 350, 400};
 
-        //input file
-        TFile* fin  = TFile::Open(inputFileName.c_str(), "READ");
+      //---------------------------------------------------------
+      //================== Chainer builder ======================
+      //---------------------------------------------------------
+
+      ChainBuilder* b = new ChainBuilder();
+      b->AddDir(inputFileNames);
+      //b->AddDir("/eos/cms/store/group/phys_heavyions/flowcorr/SubCumu/PAHighMultiplicity7/*_std_*/*/*/*.root");
+      //b->AddDir("/eos/cms/store/group/phys_heavyions/flowcorr/SubCumu/PAHighMultiplicity*/*_std_*/*/*/*.root");
+      //b->AddDir("/eos/cms/store/group/phys_heavyions/flowcorr/SubCumu/PAHighMultiplicity7/RecoSkim2016_pPb250_cumulants_std_v10/171110_162518/0000/cumulants_std_299.root");
+      b->ReadDir();
+      b->PrintList();
+      LOG_S(INFO) << "Building chain ";
+      b->BuildChain(folderName);
+      //b->GetChain()->Print();
+
+      //Check that TChain is valid
+      LOG_S(INFO) << "Getting chain ";
+      TChain* ch = b->GetChain();
+      LOG_S(INFO) << "Trying run on: " << ch->GetName();
+
+      if( !ch )
+      {
+         LOG_S(ERROR) << "Invalid TChain";
+         return 0;
+      }
+      else
+      {
+         if( nevents == -1 ) 
+         {
+            LOG_S(INFO) << "We will run on the full statistics of the TChain";
+         }
+         else
+         {
+            LOG_S(INFO) << "We will run over N_{evt} = " << nevents;
+         }
+      }
+
+
         //output file
         TFile* fout = 0x0;
-//        if(parser.exist( "process" ))
-        { 
-           //Check that inputfile is found and properly open
-           LOG_S(INFO) << "Trying to open file: " << inputFileName.c_str();
+        //if process, recreate output file
+        fout = TFile::Open(outputFileName.c_str(), "RECREATE");
 
-           if(!fin)
-           {
-              LOG_S(ERROR) << "Cannot open file: " << inputFileName.c_str() << ", file not found in the given path";
-              return 0;
-           }
-           if(!fin->IsOpen())
-           {
-              LOG_S(ERROR) << "Cannot open file: " << inputFileName.c_str() << ", file might be corrupted";
-              return 0;
-           }
-           else
-           {
-              LOG_S(INFO) << "File " << inputFileName.c_str() << " successfully opened!";
-              fin->ls();
-           }
-
-           //if process, recreate output file
-           fout = TFile::Open(outputFileName.c_str(), "RECREATE");
-
-           //process the tree
-           utils::process(fin, fout, folderName, 
-                          noffmax, multmax, 
-                          cumumaxorder, harmonicorder0, harmonicorder1, 
-                          nbins, binarray,
-                          nevents);
-           
-        }
-/*
-        else
-        {
-           //if no process just update the output file
-           fout = TFile::Open(outputFileName.c_str(), "UPDATE");
-        }
-*/
-        fin->Close();
-        delete fin;
-   
+        //process the tree
+        utils::process(ch, fout, folderName, 
+                       noffmin, noffmax, multmax, 
+                       cumumaxorder, harmonicorder0, harmonicorder1, 
+                       nbins, binarray,
+                       nevents, subevts);
+        
         fout->Close();
         delete fout;
-   
+
+        if(!b)  delete b;
+        if(!ch) delete ch;
+ 
         return 0;
 }

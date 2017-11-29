@@ -140,6 +140,7 @@ class Cumulants : public edm::one::EDAnalyzer<edm::one::SharedResources>  {
       std::vector<int> harm_;     //harmonic order
       int nsubevt_;     // number of subevents
       bool cweight_; //use particle weight to correct from acc X eff
+      int branchSave_;  // whether force saving more branches
       cumulant::QVectorSet qN_;
 //      double deltaeta_;
       double CN8_;

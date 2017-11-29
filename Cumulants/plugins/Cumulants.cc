@@ -75,6 +75,7 @@ Cumulants::Cumulants(const edm::ParameterSet& iConfig) :
   harm_(iConfig.getUntrackedParameter< std::vector<int> >("harm")),
   nsubevt_(iConfig.getUntrackedParameter<int>("nsubevt")), 
   cweight_(iConfig.getUntrackedParameter<bool>("cweight")),
+  branchSave_(iConfig.getUntrackedParameter<int>("branchSave")),
      //2-sub event relative eta difference
 //  deltaeta_(iConfig.getUntrackedParameter<double>("deltaeta")),
   //file acc & eff & fake
@@ -161,7 +162,7 @@ Cumulants::Cumulants(const edm::ParameterSet& iConfig) :
    qN_ = cumulant::QVectorSet(h, set, cweight_);
 
    //Ouptut
-//   usesResource("TFileService");
+   usesResource("TFileService");
 //   edm::Service<TFileService> fs;
    // Histograms
 }
@@ -180,6 +181,7 @@ void Cumulants::beginJob()
    hEtaNoff_ = fTrkHist.make<TH1F>("hEtaNoff", "", 30, -3.,   3.);
    hPtNoff_  = fTrkHist.make<TH1F>("hPtNoff",  "", 10,  0.,  10.);
    hPhiNoff_ = fTrkHist.make<TH1F>("hPhiNoff", "", 64, -3.2,  3.2);
+
    // TTree
    trEvent_ = fs->make<TTree>("trEvent", "trEvent");
    trEvent_->Branch("centrality", &cent_, "centrality/I");
@@ -195,7 +197,7 @@ void Cumulants::beginJob()
    trEvent_->Branch(Form("wC%d%d4_51",harm_[0],harm_[1]),  &wCN4_51_,  Form("wC%d%d4_51/D",harm_[0],harm_[1])); // 00110011
    trEvent_->Branch(Form("wC%d%d2_17",harm_[0],harm_[0]), &wCN2_17_, Form("wC%d%d2_17/D",harm_[0],harm_[0])); // 00010001 
 
-   if((nsubevt_<=2 && harm_[0]!=harm_[1]) || (nsubevt_>2)) // calculate for SC with 2sub or std method; Or higher cumulants with >2 subevents
+   if((nsubevt_<=2 && harm_[0]!=harm_[1]) || (nsubevt_>2) || branchSave_>=1) // calculate for SC with 2sub or std method; Or higher cumulants with >2 subevents
    {
      trEvent_->Branch(Form("C%d%d2_33",harm_[0],harm_[1]),  &CN2_33_,  Form("C%d%d2_33/D",harm_[0],harm_[1])); // 00100001
      trEvent_->Branch(Form("C%d%d2_18",harm_[1],harm_[0]),  &CN2_18_,  Form("C%d%d2_18/D",harm_[1],harm_[0])); // 00010010
@@ -205,7 +207,7 @@ void Cumulants::beginJob()
      trEvent_->Branch(Form("wC%d%d2_34",harm_[1],harm_[1]), &wCN2_34_, Form("wC%d%d2_34/D",harm_[1],harm_[1])); // 00100010
    }
 
-   if(nsubevt_>2 && harm_[0]==harm_[1]) // calculate for higher cumulants with >2 subevents
+   if((nsubevt_>2 && harm_[0]==harm_[1]) || branchSave_>=2) // calculate for higher cumulants with >2 subevents
    {
      trEvent_->Branch(Form("C%d%d6_123",harm_[0],harm_[1]),  &CN6_123_,  Form("C%d%d6_123/D",harm_[0],harm_[1])); // 01111011
      trEvent_->Branch(Form("C%d%d6_125",harm_[0],harm_[1]),  &CN6_125_,  Form("C%d%d6_125/D",harm_[0],harm_[1])); // 01111101

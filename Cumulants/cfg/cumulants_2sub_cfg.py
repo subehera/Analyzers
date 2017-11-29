@@ -6,16 +6,14 @@ process = cms.Process("Cumulants")
 # __________________ General _________________
 
 # Configure the logger
-process.load('Configuration.StandardSequences.Services_cff')
 process.load("FWCore.MessageService.MessageLogger_cfi")
 process.MessageLogger.cerr.FwkReport.reportEvery = 100
 
 # Configure the number of maximum event the analyser run on in interactive mode
 # -1 == ALL
 process.maxEvents = cms.untracked.PSet( 
-    input = cms.untracked.int32(1000) 
+    input = cms.untracked.int32(300) 
 )
-process.options = cms.untracked.PSet(wantSummary = cms.untracked.bool(True))
 
 process.Timing = cms.Service("Timing",
   summaryOnly = cms.untracked.bool(True),
@@ -59,8 +57,8 @@ process.GlobalTag = GlobalTag(process.GlobalTag, '75X_dataRun2_Prompt_ppAt5TeV_v
 # __________________ Event selection _________________
 
 # Define the trigger selection
-process.load('Analyzers.Cumulants.hltFilter_cff')
-process.defaultTrigSel = process.hltMB.clone()
+from Analyzers.Cumulants.hltFilter_cff import *
+process.defaultTrigSel = hltMB.clone()
 
 # Load HI event selection modules
 process.load('HeavyIonsAnalysis.Configuration.collisionEventSelection_cff')

@@ -7,12 +7,12 @@ process = cms.Process("Cumulants")
 
 # Configure the logger
 process.load("FWCore.MessageService.MessageLogger_cfi")
-process.MessageLogger.cerr.FwkReport.reportEvery = 1
+process.MessageLogger.cerr.FwkReport.reportEvery = 200
 
 # Configure the number of maximum event the analyser run on in interactive mode
 # -1 == ALL
 process.maxEvents = cms.untracked.PSet( 
-    input = cms.untracked.int32(10) 
+    input = cms.untracked.int32(10000) 
 )
 
 
@@ -21,14 +21,14 @@ process.maxEvents = cms.untracked.PSet(
 # Define the input file to run on in interactive mode
 process.source = cms.Source("PoolSource",
     fileNames = cms.untracked.vstring(
-        'root://cms-xrd-global.cern.ch//store/hidata/PARun2016C/PAHighMultiplicity0/AOD/PromptReco-v1/000/285/479/00000/3AB7179C-DCAE-E611-980E-FA163EC8DDF7.root'
+        'root://cms-xrd-global.cern.ch//store/hidata/PARun2016C/PAMinimumBias1/AOD/PromptReco-v1/000/285/480/00000/040B9307-28AF-E611-AE2A-02163E013572.root'
     )
 )
 
 # Define output file name
 import os
 process.TFileService = cms.Service("TFileService",
-     fileName = cms.string(os.getenv('CMSSW_BASE') + '/src/Analyzers/Cumulants/test/cumulants.root')
+     fileName = cms.string('cumulants.root')
 )
 
 
@@ -38,7 +38,7 @@ process.TFileService = cms.Service("TFileService",
 # Global tag contains information about detector geometry, calibration, alignement, ...
 process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
 from Configuration.AlCa.GlobalTag import GlobalTag
-process.GlobalTag = GlobalTag(process.GlobalTag, '80X_dataRun2_Express_v15', '')
+process.GlobalTag = GlobalTag(process.GlobalTag, '80X_dataRun2_Prompt_v15', '')
 # Getting calib from GT
 #process.GlobalTag.toGet = cms.VPSet(
 #  cms.PSet(
@@ -54,7 +54,7 @@ process.GlobalTag = GlobalTag(process.GlobalTag, '80X_dataRun2_Express_v15', '')
 
 # Define the trigger selection
 from Analyzers.Cumulants.hltFilter_cff import *
-process.defaultTrigSel = hlt120.clone()
+process.defaultTrigSel = hlt185.clone()
 
 # Load HI event selection modules
 process.load('HeavyIonsAnalysis.Configuration.collisionEventSelection_cff')
