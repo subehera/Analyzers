@@ -7,3 +7,7 @@ __*__.py
 Cumulants/macro/PlotVnm
 Cumulants/macro/PlotVnm.o
 Cumulants/macro/bin/debug.log
+Cumulants/crab/CumulantHM
+Cumulants/crab/CumulantMB
+Cumulants/crab/crabtest.py
+Cumulants/qjobs/LSFJOB_*
