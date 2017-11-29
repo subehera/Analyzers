@@ -11,3 +11,4 @@ Cumulants/crab/CumulantHM
 Cumulants/crab/CumulantMB
 Cumulants/crab/crabtest.py
 Cumulants/qjobs/LSFJOB_*
+Cumulants/qjobs/PlotVnm
