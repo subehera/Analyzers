@@ -2,3 +2,14 @@
 __*__.py
 *.swp
 *.swo
+*.root
+*.o
+*.log
+Cumulants/macro/PlotVnm
+Cumulants/macro/PlotVnm.o
+Cumulants/macro/bin/debug.log
+Cumulants/crab/CumulantHM
+Cumulants/crab/CumulantMB
+Cumulants/crab/crabtest.py
+Cumulants/qjobs/LSFJOB_*
+Cumulants/qjobs/PlotVnm
