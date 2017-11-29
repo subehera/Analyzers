@@ -40,6 +40,6 @@ defaultCumu = cms.EDAnalyzer('Cumulants', #Analyzer named: Correspond to the cla
                              branchSave = cms.untracked.int32(0),
                              #deltaeta = cms.untracked.double(0.),
                              #Acc X Eff
-                             fname = cms.untracked.InputTag('trkEff_pp_all_75X_origin.root'),
-                             effmultbin = cms.untracked.vint32(0,10000)
+                             fname = cms.untracked.InputTag('Hydjet_ppReco_default.root'),
+                             effmultbin = cms.untracked.vint32(0,260,400,800,1200,10000)
 )
