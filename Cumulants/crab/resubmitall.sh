@@ -9,7 +9,7 @@ do
    echo $i
    echo "---------------------------------------------"
    echo " " 
-   crab resubmit -d $i --maxmemory 3000
+   crab resubmit -d $i --maxmemory 2500 --maxjobruntime 2750
    sleep 1
    echo "---------------------------------------------"
    echo " " 
