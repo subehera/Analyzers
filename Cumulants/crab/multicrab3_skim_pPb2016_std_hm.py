@@ -15,6 +15,7 @@ if __name__ == '__main__':
     config.JobType.pluginName = 'Analysis'
 #    config.JobType.numCores = 8
     config.JobType.maxMemoryMB = 2500
+    config.JobType.maxJobRuntimeMin = 2750
     config.JobType.psetName = '../cfg/cumulants_hlt185_std_cfg.py'
     config.Data.unitsPerJob = 10
 #    config.Data.unitsPerJob = 40 for V0 only

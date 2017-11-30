@@ -13,7 +13,8 @@ if __name__ == '__main__':
     config.General.transferOutputs = True
     config.General.transferLogs = False
     config.JobType.pluginName = 'Analysis'
-#    config.JobType.maxMemoryMB = 3000
+    config.JobType.maxMemoryMB = 2500
+    config.JobType.maxJobRuntimeMin = 2750
 #    config.JobType.psetName = '../test/pPbFlowCorrSkimSlim_2016_cfg.py'
 #    config.JobType.psetName = '../test/pPbFlowCorrSkimSlim_2016_D0_cfg.py'
 #    config.JobType.psetName = '../test/pPbFlowCorrSkim_2016_D0_cfg.py'

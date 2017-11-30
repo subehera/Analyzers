@@ -14,6 +14,7 @@ if __name__ == '__main__':
     config.General.transferLogs = False
     config.JobType.pluginName = 'Analysis'
     config.JobType.maxMemoryMB = 2500
+    config.JobType.maxJobRuntimeMin = 2750
     config.JobType.psetName = '../cfg/cumulants_std_cfg.py'
     config.Data.unitsPerJob = 10
     config.Data.totalUnits = -1
