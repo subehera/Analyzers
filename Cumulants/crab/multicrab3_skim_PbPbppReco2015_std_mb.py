@@ -15,7 +15,8 @@ if __name__ == '__main__':
     config.JobType.pluginName = 'Analysis'
     config.JobType.maxMemoryMB = 2500
     config.JobType.psetName = '../cfg/cumulants_std_cfg.py'
-    config.Data.unitsPerJob = 10
+    config.JobType.maxJobRuntimeMin = 2750
+    config.Data.unitsPerJob = 5
     config.Data.totalUnits = -1
     config.Data.splitting = 'LumiBased'
     #config.Data.outLFNDirBase = '/store/user/%s/' % (getUsernameFromSiteDB())

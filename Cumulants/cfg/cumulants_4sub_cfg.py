@@ -7,12 +7,12 @@ process = cms.Process("Cumulants")
 
 # Configure the logger
 process.load("FWCore.MessageService.MessageLogger_cfi")
-process.MessageLogger.cerr.FwkReport.reportEvery = 100
+process.MessageLogger.cerr.FwkReport.reportEvery = 10000
 
 # Configure the number of maximum event the analyser run on in interactive mode
 # -1 == ALL
 process.maxEvents = cms.untracked.PSet( 
-    input = cms.untracked.int32(300) 
+    input = cms.untracked.int32(10) 
 )
 
 process.Timing = cms.Service("Timing",
@@ -32,7 +32,7 @@ process.source = cms.Source("PoolSource",
 # Define output file name
 import os
 process.TFileService = cms.Service("TFileService",
-     fileName = cms.string('cumulants_std.root')
+     fileName = cms.string('cumulants_4sub.root')
 )
 
 
@@ -41,6 +41,9 @@ process.TFileService = cms.Service("TFileService",
 # Configure the Global Tag
 # Global tag contains information about detector geometry, calibration, alignement, ...
 process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
+process.load("TrackingTools/TransientTrack/TransientTrackBuilder_cfi")
+process.load("Configuration.Geometry.GeometryIdeal_cff")
+process.load("Configuration.StandardSequences.MagneticField_cff")
 from Configuration.AlCa.GlobalTag import GlobalTag
 process.GlobalTag = GlobalTag(process.GlobalTag, '75X_dataRun2_PromptHI_v3', '')
 # Getting calib from GT
@@ -65,7 +68,7 @@ process.defaultTrigSel.throw = cms.bool(False)
 
 # Load HI event selection modules
 process.load('HeavyIonsAnalysis.Configuration.collisionEventSelection_cff')
-process.load('Configuration.EventContent.EventContentHeavyIons_cff')
+#process.load('Configuration.EventContent.EventContentHeavyIons_cff')
 
 #Primary vertex re-fitter
 process.load("RecoVertex.Configuration.RecoVertex_cff")

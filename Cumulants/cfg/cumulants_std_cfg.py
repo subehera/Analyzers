@@ -7,12 +7,12 @@ process = cms.Process("Cumulants")
 
 # Configure the logger
 process.load("FWCore.MessageService.MessageLogger_cfi")
-process.MessageLogger.cerr.FwkReport.reportEvery = 100
+process.MessageLogger.cerr.FwkReport.reportEvery = 10000
 
 # Configure the number of maximum event the analyser run on in interactive mode
 # -1 == ALL
 process.maxEvents = cms.untracked.PSet( 
-    input = cms.untracked.int32(300) 
+    input = cms.untracked.int32(10) 
 )
 
 process.Timing = cms.Service("Timing",
@@ -41,6 +41,9 @@ process.TFileService = cms.Service("TFileService",
 # Configure the Global Tag
 # Global tag contains information about detector geometry, calibration, alignement, ...
 process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
+process.load("TrackingTools/TransientTrack/TransientTrackBuilder_cfi")
+process.load("Configuration.Geometry.GeometryIdeal_cff")
+process.load("Configuration.StandardSequences.MagneticField_cff")
 from Configuration.AlCa.GlobalTag import GlobalTag
 process.GlobalTag = GlobalTag(process.GlobalTag, '75X_dataRun2_PromptHI_v3', '')
 # Getting calib from GT
@@ -65,7 +68,7 @@ process.defaultTrigSel.throw = cms.bool(False)
 
 # Load HI event selection modules
 process.load('HeavyIonsAnalysis.Configuration.collisionEventSelection_cff')
-process.load('Configuration.EventContent.EventContentHeavyIons_cff')
+#process.load('Configuration.EventContent.EventContentHeavyIons_cff')
 
 #Primary vertex re-fitter
 process.load("RecoVertex.Configuration.RecoVertex_cff")
@@ -111,27 +114,39 @@ process.anaV4 = process.stdV4Analysis.clone()
 process.anaSC23 = process.stdAnalysisSC23.clone()
 process.anaSC24 = process.stdAnalysisSC24.clone()
 
+#process.p = cms.Path(
+#                     process.eventSelPbPb *   # events sel
+#                     #process.defaultTrigSel * # Select MB events
+#                     process.anaV2)           # Run the analyzer
+#
+#process.p1 = cms.Path(
+#                     process.eventSelPbPb *    # events sel
+#                     #process.defaultTrigSel *  # Select MB events
+#                     process.anaV3)            # Run the analyzer
+#
+#process.p2 = cms.Path(
+#                     process.eventSelPbPb *    # events sel
+#                     #process.defaultTrigSel *  # Select MB events
+#                     process.anaV4)            # Run the analyzer
+#
+#process.p3 = cms.Path(
+#                     process.eventSelPbPb *    # events sel
+#                     #process.defaultTrigSel *  # Select MB events
+#                     process.anaSC23)          # Run the analyzer
+#
+#process.p4 = cms.Path(
+#                     process.eventSelPbPb *    # events sel
+#                     #process.defaultTrigSel *  # Select MB events
+#                     process.anaSC24)          # Run the analyzer
+
 process.p = cms.Path(
-                     process.eventSelPbPb *    # events sel
-                     process.defaultTrigSel *  # Select MB events
-                     process.anaV2)            # Run the analyzer
+                     process.eventSelPbPb    # events sel
+                     #process.defaultTrigSel * # Select MB events
+                     )           
+process.ana1 = cms.EndPath(process.anaV2)
+process.ana2 = cms.EndPath(process.anaV3)
+process.ana3 = cms.EndPath(process.anaV4)
+process.ana4 = cms.EndPath(process.anaSC23)
+process.ana5 = cms.EndPath(process.anaSC24)
 
-process.p1 = cms.Path(
-                     process.eventSelPbPb *    # events sel
-                     process.defaultTrigSel *  # Select MB events
-                     process.anaV3)            # Run the analyzer
-
-process.p2 = cms.Path(
-                     process.eventSelPbPb *    # events sel
-                     process.defaultTrigSel *  # Select MB events
-                     process.anaV4)            # Run the analyzer
-
-process.p3 = cms.Path(
-                     process.eventSelPbPb *    # events sel
-                     process.defaultTrigSel *  # Select MB events
-                     process.anaSC23)          # Run the analyzer
-
-process.p4 = cms.Path(
-                     process.eventSelPbPb *    # events sel
-                     process.defaultTrigSel *  # Select MB events
-                     process.anaSC24)          # Run the analyzer
+process.schedule = cms.Schedule(process.p, process.ana1, process.ana2, process.ana3, process.ana4, process.ana5)
