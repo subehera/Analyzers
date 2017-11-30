@@ -1,0 +1,217 @@
+# Conditions read from  CMS_CONDITIONS  via FrontierProd 
+DEBUG 2017-11-30 02:06:03,597: 	 Executing command: 'submit'
+DEBUG 2017-11-30 02:06:03,601: 	 Found CRAB cache file /afs/cern.ch/user/m/mguilbau/.crab3
+DEBUG 2017-11-30 02:06:03,607: 	 Checking credentials
+DEBUG 2017-11-30 02:06:03,608: 	 Found proxy file /tmp/x509up_u56046
+DEBUG 2017-11-30 02:06:03,608: 	 Getting proxy life time left
+DEBUG 2017-11-30 02:06:04,311: 	 Executing : 
+ command : voms-proxy-info -file /tmp/x509up_u56046 -timeleft
+ output : 82507
+
+ error: 
+ retcode : 0
+DEBUG 2017-11-30 02:06:05,018: 	 Executing : 
+ command : voms-proxy-info -file /tmp/x509up_u56046 -actimeleft
+ output : 82507
+
+ error: 
+ retcode : 0
+DEBUG 2017-11-30 02:06:05,018: 	 Proxy valid for 22:55:07 hours
+DEBUG 2017-11-30 02:06:05,019: 	 Will use CRAB Analysis plugin (i.e. will run an analysis job type).
+DEBUG 2017-11-30 02:06:05,166: 	 Executing : 
+ command : openssl x509 -in ~/.globus/usercert.pem -subject -noout
+ output : subject= /DC=ch/DC=cern/OU=Organic Units/OU=Users/CN=mguilbau/CN=706810/CN=Maxime Guilbaud
+
+ error: 
+ retcode : 0
+DEBUG 2017-11-30 02:06:05,166: 	 Checking credentials
+DEBUG 2017-11-30 02:06:05,166: 	 Found proxy file /tmp/x509up_u56046
+DEBUG 2017-11-30 02:06:05,166: 	 Getting proxy life time left
+DEBUG 2017-11-30 02:06:05,774: 	 Executing : 
+ command : voms-proxy-info -file /tmp/x509up_u56046 -timeleft
+ output : 82506
+
+ error: 
+ retcode : 0
+DEBUG 2017-11-30 02:06:06,278: 	 Executing : 
+ command : voms-proxy-info -file /tmp/x509up_u56046 -actimeleft
+ output : 82505
+
+ error: 
+ retcode : 0
+DEBUG 2017-11-30 02:06:06,279: 	 Proxy valid for 22:55:06 hours
+DEBUG 2017-11-30 02:06:06,883: 	 Executing : 
+ command : env X509_USER_PROXY=/tmp/x509up_u56046 voms-proxy-info -fqan
+ output : /cms/Role=NULL/Capability=NULL
+
+ error: 
+ retcode : 0
+DEBUG 2017-11-30 02:06:07,441: 	 Registering user credentials for server /DC=ch/DC=cern/OU=computers/CN=vocms(045|052|021|031|0118|0118a|0119|0108|0105|0109).cern.ch
+DEBUG 2017-11-30 02:06:07,548: 	 Executing : 
+ command : openssl x509 -in ~/.globus/usercert.pem -subject -noout
+ output : subject= /DC=ch/DC=cern/OU=Organic Units/OU=Users/CN=mguilbau/CN=706810/CN=Maxime Guilbaud
+
+ error: 
+ retcode : 0
+DEBUG 2017-11-30 02:06:07,549: 	 Getting myproxy life time left for myproxy.cern.ch
+DEBUG 2017-11-30 02:06:07,549: 	 Calculating hash of /DC=ch/DC=cern/OU=Organic Units/OU=Users/CN=mguilbau/CN=706810/CN=Maxime Guilbaud_cmsweb.cern.ch for credential name
+DEBUG 2017-11-30 02:06:07,852: 	 Executing : 
+ command : myproxy-info -l ceacc3fa5b05f1692e56a22f8a1a4ab471546649 -s myproxy.cern.ch
+ output : username: ceacc3fa5b05f1692e56a22f8a1a4ab471546649
+owner: /DC=ch/DC=cern/OU=Organic Units/OU=Users/CN=mguilbau/CN=706810/CN=Maxime Guilbaud
+  renewal policy: /DC=ch/DC=cern/OU=computers/CN=vocms(045|052|021|031|0118|0118a|0119|0108|0105|0109).cern.ch
+  trusted retrieval policy: /DC=ch/DC=cern/OU=computers/CN=vocms(045|052|021|031|0118|0118a|0119|0108|0105|0109).cern.ch
+  timeleft: 442:08:20  (18.4 days)
+
+ error: 
+ retcode : 0
+DEBUG 2017-11-30 02:06:07,854: 	 Myproxy is valid: 1591700
+DEBUG 2017-11-30 02:06:07,855: 	 Command use: submit
+DEBUG 2017-11-30 02:06:07,855: 	 Options use: ['--config', <WMCore.Configuration.Configuration object at 0x2016ed0>]
+DEBUG 2017-11-30 02:06:08,661: 	 CRABClient version: 3.3.1707.patch1
+DEBUG 2017-11-30 02:06:08,661: 	 Instance is prod
+DEBUG 2017-11-30 02:06:08,661: 	 Server base url is cmsweb.cern.ch
+DEBUG 2017-11-30 02:06:08,661: 	 Command url /crabserver/prod/workflow
+DEBUG 2017-11-30 02:06:08,661: 	 Started submission
+DEBUG 2017-11-30 02:06:08,661: 	 Working on /afs/cern.ch/user/m/mguilbau/AnalyzerForWei/CMSSW_7_5_8_patch3/src/Analyzers/Cumulants/crab/CumulantMB/crab_PbPbppRereco2015_cumulants_3sub_b5_v10
+DEBUG 2017-11-30 02:06:09,363: 	 Loading required information from the environment
+DEBUG 2017-11-30 02:06:09,363: 	 Found CMSSW_7_5_8_patch3 for slc6_amd64_gcc491 with base /afs/cern.ch/user/m/mguilbau/AnalyzerForWei/CMSSW_7_5_8_patch3
+DEBUG 2017-11-30 02:06:09,364: 	 Loading required information from the environment
+DEBUG 2017-11-30 02:06:09,364: 	 Found CMSSW_7_5_8_patch3 for slc6_amd64_gcc491 with base /afs/cern.ch/user/m/mguilbau/AnalyzerForWei/CMSSW_7_5_8_patch3
+DEBUG 2017-11-30 02:06:09,380: 	 UNIQUE NAME: tarUUID ca2e27f6-6602-47d2-9983-60bc70c9d31a 
+DEBUG 2017-11-30 02:06:09,381: 	 self.config: from WMCore.Configuration import Configuration
+config = Configuration()
+config.section_('General')
+config.General.transferLogs = False
+config.General.transferOutputs = True
+config.General.workArea = 'CumulantMB'
+config.General.requestName = 'PbPbppRereco2015_cumulants_3sub_b5_v10'
+config.section_('JobType')
+config.JobType.psetName = '../cfg/cumulants_3sub_cfg.py'
+config.JobType.pluginName = 'Analysis'
+config.JobType.maxJobRuntimeMin = 2850
+config.JobType.maxMemoryMB = 2500
+config.section_('Data')
+config.Data.inputDataset = '/HIMinimumBias5/HIRun2015-02May2016-v1/AOD'
+config.Data.outputDatasetTag = 'RecoSkimPbPbppRereco2015_MB5_cumulants_3sub_v10'
+config.Data.publication = False
+config.Data.unitsPerJob = 5
+config.Data.splitting = 'LumiBased'
+config.Data.lumiMask = 'Cert_262548-263757_PromptReco_HICollisions15_JSON_v2.txt'
+config.Data.outLFNDirBase = '/store/group/phys_heavyions/flowcorr/SubCumu/'
+config.Data.totalUnits = -1
+config.section_('Site')
+config.Site.storageSite = 'T2_CH_CERN'
+config.section_('User')
+config.section_('Debug')
+
+DEBUG 2017-11-30 02:06:09,381: 	 self.config.JobType.psetName: ../cfg/cumulants_3sub_cfg.py
+INFO 2017-11-30 02:06:09,381: 	 Importing CMSSW configuration ../cfg/cumulants_3sub_cfg.py
+INFO 2017-11-30 02:06:09,810: 	 Finished importing CMSSW configuration ../cfg/cumulants_3sub_cfg.py
+DEBUG 2017-11-30 02:06:09,810: 	 Writing CMSSW configuration to /afs/cern.ch/user/m/mguilbau/AnalyzerForWei/CMSSW_7_5_8_patch3/src/Analyzers/Cumulants/crab/CumulantMB/crab_PbPbppRereco2015_cumulants_3sub_b5_v10/inputs/PSet.py
+DEBUG 2017-11-30 02:06:09,961: 	 The following EDM output files will be collected: []
+DEBUG 2017-11-30 02:06:09,961: 	 The following TFile output files will be collected: ['cumulants_3sub.root']
+DEBUG 2017-11-30 02:06:09,961: 	 The following user output files will be collected: []
+DEBUG 2017-11-30 02:06:09,961: 	 Loading required information from the environment
+DEBUG 2017-11-30 02:06:09,961: 	 Found CMSSW_7_5_8_patch3 for slc6_amd64_gcc491 with base /afs/cern.ch/user/m/mguilbau/AnalyzerForWei/CMSSW_7_5_8_patch3
+DEBUG 2017-11-30 02:06:09,962: 	 Making tarball in /afs/cern.ch/user/m/mguilbau/AnalyzerForWei/CMSSW_7_5_8_patch3/src/Analyzers/Cumulants/crab/CumulantMB/crab_PbPbppRereco2015_cumulants_3sub_b5_v10/inputs/ca2e27f6-6602-47d2-9983-60bc70c9d31adefault.tgz
+DEBUG 2017-11-30 02:06:09,990: 	 Checking directory /afs/cern.ch/user/m/mguilbau/AnalyzerForWei/CMSSW_7_5_8_patch3/lib
+DEBUG 2017-11-30 02:06:09,990: 	 Adding directory /afs/cern.ch/user/m/mguilbau/AnalyzerForWei/CMSSW_7_5_8_patch3/lib to tarball
+DEBUG 2017-11-30 02:06:10,570: 	 Checking directory /afs/cern.ch/user/m/mguilbau/AnalyzerForWei/CMSSW_7_5_8_patch3/biglib
+DEBUG 2017-11-30 02:06:10,570: 	 Adding directory /afs/cern.ch/user/m/mguilbau/AnalyzerForWei/CMSSW_7_5_8_patch3/biglib to tarball
+DEBUG 2017-11-30 02:06:10,570: 	 Checking directory /afs/cern.ch/user/m/mguilbau/AnalyzerForWei/CMSSW_7_5_8_patch3/module
+DEBUG 2017-11-30 02:06:10,574: 	 Adding data directory /afs/cern.ch/user/m/mguilbau/AnalyzerForWei/CMSSW_7_5_8_patch3/src/Analyzers/ChargeDepAndPtCorr/data to tarball
+DEBUG 2017-11-30 02:06:10,583: 	 Adding data directory /afs/cern.ch/user/m/mguilbau/AnalyzerForWei/CMSSW_7_5_8_patch3/src/Analyzers/ChargeDepAndPtCorr/interface to tarball
+DEBUG 2017-11-30 02:06:10,585: 	 Adding data directory /afs/cern.ch/user/m/mguilbau/AnalyzerForWei/CMSSW_7_5_8_patch3/src/Analyzers/Cumulants/data to tarball
+DEBUG 2017-11-30 02:06:10,592: 	 Adding data directory /afs/cern.ch/user/m/mguilbau/AnalyzerForWei/CMSSW_7_5_8_patch3/src/Analyzers/Cumulants/interface to tarball
+DEBUG 2017-11-30 02:06:10,779: 	 Adding data directory /afs/cern.ch/user/m/mguilbau/AnalyzerForWei/CMSSW_7_5_8_patch3/src/Analyzers/NtrkDistribution/data to tarball
+DEBUG 2017-11-30 02:06:10,784: 	 Adding data directory /afs/cern.ch/user/m/mguilbau/AnalyzerForWei/CMSSW_7_5_8_patch3/src/Analyzers/NtrkDistribution/interface to tarball
+DEBUG 2017-11-30 02:06:10,834: 	 Uploading archive /afs/cern.ch/user/m/mguilbau/AnalyzerForWei/CMSSW_7_5_8_patch3/src/Analyzers/Cumulants/crab/CumulantMB/crab_PbPbppRereco2015_cumulants_3sub_b5_v10/inputs/ca2e27f6-6602-47d2-9983-60bc70c9d31adefault.tgz (0.888672.1 MB) to the CRAB cache. Using URI https://cmsweb.cern.ch/crabcache
+DEBUG 2017-11-30 02:06:11,724: 	 Loading required information from the environment
+DEBUG 2017-11-30 02:06:11,724: 	 Found CMSSW_7_5_8_patch3 for slc6_amd64_gcc491 with base /afs/cern.ch/user/m/mguilbau/AnalyzerForWei/CMSSW_7_5_8_patch3
+DEBUG 2017-11-30 02:06:11,724: 	 Making tarball in /afs/cern.ch/user/m/mguilbau/AnalyzerForWei/CMSSW_7_5_8_patch3/src/Analyzers/Cumulants/crab/CumulantMB/crab_PbPbppRereco2015_cumulants_3sub_b5_v10/inputs/debugFiles.tgz
+DEBUG 2017-11-30 02:06:11,729: 	 Uploading archive /afs/cern.ch/user/m/mguilbau/AnalyzerForWei/CMSSW_7_5_8_patch3/src/Analyzers/Cumulants/crab/CumulantMB/crab_PbPbppRereco2015_cumulants_3sub_b5_v10/inputs/debugFiles.tgz (2 KB) to the CRAB cache. Using URI https://cmsweb.cern.ch/crabcache
+DEBUG 2017-11-30 02:06:12,555: 	 Result uploading input files: 4ca6a934c3fedcad978b9455f349743fdf13f158ac62218e88de5b6b87adbb6f.tar.gz 
+DEBUG 2017-11-30 02:06:12,556: 	 Attaching lumi mask Cert_262548-263757_PromptReco_HICollisions15_JSON_v2.txt to the request
+DEBUG 2017-11-30 02:06:12,556: 	 Reading lumi-mask from Cert_262548-263757_PromptReco_HICollisions15_JSON_v2.txt
+INFO 2017-11-30 02:06:12,556: 	 Sending the request to the server
+DEBUG 2017-11-30 02:06:12,557: 	 Submitting {'maxjobruntime': 2850, 'extrajdl': [], 'ignorelocality': 0, 'savelogsflag': 0, 'useparent': 0, 'asyncdest': 'T2_CH_CERN', 'algoargs': 5, 'cachefilename': '4ca6a934c3fedcad978b9455f349743fdf13f158ac62218e88de5b6b87adbb6f.tar.gz', 'numcores': 1, 'addoutputfiles': [], 'generator': 'pythia', 'maxmemory': 2500, 'publishdbsurl': 'https://cmsweb.cern.ch/dbs/prod/phys03/DBSWriter', 'priority': 10, 'jobsw': 'CMSSW_7_5_8_patch3', 'edmoutfiles': [], 'userfiles': [], 'primarydataset': '', 'inputdata': '/HIMinimumBias5/HIRun2015-02May2016-v1/AOD', 'lfn': '/store/group/phys_heavyions/flowcorr/SubCumu/', 'dryrun': 0, 'workflow': 'crab_PbPbppRereco2015_cumulants_3sub_b5_v10', 'cacheurl': u'https://cmsweb.cern.ch/crabcache', 'runs': [u'262620', u'262640', u'262656', u'262694', u'262695', u'262697', u'262698', u'262699', u'262701', u'262702', u'262703', u'262726', u'262733', u'262735', u'262768', u'262777', u'262783', u'262784', u'262811', u'262813', u'262814', u'262815', u'262816', u'262817', u'262818', u'262819', u'262834', u'262836', u'262837', u'262893', u'262921', u'262987', u'262988', u'263005', u'263007', u'263022', u'263031', u'263033', u'263035', u'263233', u'263234', u'263261', u'263284', u'263286', u'263293', u'263322', u'263333', u'263349', u'263355', u'263357', u'263358', u'263359', u'263362', u'263379', u'263400', u'263406', u'263410', u'263412', u'263491', u'263502', u'263511', u'263584', u'263604', u'263614'], 'lumis': ['99,186,192,423', '87,102,105,232', '1,101,104,133,135,148,151,178', '72,225', '3,223', '1,62', '1,11,15,15', '1,34,36,40', '1,1', '1,1', '1,123', '64,500', '1,6,60,83', '1,206', '59,425', '1,144', '2,5', '1,374', '7,438', '1,4,6,6', '1,2,5,6', '1,4,6,6', '1,449', '1,27', '1,75,77,279', '1,118', '73,214', '1,99', '1,777', '33,1054', '9,887,889,1072', '71,156,161,174', '1,689', '63,654', '1,128', '3,13,27,51,66,204', '1,110', '1,62', '1,609', '43,427,429,437,439,486,488,735', '1,695', '82,1357', '71,223', '1,602', '1,373', '64,1238', '78,227', '60,401', '1,117', '1,2', '1,3', '1,2', '1,574', '82,916', '63,904', '82,99', '78,664', '1,240', '52,410', '74,413,415,497,499,512', '1,43,45,101,104,116,118,118,120,126,128,133,137,143,147,147,149,237', '78,289,316,959', '81,978', '80,503,505,725,753,1015,1017,1050,1053,1092'], 'nonprodsw': 0, 'tfileoutfiles': ['cumulants_3sub.root'], 'oneEventMode': 0, 'debugfilename': '56798c77b30466d16ddaeed20b77725fcc63147e79f0f8c843804271809dedfa.tar.gz', 'saveoutput': 1, 'publication': 0, 'jobarch': 'slc6_amd64_gcc491', 'totalunits': -1, 'splitalgo': 'LumiBased', 'ignoreglobalblacklist': 0, 'nonvaliddata': 0, 'dbsurl': 'https://cmsweb.cern.ch/dbs/prod/global/DBSReader', 'publishgroupname': 0, 'jobtype': 'Analysis', 'publishname2': 'RecoSkimPbPbppRereco2015_MB5_cumulants_3sub_v10'} 
+DEBUG 2017-11-30 02:06:12,557: 	 Encoded submit request: maxjobruntime=2850&ignorelocality=0&savelogsflag=0&useparent=0&asyncdest=T2_CH_CERN&algoargs=5&cachefilename=4ca6a934c3fedcad978b9455f349743fdf13f158ac62218e88de5b6b87adbb6f.tar.gz&numcores=1&generator=pythia&maxmemory=2500&publishdbsurl=https%3A%2F%2Fcmsweb.cern.ch%2Fdbs%2Fprod%2Fphys03%2FDBSWriter&priority=10&jobsw=CMSSW_7_5_8_patch3&primarydataset=&inputdata=%2FHIMinimumBias5%2FHIRun2015-02May2016-v1%2FAOD&lfn=%2Fstore%2Fgroup%2Fphys_heavyions%2Fflowcorr%2FSubCumu%2F&dryrun=0&workflow=crab_PbPbppRereco2015_cumulants_3sub_b5_v10&cacheurl=https%3A%2F%2Fcmsweb.cern.ch%2Fcrabcache&nonprodsw=0&oneEventMode=0&debugfilename=56798c77b30466d16ddaeed20b77725fcc63147e79f0f8c843804271809dedfa.tar.gz&saveoutput=1&publication=0&jobarch=slc6_amd64_gcc491&totalunits=-1&splitalgo=LumiBased&ignoreglobalblacklist=0&nonvaliddata=0&dbsurl=https%3A%2F%2Fcmsweb.cern.ch%2Fdbs%2Fprod%2Fglobal%2FDBSReader&publishgroupname=0&jobtype=Analysis&publishname2=RecoSkimPbPbppRereco2015_MB5_cumulants_3sub_v10&tfileoutfiles=cumulants_3sub.root&runs=262620&runs=262640&runs=262656&runs=262694&runs=262695&runs=262697&runs=262698&runs=262699&runs=262701&runs=262702&runs=262703&runs=262726&runs=262733&runs=262735&runs=262768&runs=262777&runs=262783&runs=262784&runs=262811&runs=262813&runs=262814&runs=262815&runs=262816&runs=262817&runs=262818&runs=262819&runs=262834&runs=262836&runs=262837&runs=262893&runs=262921&runs=262987&runs=262988&runs=263005&runs=263007&runs=263022&runs=263031&runs=263033&runs=263035&runs=263233&runs=263234&runs=263261&runs=263284&runs=263286&runs=263293&runs=263322&runs=263333&runs=263349&runs=263355&runs=263357&runs=263358&runs=263359&runs=263362&runs=263379&runs=263400&runs=263406&runs=263410&runs=263412&runs=263491&runs=263502&runs=263511&runs=263584&runs=263604&runs=263614&lumis=99%2C186%2C192%2C423&lumis=87%2C102%2C105%2C232&lumis=1%2C101%2C104%2C133%2C135%2C148%2C151%2C178&lumis=72%2C225&lumis=3%2C223&lumis=1%2C62&lumis=1%2C11%2C15%2C15&lumis=1%2C34%2C36%2C40&lumis=1%2C1&lumis=1%2C1&lumis=1%2C123&lumis=64%2C500&lumis=1%2C6%2C60%2C83&lumis=1%2C206&lumis=59%2C425&lumis=1%2C144&lumis=2%2C5&lumis=1%2C374&lumis=7%2C438&lumis=1%2C4%2C6%2C6&lumis=1%2C2%2C5%2C6&lumis=1%2C4%2C6%2C6&lumis=1%2C449&lumis=1%2C27&lumis=1%2C75%2C77%2C279&lumis=1%2C118&lumis=73%2C214&lumis=1%2C99&lumis=1%2C777&lumis=33%2C1054&lumis=9%2C887%2C889%2C1072&lumis=71%2C156%2C161%2C174&lumis=1%2C689&lumis=63%2C654&lumis=1%2C128&lumis=3%2C13%2C27%2C51%2C66%2C204&lumis=1%2C110&lumis=1%2C62&lumis=1%2C609&lumis=43%2C427%2C429%2C437%2C439%2C486%2C488%2C735&lumis=1%2C695&lumis=82%2C1357&lumis=71%2C223&lumis=1%2C602&lumis=1%2C373&lumis=64%2C1238&lumis=78%2C227&lumis=60%2C401&lumis=1%2C117&lumis=1%2C2&lumis=1%2C3&lumis=1%2C2&lumis=1%2C574&lumis=82%2C916&lumis=63%2C904&lumis=82%2C99&lumis=78%2C664&lumis=1%2C240&lumis=52%2C410&lumis=74%2C413%2C415%2C497%2C499%2C512&lumis=1%2C43%2C45%2C101%2C104%2C116%2C118%2C118%2C120%2C126%2C128%2C133%2C137%2C143%2C147%2C147%2C149%2C237&lumis=78%2C289%2C316%2C959&lumis=81%2C978&lumis=80%2C503%2C505%2C725%2C753%2C1015%2C1017%2C1050%2C1053%2C1092
+DEBUG 2017-11-30 02:06:14,603: 	 Result: {u'result': [{u'RequestName': u'171130_010613:mguilbau_crab_PbPbppRereco2015_cumulants_3sub_b5_v10'}]}
+INFO 2017-11-30 02:06:14,606: 	 Success: Your task has been delivered to the CRAB3 server.
+INFO 2017-11-30 02:06:14,606: 	 Task name: 171130_010613:mguilbau_crab_PbPbppRereco2015_cumulants_3sub_b5_v10
+INFO 2017-11-30 02:06:14,606: 	 Please use 'crab status' to check how the submission process proceeds.
+DEBUG 2017-11-30 02:06:14,606: 	 About to return
+DEBUG 2017-11-30 02:24:56,801: 	 Executing command: 'status'
+DEBUG 2017-11-30 02:24:56,801: 	 Found CRAB cache file /afs/cern.ch/user/m/mguilbau/.crab3
+DEBUG 2017-11-30 02:24:56,807: 	 Checking credentials
+DEBUG 2017-11-30 02:24:56,807: 	 Found proxy file /tmp/x509up_u56046
+DEBUG 2017-11-30 02:24:56,808: 	 Getting proxy life time left
+DEBUG 2017-11-30 02:24:57,614: 	 Executing : 
+ command : voms-proxy-info -file /tmp/x509up_u56046 -timeleft
+ output : 81374
+
+ error: 
+ retcode : 0
+DEBUG 2017-11-30 02:24:58,435: 	 Executing : 
+ command : voms-proxy-info -file /tmp/x509up_u56046 -actimeleft
+ output : 81373
+
+ error: 
+ retcode : 0
+DEBUG 2017-11-30 02:24:58,435: 	 Proxy valid for 22:36:14 hours
+DEBUG 2017-11-30 02:24:58,619: 	 Executing : 
+ command : openssl x509 -in ~/.globus/usercert.pem -subject -noout
+ output : subject= /DC=ch/DC=cern/OU=Organic Units/OU=Users/CN=mguilbau/CN=706810/CN=Maxime Guilbaud
+
+ error: 
+ retcode : 0
+DEBUG 2017-11-30 02:24:58,620: 	 Checking credentials
+DEBUG 2017-11-30 02:24:58,622: 	 Found proxy file /tmp/x509up_u56046
+DEBUG 2017-11-30 02:24:58,622: 	 Getting proxy life time left
+DEBUG 2017-11-30 02:24:59,539: 	 Executing : 
+ command : voms-proxy-info -file /tmp/x509up_u56046 -timeleft
+ output : 81372
+
+ error: 
+ retcode : 0
+DEBUG 2017-11-30 02:25:00,244: 	 Executing : 
+ command : voms-proxy-info -file /tmp/x509up_u56046 -actimeleft
+ output : 81371
+
+ error: 
+ retcode : 0
+DEBUG 2017-11-30 02:25:00,244: 	 Proxy valid for 22:36:12 hours
+DEBUG 2017-11-30 02:25:01,299: 	 Registering user credentials for server /DC=ch/DC=cern/OU=computers/CN=vocms(045|052|021|031|0118|0118a|0119|0108|0105|0109).cern.ch
+DEBUG 2017-11-30 02:25:01,410: 	 Executing : 
+ command : openssl x509 -in ~/.globus/usercert.pem -subject -noout
+ output : subject= /DC=ch/DC=cern/OU=Organic Units/OU=Users/CN=mguilbau/CN=706810/CN=Maxime Guilbaud
+
+ error: 
+ retcode : 0
+DEBUG 2017-11-30 02:25:01,411: 	 Getting myproxy life time left for myproxy.cern.ch
+DEBUG 2017-11-30 02:25:01,411: 	 Calculating hash of /DC=ch/DC=cern/OU=Organic Units/OU=Users/CN=mguilbau/CN=706810/CN=Maxime Guilbaud_cmsweb.cern.ch for credential name
+DEBUG 2017-11-30 02:25:01,516: 	 Executing : 
+ command : myproxy-info -l ceacc3fa5b05f1692e56a22f8a1a4ab471546649 -s myproxy.cern.ch
+ output : username: ceacc3fa5b05f1692e56a22f8a1a4ab471546649
+owner: /DC=ch/DC=cern/OU=Organic Units/OU=Users/CN=mguilbau/CN=706810/CN=Maxime Guilbaud
+  renewal policy: /DC=ch/DC=cern/OU=computers/CN=vocms(045|052|021|031|0118|0118a|0119|0108|0105|0109).cern.ch
+  trusted retrieval policy: /DC=ch/DC=cern/OU=computers/CN=vocms(045|052|021|031|0118|0118a|0119|0108|0105|0109).cern.ch
+  timeleft: 441:49:26  (18.4 days)
+
+ error: 
+ retcode : 0
+DEBUG 2017-11-30 02:25:01,518: 	 Myproxy is valid: 1590566
+DEBUG 2017-11-30 02:25:01,519: 	 Command use: status
+DEBUG 2017-11-30 02:25:01,519: 	 Options use: ['-d', 'CumulantMB/crab_PbPbppRereco2015_cumulants_3sub_b5_v10']
+DEBUG 2017-11-30 02:25:01,885: 	 CRABClient version: 3.3.1707.patch1
+DEBUG 2017-11-30 02:25:01,885: 	 Instance is prod
+DEBUG 2017-11-30 02:25:01,885: 	 Server base url is cmsweb.cern.ch
+DEBUG 2017-11-30 02:25:01,885: 	 Command url /crabserver/prod/workflow
+DEBUG 2017-11-30 02:25:02,325: 	 Got information from server oracle database: {u'result': [u'171130_010613:mguilbau_crab_PbPbppRereco2015_cumulants_3sub_b5_v10', u'None', u'NEW', u'2017-11-30 01:06:14.245798', u'None', u'None', u'None', u'CMSSW_7_5_8_patch3', u'slc6_amd64_gcc491', u'/HIMinimumBias5/HIRun2015-02May2016-v1/AOD', u'[]', u'[]', u'LumiBased', u"{'splitOnRun': False, 'halt_job_on_file_boundaries': False, 'lumis': ['99,186,192,423', '87,102,105,232', '1,101,104,133,135,148,151,178', '72,225', '3,223', '1,62', '1,11,15,15', '1,34,36,40', '1,1', '1,1', '1,123', '64,500', '1,6,60,83', '1,206', '59,425', '1,144', '2,5', '1,374', '7,438', '1,4,6,6', '1,2,5,6', '1,4,6,6', '1,449', '1,27', '1,75,77,279', '1,118', '73,214', '1,99', '1,777', '33,1054', '9,887,889,1072', '71,156,161,174', '1,689', '63,654', '1,128', '3,13,27,51,66,204', '1,110', '1,62', '1,609', '43,427,429,437,439,486,488,735', '1,695', '82,1357', '71,223', '1,602', '1,373', '64,1238', '78,227', '60,401', '1,117', '1,2', '1,3', '1,2', '1,574', '82,916', '63,904', '82,99', '78,664', '1,240', '52,410', '74,413,415,497,499,512', '1,43,45,101,104,116,118,118,120,126,128,133,137,143,147,147,149,237', '78,289,316,959', '81,978', '80,503,505,725,753,1015,1017,1050,1053,1092'], 'runs': ['262620', '262640', '262656', '262694', '262695', '262697', '262698', '262699', '262701', '262702', '262703', '262726', '262733', '262735', '262768', '262777', '262783', '262784', '262811', '262813', '262814', '262815', '262816', '262817', '262818', '262819', '262834', '262836', '262837', '262893', '262921', '262987', '262988', '263005', '263007', '263022', '263031', '263033', '263035', '263233', '263234', '263261', '263284', '263286', '263293', '263322', '263333', '263349', '263355', '263357', '263358', '263359', '263362', '263379', '263400', '263406', '263410', '263412', '263491', '263502', '263511', '263584', '263604', '263614'], 'lumis_per_job': 5}", u'-1', u'4ca6a934c3fedcad978b9455f349743fdf13f158ac62218e88de5b6b87adbb6f.tar.gz', u'https://cmsweb.cern.ch/crabcache', u'mguilbau', u'/DC=ch/DC=cern/OU=Organic Units/OU=Users/CN=mguilbau/CN=706810/CN=Maxime Guilbaud', u'cms', u'None', u'None', u'RecoSkimPbPbppRereco2015_MB5_cumulants_3sub_v10-00000000000000000000000000000000', u'T2_CH_CERN', u'https://cmsweb.cern.ch/dbs/prod/global/DBSReader', u'https://cmsweb.cern.ch/dbs/prod/phys03/DBSWriter', u'F', u'Analysis', u'{}', u'[]', u'F', u'None', u'[]', u'2850', u'1', u'2500', u'10', u'None', u'None', u'None', u'None', u'[]', u'[]', u'[]', u'pythia', u'[]', u"['cumulants_3sub.root']", u'[]', u'https://cmsweb.cern.ch/crabserver/prod', u'None', u'0', u'cmsgwms-collector-global.cern.ch:9620,cmssrv221.fnal.gov:9620', u'None', u'F', u'[]', u'T', u'/store/group/phys_heavyions/flowcorr/SubCumu/', u'F', u'None', u'F', u'F', u'F', u'None', u'HIMinimumBias5', u'filetransfers', u'SUBMIT', u'None', u'56798c77b30466d16ddaeed20b77725fcc63147e79f0f8c843804271809dedfa.tar.gz', u'188.184.95.191', u'F', u'None'], u'desc': {u'columns': [u'tm_taskname', u'panda_jobset_id', u'tm_task_status', u'tm_start_time', u'tm_start_injection', u'tm_end_injection', u'tm_task_failure', u'tm_job_sw', u'tm_job_arch', u'tm_input_dataset', u'tm_site_whitelist', u'tm_site_blacklist', u'tm_split_algo', u'tm_split_args', u'tm_totalunits', u'tm_user_sandbox', u'tm_cache_url', u'tm_username', u'tm_user_dn', u'tm_user_vo', u'tm_user_role', u'tm_user_group', u'tm_publish_name', u'tm_asyncdest', u'tm_dbs_url', u'tm_publish_dbs_url', u'tm_publication', u'tm_job_type', u'tm_arguments', u'panda_resubmitted_jobs', u'tm_save_logs', u'tw_name', u'tm_user_infiles', u'tm_maxjobruntime', u'tm_numcores', u'tm_maxmemory', u'tm_priority', u'tm_output_dataset', u'tm_user_webdir', u'tm_activity', u'tm_scriptexe', u'tm_scriptargs', u'tm_extrajdl', u'tm_task_warnings', u'tm_generator', u'tm_outfiles', u'tm_tfile_outfiles', u'tm_edm_outfiles', u'tm_asourl', u'tm_events_per_lumi', u'tm_use_parent', u'tm_collector', u'tm_schedd', u'tm_dry_run', u'tm_user_files', u'tm_transfer_outputs', u'tm_output_lfn', u'tm_ignore_locality', u'tm_fail_limit', u'tm_one_event_mode', u'tm_publish_groupname', u'tm_nonvalid_input_dataset', u'tm_secondary_input_dataset', u'tm_primary_dataset', u'tm_asodb', u'tm_task_command', u'clusterid', u'tm_debug_files', u'tm_submitter_ip_addr', u'tm_ignore_global_blacklist', u'tm_last_publication']}}
+INFO 2017-11-30 02:25:02,325: 	 CRAB project directory:		/afs/cern.ch/user/m/mguilbau/AnalyzerForWei/CMSSW_7_5_8_patch3/src/Analyzers/Cumulants/crab/CumulantMB/crab_PbPbppRereco2015_cumulants_3sub_b5_v10
+INFO 2017-11-30 02:25:02,325: 	 Task name:			171130_010613:mguilbau_crab_PbPbppRereco2015_cumulants_3sub_b5_v10
+INFO 2017-11-30 02:25:02,326: 	 Status on the CRAB server:	NEW on command SUBMIT
+INFO 2017-11-30 02:25:02,326: 	 Task URL to use for HELP:	https://cmsweb.cern.ch/crabserver/ui/task/171130_010613%3Amguilbau_crab_PbPbppRereco2015_cumulants_3sub_b5_v10
+DEBUG 2017-11-30 02:25:02,326: 	 The task has not been submitted to the Grid scheduler yet. Not printing job information.
+INFO 2017-11-30 02:25:02,335: 	 Log file is /afs/cern.ch/user/m/mguilbau/AnalyzerForWei/CMSSW_7_5_8_patch3/src/Analyzers/Cumulants/crab/CumulantMB/crab_PbPbppRereco2015_cumulants_3sub_b5_v10/crab.log
