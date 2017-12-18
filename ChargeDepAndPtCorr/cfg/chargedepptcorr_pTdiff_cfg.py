@@ -12,8 +12,8 @@ process.MessageLogger.cerr.FwkReport.reportEvery = 10
 # Configure the number of maximum event the analyser run on in interactive mode
 # -1 == ALL
 process.maxEvents = cms.untracked.PSet( 
-    #input = cms.untracked.int32(-1) 
-    input = cms.untracked.int32(1) 
+    input = cms.untracked.int32(-1) 
+    #input = cms.untracked.int32(1) 
 )
 
 
@@ -30,7 +30,7 @@ process.source = cms.Source("PoolSource",
 import os
 process.TFileService = cms.Service("TFileService",
      #fileName = cms.string(os.getenv('CMSSW_BASE') + '/src/Analyzers/ChargeDepAndPtCorr/test/chargeptdepcorr.root')
-     fileName = cms.string('chargeptdepcorr_midcentral.root')
+     fileName = cms.string('chargeptdepcorr_base.root')
 )
 
 
@@ -70,17 +70,12 @@ process.clusterCompatibilityFilter.clusterTrunc = cms.double(2.0)
 # __________________ Analyse Sequence _________________
 
 # Load you analyzer with initial configuration
-process.load("Analyzers.ChargeDepAndPtCorr.chargedepptcorr_cff")
-process.defaultAnalysis_1015 = process.CPDC1015.clone()
-process.defaultAnalysis_1520 = process.CPDC1520.clone()
-process.defaultAnalysis_2025 = process.CPDC2025.clone()
-process.defaultAnalysis_2530 = process.CPDC2530.clone()
+process.load("Analyzers.ChargeDepAndPtCorr.chargedepptcorr_cfi")
+process.defaultAnalysis = process.CPDCptdiff.clone()
+
 process.p = cms.Path(process.hfCoincFilter3 *             # Requier HF coincidence with 3 GeV  
                      process.primaryVertexFilter *        # Clean up on vertices
                      process.clusterCompatibilityFilter * # Clean up on pileup
                      process.centralityBin *              # Compute centrality
                      process.hltMB *                      # Select MB events
-                     process.defaultAnalysis_1015 *
-                     process.defaultAnalysis_1520 *
-                     process.defaultAnalysis_2025 *
-                     process.defaultAnalysis_2530)        # Run the analyzer
+                     process.defaultAnalysis)             # Run the analyzer
