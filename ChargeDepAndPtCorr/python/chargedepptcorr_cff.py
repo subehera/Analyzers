@@ -77,6 +77,6 @@ CPDC8590.centmin = cms.untracked.int32(85)
 CPDC8590.centmax = cms.untracked.int32(90)
 
 #pT diff file
-CPDCptdiff = defaultCPDC.clone()
-CPDCptdiff.pTminTrk_trg = cms.untracked.int32(0.1,0.2,0.3,0.4,0.5,1.0,2.0)
-CPDCptdiff.pTminTrk_trg = cms.untracked.int32(0.2,0.3,0.4,0.5,1.0,2.0,3.0)
+#CPDCptdiff = defaultCPDC.clone()
+#CPDCptdiff.pTminTrk_trg = cms.untracked.int32(0.1,0.2,0.3,0.4,0.5,1.0,2.0)
+#CPDCptdiff.pTminTrk_trg = cms.untracked.int32(0.2,0.3,0.4,0.5,1.0,2.0,3.0)

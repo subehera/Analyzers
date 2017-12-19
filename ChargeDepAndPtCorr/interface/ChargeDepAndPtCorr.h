@@ -141,9 +141,9 @@ class ChargeDepAndPtCorr : public edm::one::EDAnalyzer<edm::one::SharedResources
 
       // ## track selection ##
       int    nTrkTot_trg_; 
-      double nTrkTot_corr_trg_; 
+      float  nTrkTot_corr_trg_; 
       int    nTrkTot_ass_; 
-      double nTrkTot_corr_ass_; 
+      float  nTrkTot_corr_ass_; 
       std::vector<int>    nTrk_trg_; 
       std::vector<double> nTrk_corr_trg_; 
       std::vector<int>    nTrk_ass_; 
