@@ -700,11 +700,6 @@ namespace utils
              std::vector< std::vector<double> > &wcNMreb,
              int nbins, int binarray[], int nsub, bool quiet = false)
    {
-      std::vector< std::vector<double> >(cNM.size(),  std::vector<double>(qNM[0].size(),  0.)).swap(cNM);
-      std::vector< std::vector<double> >(wcNM.size(), std::vector<double>(wqNM[0].size(), 0.)).swap(wcNM);
-      std::vector< std::vector<double> >(cNMreb.size(),  std::vector<double>(nbins,  0.)).swap(cNMreb);
-      std::vector< std::vector<double> >(wcNMreb.size(), std::vector<double>(nbins,  0.)).swap(wcNMreb);
-   
       if(!quiet) LOG_S(INFO) << "Combining multiplicity bin for each N_{trk}^{offline} bin";
       for(unsigned int iord = 0; iord < static_cast<unsigned int>(cNM.size()); ++iord)
       {
@@ -717,14 +712,6 @@ namespace utils
          }
       }
 
-      for(unsigned int iord = 0; iord < static_cast<unsigned int>(cNM.size()); ++iord)
-      {
-         for(unsigned int inoff = 0; inoff < static_cast<int>(qNM[0].size()); ++inoff)
-         {
-            if(wcNM[iord][inoff] != 0.) cNM[iord][inoff] /= wcNM[iord][inoff];
-            else                        cNM[iord][inoff] = 0.;
-         }
-      }
 
       if(!quiet) LOG_S(INFO) << "Rebinning in larger N_{trk}_{offline} bins now";
       for(unsigned int iord = 0; iord < static_cast<unsigned int>(cNMreb.size()); ++iord)
@@ -734,13 +721,20 @@ namespace utils
          {
             while( inoff >= binarray[ibin] && inoff < binarray[ibin+1] )
             {
-                  cNMreb[iord][ibin]  += cNM[iord][inoff] * wcNM[iord][inoff];
+                  //cNMreb[iord][ibin]  += cNM[iord][inoff] * wcNM[iord][inoff];
+                  cNMreb[iord][ibin]  += cNM[iord][inoff];
                   wcNMreb[iord][ibin] += wcNM[iord][inoff];
                   ++inoff;
             }
 
             if(wcNMreb[iord][ibin] != 0.) cNMreb[iord][ibin] /= wcNMreb[iord][ibin];
             else                          cNMreb[iord][ibin] = 0.;
+         }
+
+         for(unsigned int inoff = 0; inoff < static_cast<int>(qNM[0].size()); ++inoff)
+         {
+            if(wcNM[iord][inoff] != 0.) cNM[iord][inoff] /= wcNM[iord][inoff];
+            else                        cNM[iord][inoff] = 0.;
          }
       }
    }
@@ -750,8 +744,8 @@ namespace utils
    // fill histograms
    //___________________________________________________
    void
-   fillHistograms(std::vector< std::vector<double> > cNM, 
-                  std::vector< std::vector<double> > cNMreb, 
+   fillHistograms(const std::vector< std::vector<double> >& cNM, 
+                  const std::vector< std::vector<double> >& cNMreb, 
                   std::vector<TH1D*> hcN, 
                   std::vector<TH1D*> hcNreb,
                   std::vector<TH1D*> hvN, 
@@ -1001,7 +995,7 @@ namespace utils
       {
          for(int ibin = 0; ibin < hcN[ibr]->GetNbinsX(); ++ibin)
          {
-            if(cNMvar[ibr][ibin] > 0)
+            if(cNMvar[ibr][ibin] > 0.)
             { 
                hcN[ibr]->SetBinError(ibin+1, TMath::Sqrt(cNMvar[ibr][ibin]));
                hvN[ibr]->SetBinError(ibin+1, errorVn(ibr,
@@ -1028,9 +1022,9 @@ namespace utils
                ++jbin;
             }
              
-            cNMrebvar[ibr][ibin] /= hcNreb[ibr]->GetBinWidth(ibin+1);
+            if(hcNreb[ibr]->GetBinWidth(ibin+1) != 0.) cNMrebvar[ibr][ibin] /= hcNreb[ibr]->GetBinWidth(ibin+1);
 
-            if(cNMrebvar[ibr][ibin] > 0)
+            if(cNMrebvar[ibr][ibin] > 0.)
             { 
                hcNreb[ibr]->SetBinError(ibin+1, TMath::Sqrt(cNMrebvar[ibr][ibin]));
                hvNreb[ibr]->SetBinError(ibin+1, errorVn(ibr, 
@@ -1067,26 +1061,26 @@ namespace utils
       //  -- 2D vector correlator (numerator and denominator)
       std::vector < std::vector< std::vector<double> > >  
       qNM( cumumaxorder / 2,
-           std::vector< std::vector<double> > ( noffmax, 
+           std::vector< std::vector<double> > ( binarray[nbins], 
                                                 std::vector<double>(multmax, 0.) ) );
       std::vector < std::vector< std::vector<double> > >  
       wqNM( cumumaxorder / 2,
-            std::vector< std::vector<double> > ( noffmax, 
+            std::vector< std::vector<double> > ( binarray[nbins], 
                                                  std::vector<double>(multmax, 0.) ) );
       // -- cumulant after multipilicity bin re-combination
       std::vector < std::vector<double> >  
       cNM( cumumaxorder / 2,
-           std::vector<double>( noffmax, 0.) );
+           std::vector<double>( binarray[nbins], 0.) );
       std::vector < std::vector<double> >  
       wcNM( cumumaxorder / 2,
-            std::vector<double>( noffmax, 0.) );
+            std::vector<double>( binarray[nbins], 0.) );
       // -- cumulant after rebinning in noff
       std::vector < std::vector<double> >  
       cNMreb( cumumaxorder / 2,
-              std::vector<double>( noffmax, 0.) );
+              std::vector<double>( nbins, 0.) );
       std::vector < std::vector<double> >  
       wcNMreb( cumumaxorder / 2,
-               std::vector<double>( noffmax, 0.) );
+               std::vector<double>( nbins, 0.) );
 
       //Loop on chain an fill stuff!!!
       LOG_S(INFO) << "Looping on TChain...";
@@ -1156,10 +1150,10 @@ namespace utils
          hvNreb[iord]->SetMarkerColor(iord+1);
          hvNreb[iord]->SetLineColor(iord+1);
       }
-      delete[] tmp;
 
       // -- fill them 
       fillHistograms(cNM, cNMreb, hcN, hcNreb, hvN, hvNreb, nsub);
+      delete[] tmp;
 
       //Jacknife it to get errors
       Jacknife(ch,           harm0,    harm1, 
