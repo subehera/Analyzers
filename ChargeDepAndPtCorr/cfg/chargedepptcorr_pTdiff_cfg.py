@@ -12,7 +12,7 @@ process.MessageLogger.cerr.FwkReport.reportEvery = 10
 # Configure the number of maximum event the analyser run on in interactive mode
 # -1 == ALL
 process.maxEvents = cms.untracked.PSet( 
-    input = cms.untracked.int32(300) 
+    input = cms.untracked.int32(-1) 
     #input = cms.untracked.int32(1) 
 )
 
@@ -30,7 +30,7 @@ process.source = cms.Source("PoolSource",
 import os
 process.TFileService = cms.Service("TFileService",
      #fileName = cms.string(os.getenv('CMSSW_BASE') + '/src/Analyzers/ChargeDepAndPtCorr/test/chargeptdepcorr.root')
-     fileName = cms.string('chargeptdepcorr_midperipheral.root')
+     fileName = cms.string('chargeptdepcorr_base.root')
 )
 
 
@@ -67,20 +67,15 @@ process.clusterCompatibilityFilter.clusterPars = cms.vdouble(0.0,0.006)
 process.clusterCompatibilityFilter.clusterTrunc = cms.double(2.0)
 
 
-# __________________ Event selection _________________
+# __________________ Analyse Sequence _________________
 
 # Load you analyzer with initial configuration
-process.load("Analyzers.ChargeDepAndPtCorr.chargedepptcorr_cff")
-process.defaultAnalysis_3035 = process.CPDC3035.clone()
-process.defaultAnalysis_3540 = process.CPDC3540.clone()
-process.defaultAnalysis_4045 = process.CPDC4045.clone()
-process.defaultAnalysis_4550 = process.CPDC4550.clone()
+process.load("Analyzers.ChargeDepAndPtCorr.chargedepptcorr_cfi")
+process.defaultAnalysis = process.CPDCptdiff.clone()
+
 process.p = cms.Path(process.hfCoincFilter3 *             # Requier HF coincidence with 3 GeV  
                      process.primaryVertexFilter *        # Clean up on vertices
                      process.clusterCompatibilityFilter * # Clean up on pileup
                      process.centralityBin *              # Compute centrality
                      process.hltMB *                      # Select MB events
-                     process.defaultAnalysis_3035 *       
-                     process.defaultAnalysis_3540 *       
-                     process.defaultAnalysis_4045 *       
-                     process.defaultAnalysis_4550)        # Run the analyzer
+                     process.defaultAnalysis)             # Run the analyzer

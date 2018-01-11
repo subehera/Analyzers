@@ -123,16 +123,16 @@ ChargeDepAndPtCorr::ChargeDepAndPtCorr(const edm::ParameterSet& iConfig) :
    hNoff_          = fGlobalHist.make<TH1I>("hNoff", "p_{T} > 0.4 GeV/c", 1000, 0, 1000);
    hMult_trg_      = fGlobalHist.make<TH1I>("hMult_trg", 
                                             Form("%1.1f<p_{T}<%1.1f GeV/c", pTmin_trg_[0], pTmax_trg_[pTmax_trg_.size()-1]), 
-                                            1000, 0, 1000);
+                                            1000, 0, 50000);
    hMult_corr_trg_ = fGlobalHist.make<TH1F>("hMultcorr_trg",
                                             Form("%1.1f<p_{T}<%1.1f GeV/c", pTmin_trg_[0], pTmax_trg_[pTmax_trg_.size()-1]), 
-                                            1000, 0, 1000);
+                                            1000, 0, 50000);
    hMult_ass_      = fGlobalHist.make<TH1I>("hMult_ass", 
                                             Form("%1.1f<p_{T}<%1.1f GeV/c", pTmin_ass_[0], pTmax_ass_[pTmax_ass_.size()-1]), 
-                                            1000, 0, 1000);
+                                            1000, 0, 50000);
    hMult_corr_ass_ = fGlobalHist.make<TH1F>("hMultcorr_ass",
                                             Form("%1.1f<p_{T}<%1.1f GeV/c", pTmin_ass_[0], pTmax_ass_[pTmax_ass_.size()-1]), 
-                                            1000, 0, 1000);
+                                            1000, 0, 50000);
    TFileDirectory fTrkTrgHist  = fs->mkdir("TrgTracksRaw");
    hEtaTrk_trg_.resize(pTmin_trg_.size()); 
    hPtTrk_trg_.resize(pTmin_trg_.size()); 
@@ -154,7 +154,7 @@ ChargeDepAndPtCorr::ChargeDepAndPtCorr(const edm::ParameterSet& iConfig) :
                                                  640, -3.2, 3.2);
       hMultTrk_trg_[ipt] = fTrkTrgHist.make<TH1I>(Form("hMulttrk_trg_%d",ipt), 
                                                  Form("%1.1f<p_{T}<%1.1f GeV/c", pTmin_trg_[ipt], pTmax_trg_[ipt]), 
-                                                 1000, 0, 1000);
+                                                 1000, 0, 50000);
    }
    TFileDirectory fTrkCorrTrgHist  = fs->mkdir("TrgTracksCorr");
    hEtaTrk_corr_trg_.resize(pTmin_trg_.size()); 
@@ -177,7 +177,7 @@ ChargeDepAndPtCorr::ChargeDepAndPtCorr(const edm::ParameterSet& iConfig) :
                                                  640, -3.2, 3.2);
       hMultTrk_corr_trg_[ipt] = fTrkCorrTrgHist.make<TH1F>(Form("hMulttrk_corr_trg_%d",ipt), 
                                                  Form("%1.1f<p_{T}<%1.1f GeV/c", pTmin_trg_[ipt], pTmax_trg_[ipt]), 
-                                                 1000, 0, 1000);
+                                                 1000, 0, 50000);
    }
    TFileDirectory fTrkAssHist  = fs->mkdir("AssTracksRaw");
    hEtaTrk_ass_.resize(pTmin_ass_.size()); 
@@ -200,7 +200,7 @@ ChargeDepAndPtCorr::ChargeDepAndPtCorr(const edm::ParameterSet& iConfig) :
                                                  640, -3.2, 3.2);
       hMultTrk_ass_[ipt] = fTrkAssHist.make<TH1I>(Form("hMulttrk_ass_%d",ipt), 
                                                  Form("%1.1f<p_{T}<%1.1f GeV/c", pTmin_ass_[ipt], pTmax_ass_[ipt]), 
-                                                 1000, 0, 1000);
+                                                 1000, 0, 50000);
    }
    TFileDirectory fTrkCorrAssHist  = fs->mkdir("AssTracksCorr");
    hEtaTrk_corr_ass_.resize(pTmin_ass_.size()); 
@@ -223,7 +223,7 @@ ChargeDepAndPtCorr::ChargeDepAndPtCorr(const edm::ParameterSet& iConfig) :
                                                  640, -3.2, 3.2);
       hMultTrk_corr_ass_[ipt] = fTrkCorrAssHist.make<TH1F>(Form("hMulttrk_corr_ass_%d",ipt), 
                                                  Form("%1.1f<p_{T}<%1.1f GeV/c", pTmin_ass_[ipt], pTmax_ass_[ipt]), 
-                                                 1000, 0, 1000);
+                                                 1000, 0, 50000);
    }
    TFileDirectory fCTowHist = fs->mkdir("CaloTowers");
    hEtaCTow_ = fCTowHist.make<TH1F>("hEtatow", "", 120, -6.,   6.);
@@ -471,7 +471,6 @@ ChargeDepAndPtCorr::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
    {
        edm::LogWarning ("Invalid value") <<"Invalid centrality value";
    }
-   hCent_->Fill(centBin);
 
    // ----- Vertex selection -----
    // Get vertex collection by token
@@ -499,7 +498,6 @@ ChargeDepAndPtCorr::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
 
    // ----- Ntrk offline selection -----
    double noff = LoopNoff(iEvent, iSetup); //compute ntrk^offline
-   hNoff_->Fill(noff);
 
    // ----- Define event classification (either centrality or Ntrk^off) -----
    int evtclass = -1;
@@ -517,6 +515,8 @@ ChargeDepAndPtCorr::analyze(const edm::Event& iEvent, const edm::EventSetup& iSe
       default:
          evtclass = -1; 
    }
+   hCent_->Fill(centBin);
+   hNoff_->Fill(noff);
 
    nTrkTot_trg_      = 0; 
    nTrkTot_corr_trg_ = 0; 
@@ -588,7 +588,7 @@ ChargeDepAndPtCorr::endJob()
       for( unsigned int j = mixstart; j < mixend; j++ )
       {
           if(i == j) continue;
-
+          //std::cout << i << " : " << j << std::endl;
           double deltazvtx = evtVec_[i].zvtx-evtVec_[j].zvtx;
           hDeltaZvtx_->Fill(deltazvtx);
 
@@ -840,6 +840,7 @@ ChargeDepAndPtCorr::LoopTracks(const edm::Event& iEvent, const edm::EventSetup& 
       {
          hMultTrk_trg_[itrg]     ->Fill(nTrk_trg_[itrg]);
          hMultTrk_corr_trg_[itrg]->Fill(nTrk_corr_trg_[itrg]);
+         //std::cout << nTrk_corr_trg_[itrg] <<std::endl;
          (evt_->nMultCorrVect_trg)[itrg] = nTrk_corr_trg_[itrg];
       }
    }
@@ -1045,109 +1046,109 @@ ChargeDepAndPtCorr::FillHistsSignal(int ievt)
                  continue;
 
               //Total weight
-              double effweight = effweight_trg * effweight_ass;
+              double effweight = effweight_trg * effweight_ass * nMult_corr_trg;
               //Fill and symmetrize the distribution
               hSignal_[itrg][jass]->Fill( fabs(deltaEta),
                                           fabs(deltaPhi),
-                                          1.0/4.0/effweight/nMult_corr_trg );
+                                          1.0/4.0/effweight );
               hSignal_[itrg][jass]->Fill(-fabs(deltaEta),
                                           fabs(deltaPhi),
-                                          1.0/4.0/effweight/nMult_corr_trg );
+                                          1.0/4.0/effweight );
               hSignal_[itrg][jass]->Fill( fabs(deltaEta),
                                          -fabs(deltaPhi),
-                                          1.0/4.0/effweight/nMult_corr_trg );
+                                          1.0/4.0/effweight );
               hSignal_[itrg][jass]->Fill(-fabs(deltaEta),
                                          -fabs(deltaPhi),
-                                          1.0/4.0/effweight/nMult_corr_trg );
+                                          1.0/4.0/effweight );
               hSignal_[itrg][jass]->Fill( fabs(deltaEta),
                                           2*TMath::Pi()-fabs(deltaPhi),
-                                          1.0/4.0/effweight/nMult_corr_trg );
+                                          1.0/4.0/effweight );
               hSignal_[itrg][jass]->Fill(-fabs(deltaEta),
                                           2*TMath::Pi()-fabs(deltaPhi),
-                                          1.0/4.0/effweight/nMult_corr_trg );
+                                          1.0/4.0/effweight );
               if( chg_trg > 0 && chg_ass > 0)
               {
                  hSignalPP_[itrg][jass]->Fill( fabs(deltaEta),
                                                fabs(deltaPhi),
-                                               1.0/4.0/effweight/nMult_corr_trg );
+                                               1.0/4.0/effweight );
                  hSignalPP_[itrg][jass]->Fill(-fabs(deltaEta),
                                                fabs(deltaPhi),
-                                               1.0/4.0/effweight/nMult_corr_trg );
+                                               1.0/4.0/effweight );
                  hSignalPP_[itrg][jass]->Fill( fabs(deltaEta),
                                               -fabs(deltaPhi),
-                                               1.0/4.0/effweight/nMult_corr_trg );
+                                               1.0/4.0/effweight );
                  hSignalPP_[itrg][jass]->Fill(-fabs(deltaEta),
                                               -fabs(deltaPhi),
-                                               1.0/4.0/effweight/nMult_corr_trg );
+                                               1.0/4.0/effweight );
                  hSignalPP_[itrg][jass]->Fill( fabs(deltaEta),
                                                2*TMath::Pi()-fabs(deltaPhi),
-                                               1.0/4.0/effweight/nMult_corr_trg );
+                                               1.0/4.0/effweight );
                  hSignalPP_[itrg][jass]->Fill(-fabs(deltaEta),
                                                2*TMath::Pi()-fabs(deltaPhi),
-                                               1.0/4.0/effweight/nMult_corr_trg );
+                                               1.0/4.0/effweight );
               } 
               else if( chg_trg < 0 && chg_ass < 0)
               {
                  hSignalMM_[itrg][jass]->Fill( fabs(deltaEta),
                                                fabs(deltaPhi),
-                                               1.0/4.0/effweight/nMult_corr_trg );
+                                               1.0/4.0/effweight );
                  hSignalMM_[itrg][jass]->Fill(-fabs(deltaEta),
                                                fabs(deltaPhi),
-                                               1.0/4.0/effweight/nMult_corr_trg );
+                                               1.0/4.0/effweight );
                  hSignalMM_[itrg][jass]->Fill( fabs(deltaEta),
                                               -fabs(deltaPhi),
-                                               1.0/4.0/effweight/nMult_corr_trg );
+                                               1.0/4.0/effweight );
                  hSignalMM_[itrg][jass]->Fill(-fabs(deltaEta),
                                               -fabs(deltaPhi),
-                                               1.0/4.0/effweight/nMult_corr_trg );
+                                               1.0/4.0/effweight );
                  hSignalMM_[itrg][jass]->Fill( fabs(deltaEta),
                                                2*TMath::Pi()-fabs(deltaPhi),
-                                               1.0/4.0/effweight/nMult_corr_trg );
+                                               1.0/4.0/effweight );
                  hSignalMM_[itrg][jass]->Fill(-fabs(deltaEta),
                                                2*TMath::Pi()-fabs(deltaPhi),
-                                               1.0/4.0/effweight/nMult_corr_trg );
+                                               1.0/4.0/effweight );
               } 
               if( chg_trg > 0 && chg_ass < 0)
               {
                  hSignalPM_[itrg][jass]->Fill( fabs(deltaEta),
                                                fabs(deltaPhi),
-                                               1.0/4.0/effweight/nMult_corr_trg );
+                                               1.0/4.0/effweight );
                  hSignalPM_[itrg][jass]->Fill(-fabs(deltaEta),
                                                fabs(deltaPhi),
-                                               1.0/4.0/effweight/nMult_corr_trg );
+                                               1.0/4.0/effweight );
                  hSignalPM_[itrg][jass]->Fill( fabs(deltaEta),
                                               -fabs(deltaPhi),
-                                               1.0/4.0/effweight/nMult_corr_trg );
+                                               1.0/4.0/effweight );
                  hSignalPM_[itrg][jass]->Fill(-fabs(deltaEta),
                                               -fabs(deltaPhi),
-                                               1.0/4.0/effweight/nMult_corr_trg );
+                                               1.0/4.0/effweight );
                  hSignalPM_[itrg][jass]->Fill( fabs(deltaEta),
                                                2*TMath::Pi()-fabs(deltaPhi),
-                                               1.0/4.0/effweight/nMult_corr_trg );
+                                               1.0/4.0/effweight );
                  hSignalPM_[itrg][jass]->Fill(-fabs(deltaEta),
                                                2*TMath::Pi()-fabs(deltaPhi),
-                                               1.0/4.0/effweight/nMult_corr_trg );
+                                               1.0/4.0/effweight );
               } 
               if( chg_trg < 0 && chg_ass > 0)
               {
                  hSignalMP_[itrg][jass]->Fill( fabs(deltaEta),
                                                fabs(deltaPhi),
-                                               1.0/4.0/effweight/nMult_corr_trg );
+                                               1.0/4.0/effweight );
                  hSignalMP_[itrg][jass]->Fill(-fabs(deltaEta),
                                                fabs(deltaPhi),
-                                               1.0/4.0/effweight/nMult_corr_trg );
+                                               1.0/4.0/effweight );
                  hSignalMP_[itrg][jass]->Fill( fabs(deltaEta),
                                               -fabs(deltaPhi),
-                                               1.0/4.0/effweight/nMult_corr_trg );
+                                               1.0/4.0/effweight );
                  hSignalMP_[itrg][jass]->Fill(-fabs(deltaEta),
                                               -fabs(deltaPhi),
-                                               1.0/4.0/effweight/nMult_corr_trg );
+                                               1.0/4.0/effweight );
                  hSignalMP_[itrg][jass]->Fill( fabs(deltaEta),
                                                2*TMath::Pi()-fabs(deltaPhi),
-                                               1.0/4.0/effweight/nMult_corr_trg );
+                                               1.0/4.0/effweight );
                  hSignalMP_[itrg][jass]->Fill(-fabs(deltaEta),
                                                2*TMath::Pi()-fabs(deltaPhi),
-                                               1.0/4.0/effweight/nMult_corr_trg );
+                                               1.0/4.0/effweight );
               } 
           }
        }
@@ -1158,6 +1159,13 @@ ChargeDepAndPtCorr::FillHistsSignal(int ievt)
 void 
 ChargeDepAndPtCorr::FillHistsBackground(int ievt_trg, int jevt_ass)
 {
+  if( evtVec_[ievt_trg].run ==  evtVec_[jevt_ass].run &&  
+      evtVec_[ievt_trg].event == evtVec_[jevt_ass].event )
+  {
+      std::cout << "Event are the same. Skipping it" << std::endl;
+      return;
+  }
+
   for( unsigned int itrg = 0; itrg < pTmin_trg_.size(); itrg++ )
   {
       for( unsigned int jass = 0; jass < pTmin_ass_.size(); jass++ )
@@ -1175,7 +1183,7 @@ ChargeDepAndPtCorr::FillHistsBackground(int ievt_trg, int jevt_ass)
               double chg_trg = (evtVec_[ievt_trg].chgVect_trg[itrg])[ntrg];
               double eta_trg = pvector_trg.Eta();
               double phi_trg = pvector_trg.Phi();
-              double pt_trg  = pvector_trg.Pt();
+              //double pt_trg  = pvector_trg.Pt();
 
               for( unsigned int nass = 0; nass < nasssize; nass++ )
               {
@@ -1184,17 +1192,17 @@ ChargeDepAndPtCorr::FillHistsBackground(int ievt_trg, int jevt_ass)
                   double chg_ass = (evtVec_[jevt_ass].chgVect_trg[jass])[nass];
                   double eta_ass = pvector_ass.Eta();
                   double phi_ass = pvector_ass.Phi();
-                  double pt_ass  = pvector_ass.Pt();
+                  //double pt_ass  = pvector_ass.Pt();
 
                   double deltaPhi = GetDeltaPhi( phi_trg, phi_ass );
                   double deltaEta = GetDeltaEta( eta_trg, eta_ass );
 
                   //Skip the loop when trg, ass particles are the same
-                  if( deltaEta == 0.0    && 
-                      deltaPhi == 0.0    && 
-                      pt_trg   == pt_ass &&
-                      chg_trg  == chg_ass ) 
-                     continue;
+                  //if( deltaEta == 0.0    && 
+                  //    deltaPhi == 0.0    && 
+                  //    pt_trg   == pt_ass &&
+                  //    chg_trg  == chg_ass ) 
+                  //   continue;
          
                   //Total weight
                   double effweight = effweight_trg * effweight_ass * nMult_corr_trg;
