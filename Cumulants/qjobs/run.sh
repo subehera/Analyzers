@@ -76,9 +76,11 @@ ls $tdir
 fname="cnm_vnm_HM_${multmin}_${multmax}_nsub${subevt}.root"
 if [ $subevt -eq 1 ]
 then
-${MACRO_DIR}/PlotVnm --input "/eos/cms/store/group/phys_heavyions/flowcorr/SubCumu/PAHighMultiplicity${HM}/RecoSkim2016_*${trg}_*_std_*/*/*/*.root" --noffmin ${multmin} --noffmax ${multmax} --subevt ${subevt} --output ${fname} 
+#${MACRO_DIR}/PlotVnm --input "/eos/cms/store/group/phys_heavyions/flowcorr/SubCumu/PAHighMultiplicity${HM}/RecoSkim2016_*${trg}_*_std_*/*/*/*.root" --noffmin ${multmin} --noffmax ${multmax} --subevt ${subevt} --output ${fname} 
+${MACRO_DIR}/PlotVnm --input "/eos/cms/store/group/phys_heavyions/flowcorr/SubCumu18/PA*/*c2_v1/*/*/*std*.root" --noffmin ${multmin} --noffmax ${multmax} --subevt ${subevt} --output ${fname} 
 else
-${MACRO_DIR}/PlotVnm --input "/eos/cms/store/group/phys_heavyions/flowcorr/SubCumu/PAHighMultiplicity${HM}/RecoSkim2016_*${trg}_*_${subevt}sub_*/*/*/*.root" --noffmin ${multmin} --noffmax ${multmax} --subevt ${subevt} --output ${fname} 
+#${MACRO_DIR}/PlotVnm --input "/eos/cms/store/group/phys_heavyions/flowcorr/SubCumu/PAHighMultiplicity${HM}/RecoSkim2016_*${trg}_*_${subevt}sub_*/*/*/*.root" --noffmin ${multmin} --noffmax ${multmax} --subevt ${subevt} --output ${fname} 
+${MACRO_DIR}/PlotVnm --input "/eos/cms/store/group/phys_heavyions/flowcorr/SubCumu18/PA*/*c2_v1/*/*/*${subevt}sub*.root" --noffmin ${multmin} --noffmax ${multmax} --subevt ${subevt} --output ${fname} 
 fi
 
 mv $tdir/${fname} ${OUT_DIR}/.

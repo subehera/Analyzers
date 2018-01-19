@@ -161,23 +161,23 @@ namespace utils
       while ( (ch->GetEntry(ievt) && ievt <= analyzedEvts) ||
               (ch->GetEntry(ievt) && analyzedEvts == -1)      ) 
       {
-         //if(!(ievt%1000))
-         //{
-         //   std::cout << 
-         //   "\rievt = " << ievt 
-         //   <<
-         //   ", tree number = " << ch->GetTreeNumber()
-         //   <<
-         //   " ~~~> " << std::setprecision(3) << (static_cast<double>(ch->GetTreeNumber())/static_cast<double>(ntrees))*100.  << " %" 
-         //   << std::flush;
-         //}
+         if(!(ievt%1000))
+         {
+            std::cout << 
+            "\rievt = " << ievt 
+            <<
+            ", tree number = " << ch->GetTreeNumber()
+            <<
+            " ~~~> " << std::setprecision(3) << (static_cast<double>(ch->GetTreeNumber())/static_cast<double>(ntrees))*100.  << " %" 
+            << std::flush;
+         }
         
          // Skip event if multiplicity is zero 
-         if(mult <= 10) 
-         {
-            ++ievt;
-            continue;
-         }
+         //if(mult <= 10) 
+         //{
+         //   ++ievt;
+         //   continue;
+         //}
 
          //Skip event if out of range
          if(noff < noffmin || noff >= noffmax)
@@ -834,23 +834,23 @@ namespace utils
       {
          ch->GetEntry(ievt);
 
-         //if(!(ievt%1000))
-         //{
-         //   std::cout << 
-         //   "\rievt = " << ievt 
-         //   <<
-         //   ", tree number = " << ch->GetTreeNumber()
-         //   <<
-         //   " ~~~> " << std::setprecision(3) << (static_cast<double>(ch->GetTreeNumber())/static_cast<double>(ntrees))*100.  << " %" 
-         //   << std::flush;
-         //}
+         if(!(ievt%1000))
+         {
+            std::cout << 
+            "\rievt = " << ievt 
+            <<
+            ", tree number = " << ch->GetTreeNumber()
+            <<
+            " ~~~> " << std::setprecision(3) << (static_cast<double>(ch->GetTreeNumber())/static_cast<double>(ntrees))*100.  << " %" 
+            << std::flush;
+         }
         
          // Skip event if multiplicity is zero 
-         if(mult <= 10) 
-         {
-            ++ievt;
-            continue;
-         }
+         //if(mult <= 10) 
+         //{
+         //   ++ievt;
+         //   continue;
+         //}
 
          //Skip event if out of range
          if(noff < noffmin || noff >= noffmax)
@@ -862,7 +862,7 @@ namespace utils
          // Compute cumulants
          for(int ibr = 0; ibr < static_cast<int>(qNM.size()); ibr++)
          {
-             //LOG_S(INFO) << "Branch: " << ibr;
+             //LOG_S(INFO) << "Branch: " << ibr << ", Noff: " << noff << ", mult: " << mult << ",CNM[ibr] = " << CNM[ibr];
               qNM_jacknife[ibr][noff][mult] =  CNM[ibr];
              wqNM_jacknife[ibr][noff][mult] = wCNM[ibr];
          }        
