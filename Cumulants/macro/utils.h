@@ -21,9 +21,8 @@ namespace utils
          brnames.push_back(Form("%sC%d%d%d_33", suffix.c_str(), harm0, harm1, 2));
          brnames.push_back(Form("%sC%d%d%d_18", suffix.c_str(), harm1, harm0, 2));
          brnames.push_back(Form("%sC%d%d%d_34", suffix.c_str(), harm1, harm1, 2));
-
       }
-
+/*
       if( nsub > 2 && harm0 == harm1 )
       {
          brnames.push_back(Form("%sC%d%d%d_53",  suffix.c_str(), harm0, harm1, 4));
@@ -32,8 +31,8 @@ namespace utils
          brnames.push_back(Form("%sC%d%d%d_85",  suffix.c_str(), harm0, harm1, 4));
          brnames.push_back(Form("%sC%d%d%d_86",  suffix.c_str(), harm0, harm1, 4));
          brnames.push_back(Form("%sC%d%d%d_99",  suffix.c_str(), harm0, harm1, 4));
-         brnames.push_back(Form("%sC%d%d%d_101", suffix.c_str(), harm0, harm1, 6));
-         brnames.push_back(Form("%sC%d%d%d_102", suffix.c_str(), harm0, harm1, 6));
+         brnames.push_back(Form("%sC%d%d%d_101", suffix.c_str(), harm0, harm1, 4));
+         brnames.push_back(Form("%sC%d%d%d_102", suffix.c_str(), harm0, harm1, 4));
          brnames.push_back(Form("%sC%d%d%d_123", suffix.c_str(), harm0, harm1, 6));
          brnames.push_back(Form("%sC%d%d%d_125", suffix.c_str(), harm0, harm1, 6));
          brnames.push_back(Form("%sC%d%d%d_126", suffix.c_str(), harm0, harm1, 6));
@@ -50,7 +49,7 @@ namespace utils
          brnames.push_back(Form("%sC%d%d%d_237", suffix.c_str(), harm0, harm1, 6));
          brnames.push_back(Form("%sC%d%d%d_238", suffix.c_str(), harm0, harm1, 6));
       }
-
+*/
       return brnames;
    }
 
@@ -91,7 +90,9 @@ namespace utils
       std::vector<TString> brnames  = SetupBranchName(harm0, harm1, nsub);
       std::vector<TString> wbrnames = SetupBranchName(harm0, harm1, nsub, "w");
 
-      for(int ibr = 0; ibr < static_cast<int>(CNM.size()); ibr++)
+std::cout<<"printing out parameters: "<<harm0<<" "<<harm1<<" "<<nsub<<" "<<CNM.size()<<std::endl;
+
+      for(int ibr = 0; ibr < static_cast<int>(brnames.size()); ibr++)
       {
          LOG_S(INFO) << "Trying to get branch '" << brnames[ibr].Data() << "'"; 
          if(!ch->GetBranch(brnames[ibr]))
@@ -187,7 +188,7 @@ namespace utils
          }
 
          // Compute cumulants
-         for(int ibr = 0; ibr < static_cast<int>(qNM.size()); ibr++)
+         for(int ibr = 0; ibr < static_cast<int>(CNM.size()); ibr++)
          {
            if( noff < qNM[ibr].size() )
            {
@@ -203,10 +204,14 @@ namespace utils
       }
 
       // Free memory from huge vectors
+      /*
       CNM.clear();
       wCNM.clear();
       std::vector<double>().swap(CNM);       
       std::vector<double>().swap(wCNM); 
+      */
+
+      std::cout <<" reach here!"<< std::endl;
 
       std::cout << std::endl;
    }
@@ -219,66 +224,98 @@ namespace utils
                  const std::vector< std::vector< std::vector<double> > > &wqNM,
                  std::vector< std::vector<double> > &cNM,
                  std::vector< std::vector<double> > &wcNM,
-                 int order, int inoff, int iref, int nsub)
+                 int order, int harm0, int harm1, int inoff, int iref, int nsub)
    {
-      if( nsub <= 2)
+      if( nsub <= 2 && harm0==harm1) // 2-subevent cumulant
       {
          switch(order)
          {
+//           order 0: 17
+//           order 1: 51
+//           order 2: 119
+//           order 3: 11111111
+//           order 4: 33
+//           order 5: 18
+//           order 6: 34
+// for four
+//           order 0: 53
+//           order 0: 54
+//           order 0: 83
+//           order 0: 85
+//           order 0: 86
+//           order 0: 99
+//           order 0: 101
+//           order 0: 102
+// for six
+//           order 0: 123
+//           order 0: 125
+//           order 0: 126
+//           order 0: 183
+//           order 0: 187
+//           order 0: 189
+//           order 0: 190
+//           order 0: 215 
+//           order 0: 219
+//           order 0: 221
+//           order 0: 222
+//           order 0: 231
+//           order 0: 235
+//           order 0: 237
+//           order 0: 238
             case 0:
-               if( wqNM[order][inoff][iref] != 0. )
+               if( wqNM[0][inoff][iref] != 0. )
                {
-                  cNM[order][inoff]  += ( qNM[order][inoff][iref] / wqNM[order][inoff][iref] ) // <<2>> 
-                                         *wqNM[order][inoff][iref];
-                  wcNM[order][inoff] += wqNM[order][inoff][iref];
+                  cNM[order][inoff]  += ( qNM[0][inoff][iref] / wqNM[0][inoff][iref] ) // <<2>> 
+                                         *wqNM[0][inoff][iref];
+                  wcNM[order][inoff] += wqNM[0][inoff][iref];
                }
                break;
             case 1:
-               if( wqNM[order][inoff][iref]   != 0. && 
-                   wqNM[order-1][inoff][iref] != 0. )
+               if( wqNM[1][inoff][iref]   != 0. && 
+                   wqNM[0][inoff][iref] != 0. )
                {
-                  cNM[order][inoff]  += ( qNM[order][inoff][iref]   / wqNM[order][inoff][iref] -   //   <<4>>
-                                        2*qNM[order-1][inoff][iref] / wqNM[order-1][inoff][iref]   //-2*<<2>>^{2}
-                                         *qNM[order-1][inoff][iref] / wqNM[order-1][inoff][iref] ) 
-                                         *wqNM[order][inoff][iref];
-                  wcNM[order][inoff] += wqNM[order][inoff][iref];
+                  cNM[order][inoff]  += ( qNM[1][inoff][iref]   / wqNM[1][inoff][iref] -   //   <<4>>
+                                        2*qNM[0][inoff][iref] / wqNM[0][inoff][iref]   //-2*<<2>>^{2}
+                                         *qNM[0][inoff][iref] / wqNM[0][inoff][iref] ) 
+                                         *wqNM[1][inoff][iref];
+                  wcNM[order][inoff] += wqNM[1][inoff][iref];
                }
                break;
             case 2:
-               if( wqNM[order][inoff][iref]   != 0. && 
-                   wqNM[order-1][inoff][iref] != 0. &&
-                   wqNM[order-2][inoff][iref] != 0. )
+               if( wqNM[2][inoff][iref]   != 0. && 
+                   wqNM[1][inoff][iref] != 0. &&
+                   wqNM[0][inoff][iref] != 0. )
                {
-                  cNM[order][inoff]  += ( qNM[order][inoff][iref]   / wqNM[order][inoff][iref]   - //    <<6>>
-                                        9*qNM[order-1][inoff][iref] / wqNM[order-1][inoff][iref]   //- 9*<<4>><<2>>
-                                         *qNM[order-2][inoff][iref] / wqNM[order-2][inoff][iref] + //
-                                       12*qNM[order-2][inoff][iref] / wqNM[order-2][inoff][iref]   //+12*<<2>>^{3}
-                                         *qNM[order-2][inoff][iref] / wqNM[order-2][inoff][iref]
-                                         *qNM[order-2][inoff][iref] / wqNM[order-2][inoff][iref] ) 
-                                         *wqNM[order][inoff][iref];
-                  wcNM[order][inoff] += wqNM[order][inoff][iref];
+                  cNM[order][inoff]  += ( qNM[2][inoff][iref]   / wqNM[2][inoff][iref]   - //    <<6>>
+                                        9*qNM[1][inoff][iref] / wqNM[1][inoff][iref]   //- 9*<<4>><<2>>
+                                         *qNM[0][inoff][iref] / wqNM[0][inoff][iref] + //
+                                       12*qNM[0][inoff][iref] / wqNM[0][inoff][iref]   //+12*<<2>>^{3}
+                                         *qNM[0][inoff][iref] / wqNM[0][inoff][iref]
+                                         *qNM[0][inoff][iref] / wqNM[0][inoff][iref] ) 
+                                         *wqNM[2][inoff][iref];
+                  wcNM[order][inoff] += wqNM[2][inoff][iref];
                }
                break;
             case 3:
-               if( wqNM[order][inoff][iref]   != 0. && 
-                   wqNM[order-1][inoff][iref] != 0. &&
-                   wqNM[order-2][inoff][iref] != 0. &&
-                   wqNM[order-3][inoff][iref] != 0. )
+               if( wqNM[3][inoff][iref] != 0. && 
+                   wqNM[2][inoff][iref] != 0. &&
+                   wqNM[1][inoff][iref] != 0. &&
+                   wqNM[0][inoff][iref] != 0. )
                {
-                  cNM[order][inoff]  += ( qNM[order][inoff][iref]   / wqNM[order][inoff][iref]   - //     <<8>>
-                                       16*qNM[order-1][inoff][iref] / wqNM[order-1][inoff][iref]   //- 16*<<6>><<2>>
-                                         *qNM[order-3][inoff][iref] / wqNM[order-3][inoff][iref] - //
-                                       18*qNM[order-2][inoff][iref] / wqNM[order-2][inoff][iref]   //- 18*<<4>>^{2}
-                                         *qNM[order-2][inoff][iref] / wqNM[order-2][inoff][iref] + //
-                                      144*qNM[order-2][inoff][iref] / wqNM[order-2][inoff][iref]   //+144*<<4>><<2>>^{2}
-                                         *qNM[order-3][inoff][iref] / wqNM[order-3][inoff][iref]   //
-                                         *qNM[order-3][inoff][iref] / wqNM[order-3][inoff][iref] - //-144*<<2>>^{4}
-                                      144*qNM[order-3][inoff][iref] / wqNM[order-3][inoff][iref]
-                                         *qNM[order-3][inoff][iref] / wqNM[order-3][inoff][iref]
-                                         *qNM[order-3][inoff][iref] / wqNM[order-3][inoff][iref]
-                                         *qNM[order-3][inoff][iref] / wqNM[order-3][inoff][iref] )
-                                         *wqNM[order][inoff][iref];
-                  wcNM[order][inoff] += wqNM[order][inoff][iref];
+                  cNM[order][inoff]  += ( qNM[3][inoff][iref]   / wqNM[3][inoff][iref]   - //     <<8>>
+                                       16*qNM[2][inoff][iref] / wqNM[2][inoff][iref]   //- 16*<<6>><<2>>
+                                         *qNM[0][inoff][iref] / wqNM[0][inoff][iref] - //
+                                       18*qNM[1][inoff][iref] / wqNM[1][inoff][iref]   //- 18*<<4>>^{2}
+                                         *qNM[1][inoff][iref] / wqNM[1][inoff][iref] + //
+                                      144*qNM[1][inoff][iref] / wqNM[1][inoff][iref]   //+144*<<4>><<2>>^{2}
+                                         *qNM[0][inoff][iref] / wqNM[0][inoff][iref]   //
+                                         *qNM[0][inoff][iref] / wqNM[0][inoff][iref] - //-144*<<2>>^{4}
+                                      144*qNM[0][inoff][iref] / wqNM[0][inoff][iref]
+                                         *qNM[0][inoff][iref] / wqNM[0][inoff][iref]
+                                         *qNM[0][inoff][iref] / wqNM[0][inoff][iref]
+                                         *qNM[0][inoff][iref] / wqNM[0][inoff][iref] )
+                                         *wqNM[3][inoff][iref];
+                  wcNM[order][inoff] += wqNM[3][inoff][iref];
                }
                break;
             default:
@@ -286,59 +323,66 @@ namespace utils
                break;
          }
       }
-      else
+      else if(harm0!=harm1) //symmetric cumulant
       {
          switch(order)
          {
             case 0:
-               if( wqNM[order][inoff][iref] != 0. )
+               if( wqNM[4][inoff][iref] != 0. )
                {
-                  cNM[order][inoff]  += ( qNM[order][inoff][iref] / wqNM[order][inoff][iref] ) // <<2>>_17 
-                                         *wqNM[order][inoff][iref];
-                  wcNM[order][inoff] += wqNM[order][inoff][iref];
+                  cNM[order][inoff]  += ( qNM[4][inoff][iref] / wqNM[4][inoff][iref] ) // <<2>>_33 not really useful in the case of symmetic cumulant
+                                         *wqNM[4][inoff][iref];
+                  wcNM[order][inoff] += wqNM[4][inoff][iref];
                }
                break;
             case 1:
-               if( wqNM[order][inoff][iref] != 0. )
+               if( wqNM[1][inoff][iref] != 0. &&
+                   wqNM[4][inoff][iref] != 0. && wqNM[0][inoff][iref] != 0. &&
+                   wqNM[5][inoff][iref] != 0. && wqNM[6][inoff][iref] != 0.
+               )
                {
-                  cNM[order][inoff]  += ( qNM[order][inoff][iref] / wqNM[order][inoff][iref] ) // <<2>>_34 
-                                         *wqNM[order][inoff][iref];
-                  wcNM[order][inoff] += wqNM[order][inoff][iref];
+                  cNM[order][inoff]  += ( qNM[1][inoff][iref] / wqNM[1][inoff][iref] -  // <<4>>-<<33>>*<<18>>-<<34>>*<<17>>
+                                          qNM[4][inoff][iref] / wqNM[4][inoff][iref]
+                                         *qNM[5][inoff][iref] / wqNM[5][inoff][iref] -
+                                          qNM[0][inoff][iref] / wqNM[0][inoff][iref]
+                                         *qNM[6][inoff][iref] / wqNM[6][inoff][iref]
+                                         )
+                                         *wqNM[1][inoff][iref];
+                  wcNM[order][inoff] += wqNM[1][inoff][iref];
+               }
+               break;
+            default:
+               LOG_S(ERROR) << "Not defined order";
+               break;
+         }
+      }
+      else if(nsub==3 && harm0==harm1)
+      {
+         switch(order)
+         {
+            case 0:
+               if( wqNM[4][inoff][iref] != 0. )
+               {
+                  cNM[order][inoff]  += ( qNM[4][inoff][iref] / wqNM[4][inoff][iref] ) // <<2>>_33 not really useful in the case of nsub=3 
+                                         *wqNM[4][inoff][iref];
+                  wcNM[order][inoff] += wqNM[4][inoff][iref];
+               }
+               break;
+            case 1:
+               if( wqNM[1][inoff][iref] != 0. &&
+                   wqNM[4][inoff][iref] != 0. &&
+                   wqNM[5][inoff][iref] != 0.
+                 )
+               {
+                  cNM[order][inoff]  += ( qNM[1][inoff][iref]   / wqNM[1][inoff][iref] -  // <<4>>-2<<33>>*<<18>>
+                                          2*qNM[4][inoff][iref] / wqNM[4][inoff][iref]
+                                         *qNM[5][inoff][iref] / wqNM[5][inoff][iref] 
+                                         )
+                                         *wqNM[1][inoff][iref];
+                  wcNM[order][inoff] += wqNM[1][inoff][iref];
                }
                break;
             case 2:
-               if( wqNM[order][inoff][iref] != 0. )
-               {
-                  cNM[order][inoff]  += ( qNM[order][inoff][iref] / wqNM[order][inoff][iref] ) // <<2>>_18 
-                                         *wqNM[order][inoff][iref];
-                  wcNM[order][inoff] += wqNM[order][inoff][iref];
-               }
-               break;
-            case 3:
-               if( wqNM[order][inoff][iref] != 0. )
-               {
-                  cNM[order][inoff]  += ( qNM[order][inoff][iref] / wqNM[order][inoff][iref] ) // <<2>>_33 
-                                         *wqNM[order][inoff][iref];
-                  wcNM[order][inoff] += wqNM[order][inoff][iref];
-               }
-               break;
-            case 4:
-               if( wqNM[order][inoff][iref] != 0. &&
-                   wqNM[order-3][inoff][iref] != 0. &&
-                   wqNM[order-4][inoff][iref] != 0. &&
-                   wqNM[order-2][inoff][iref] != 0. &&
-                   wqNM[order-1][inoff][iref] != 0. )
-               {
-                  cNM[order][inoff]  += ( qNM[order][inoff][iref]   / wqNM[order][inoff][iref] -   //   <<4>>
-                                          qNM[order-4][inoff][iref] / wqNM[order-4][inoff][iref]
-                                         *qNM[order-3][inoff][iref] / wqNM[order-3][inoff][iref] -
-                                          qNM[order-1][inoff][iref] / wqNM[order-1][inoff][iref]
-                                         *qNM[order-2][inoff][iref] / wqNM[order-2][inoff][iref] )
-                                         *wqNM[order][inoff][iref];
-                  wcNM[order][inoff] += wqNM[order][inoff][iref];
-               }
-               break;
-            case 5:
                if( wqNM[order][inoff][iref]   != 0. && 
                    wqNM[order-1][inoff][iref] != 0. &&
                    wqNM[order-5][inoff][iref] != 0. )
@@ -353,8 +397,78 @@ namespace utils
                   wcNM[order][inoff] += wqNM[order][inoff][iref];
                }
                break;
-            case 6:
+            case 3:
                if( wqNM[order][inoff][iref]   != 0. && 
+                   wqNM[order-1][inoff][iref] != 0. &&
+                   wqNM[order-2][inoff][iref] != 0. &&
+                   wqNM[order-6][inoff][iref] != 0. )
+               {
+                  cNM[order][inoff]  += ( qNM[order][inoff][iref]   / wqNM[order][inoff][iref]   - //     <<8>>
+                                       16*qNM[order-1][inoff][iref] / wqNM[order-1][inoff][iref]   //- 16*<<6>><<2>>
+                                         *qNM[order-6][inoff][iref] / wqNM[order-6][inoff][iref] - //
+                                       18*qNM[order-2][inoff][iref] / wqNM[order-2][inoff][iref]   //- 18*<<4>>^{2}
+                                         *qNM[order-2][inoff][iref] / wqNM[order-2][inoff][iref] + //
+                                      144*qNM[order-2][inoff][iref] / wqNM[order-2][inoff][iref]   //+144*<<4>><<2>>^{2}
+                                         *qNM[order-6][inoff][iref] / wqNM[order-6][inoff][iref]   //
+                                         *qNM[order-6][inoff][iref] / wqNM[order-6][inoff][iref] - //-144*<<2>>^{4}
+                                      144*qNM[order-6][inoff][iref] / wqNM[order-6][inoff][iref]
+                                         *qNM[order-6][inoff][iref] / wqNM[order-6][inoff][iref]
+                                         *qNM[order-6][inoff][iref] / wqNM[order-6][inoff][iref]
+                                         *qNM[order-6][inoff][iref] / wqNM[order-6][inoff][iref] )
+                                         *wqNM[order][inoff][iref];
+                  wcNM[order][inoff] += wqNM[order][inoff][iref];
+               }
+               break;
+            default:
+               LOG_S(ERROR) << "Not defined order";
+               break;
+         }
+      }
+      else if(nsub==4 && harm0==harm1)
+      {
+         switch(order)
+         {
+            case 0:
+               if( wqNM[4][inoff][iref] != 0. )
+               {
+                  cNM[order][inoff]  += ( qNM[4][inoff][iref] / wqNM[4][inoff][iref] ) // <<2>>_33 not really useful in the case of nsub=4 
+                                         *wqNM[4][inoff][iref];
+                  wcNM[order][inoff] += wqNM[4][inoff][iref];
+               }
+               break;
+            case 1:
+               if( wqNM[1][inoff][iref] != 0. &&
+                   wqNM[4][inoff][iref] != 0. && wqNM[0][inoff][iref] != 0. &&
+                   wqNM[5][inoff][iref] != 0. && wqNM[6][inoff][iref] != 0.
+                 )
+               {
+                  cNM[order][inoff]  += ( qNM[1][inoff][iref]   / wqNM[1][inoff][iref] -  // <<4>>-<<33>>*<<18>>-<<34>>*<<17>>
+                                          qNM[4][inoff][iref] / wqNM[4][inoff][iref]
+                                         *qNM[5][inoff][iref] / wqNM[5][inoff][iref] -
+                                          qNM[0][inoff][iref] / wqNM[0][inoff][iref]
+                                         *qNM[6][inoff][iref] / wqNM[6][inoff][iref]
+                                         )
+                                         *wqNM[1][inoff][iref];
+                  wcNM[order][inoff] += wqNM[1][inoff][iref];
+               }
+               break;
+            case 2:
+               if( wqNM[order][inoff][iref]   != 0. &&
+                   wqNM[order-1][inoff][iref] != 0. &&
+                   wqNM[order-5][inoff][iref] != 0. )
+               {
+                  cNM[order][inoff]  += ( qNM[order][inoff][iref]   / wqNM[order][inoff][iref]   - //    <<6>>
+                                        9*qNM[order-1][inoff][iref] / wqNM[order-1][inoff][iref]   //- 9*<<4>><<2>>
+                                         *qNM[order-5][inoff][iref] / wqNM[order-5][inoff][iref] + //
+                                       12*qNM[order-5][inoff][iref] / wqNM[order-5][inoff][iref]   //+12*<<2>>^{3}
+                                         *qNM[order-5][inoff][iref] / wqNM[order-5][inoff][iref]
+                                         *qNM[order-5][inoff][iref] / wqNM[order-5][inoff][iref] )
+                                         *wqNM[order][inoff][iref];
+                  wcNM[order][inoff] += wqNM[order][inoff][iref];
+               }
+               break;
+            case 3:
+               if( wqNM[order][inoff][iref]   != 0. &&
                    wqNM[order-1][inoff][iref] != 0. &&
                    wqNM[order-2][inoff][iref] != 0. &&
                    wqNM[order-6][inoff][iref] != 0. )
@@ -698,20 +812,26 @@ namespace utils
              std::vector< std::vector<double> > &wcNM,
              std::vector< std::vector<double> > &cNMreb,
              std::vector< std::vector<double> > &wcNMreb,
-             int nbins, int binarray[], int nsub, bool quiet = false)
+             int nbins, int binarray[], int nsub, int harm0, int harm1, bool quiet = false)
    {
       if(!quiet) LOG_S(INFO) << "Combining multiplicity bin for each N_{trk}^{offline} bin";
       for(unsigned int iord = 0; iord < static_cast<unsigned int>(cNM.size()); ++iord)
       {
+std::cout<<nbins<<" "<<cNM.size()<<" "<<iord<<" "<<qNM[iord].size()<<std::endl;
+
          for(unsigned int inoff = 0; inoff < static_cast<int>(qNM[iord].size()); ++inoff)
          {
             for(unsigned int iref = 0; iref < static_cast<int>(qNM[iord][inoff].size()); ++iref)
             {
-               cumulant(qNM, wqNM, cNM, wcNM, iord, inoff, iref, nsub);
+               cumulant(qNM, wqNM, cNM, wcNM, iord, harm0, harm1, inoff, iref, nsub);
             }
          }
       }
 
+
+std::cout<<"get here 33"<<std::endl;
+
+std::cout<<nbins<<" "<<cNMreb.size()<<" "<<qNM[0].size()<<std::endl;
 
       if(!quiet) LOG_S(INFO) << "Rebinning in larger N_{trk}_{offline} bins now";
       for(unsigned int iord = 0; iord < static_cast<unsigned int>(cNMreb.size()); ++iord)
@@ -1060,11 +1180,13 @@ namespace utils
       //init vectors
       //  -- 2D vector correlator (numerator and denominator)
       std::vector < std::vector< std::vector<double> > >  
-      qNM( cumumaxorder / 2,
+//      qNM( cumumaxorder / 2,
+      qNM( 100,
            std::vector< std::vector<double> > ( binarray[nbins], 
                                                 std::vector<double>(multmax, 0.) ) );
       std::vector < std::vector< std::vector<double> > >  
-      wqNM( cumumaxorder / 2,
+//      wqNM( cumumaxorder / 2,
+      wqNM( 100,
             std::vector< std::vector<double> > ( binarray[nbins], 
                                                  std::vector<double>(multmax, 0.) ) );
       // -- cumulant after multipilicity bin re-combination
@@ -1090,16 +1212,24 @@ namespace utils
                      noffmin,      noffmax, 
                      qNM,          wqNM, 
                      analyzedEvts, nsub);
+std::cout<<"get here 11"<<std::endl;
+
       }
       catch(std::string const& e)
       {
+std::cout<<"get here 22"<<std::endl;
+
          LOG_S(ERROR) << "Be careful, something might break";
          return;
       }
 
+std::cout<<"get here 1"<<std::endl;
+
       //Rebinning
       LOG_S(INFO) << "Rebinning cumulants...";
-      rebinning(qNM, wqNM, cNM, wcNM, cNMreb, wcNMreb, nbins, binarray, nsub);
+      rebinning(qNM, wqNM, cNM, wcNM, cNMreb, wcNMreb, nbins, binarray, nsub, harm0, harm1);
+
+std::cout<<"get here 2"<<std::endl;
 
       //Fill histograms
       LOG_S(INFO) << "Fill histograms";
@@ -1123,6 +1253,8 @@ namespace utils
       }
       // ---- Allocate memory for histograms
       std::vector<TString> brnames = SetupBranchName(harm0, harm1, nsub, "h");
+
+std::cout<<"get here 2"<<std::endl;
 
       LOG_S(INFO) << "There are " << hcN.size() << " to be filled" ;
       for(int iord = 0; iord < hcN.size(); ++iord)
@@ -1151,11 +1283,17 @@ namespace utils
          hvNreb[iord]->SetLineColor(iord+1);
       }
 
+std::cout<<"get here 3"<<std::endl;
+
       // -- fill them 
       fillHistograms(cNM, cNMreb, hcN, hcNreb, hvN, hvNreb, nsub);
+
+std::cout<<"get here 4"<<std::endl;
+
       delete[] tmp;
 
       //Jacknife it to get errors
+/*
       Jacknife(ch,           harm0,    harm1, 
                noffmin,      noffmax, 
                qNM,          wqNM, 
@@ -1164,8 +1302,10 @@ namespace utils
                hcN,          hcNreb,   hvN, hvNreb, 
                nbins,        binarray, 
                analyzedEvts, nsub);
-
+*/
       //Write histo
+ std::cout<<"get here 5"<<std::endl;
+
       fout->cd();
       for(int iord = 0; iord < cNM.size(); ++iord)
       {
@@ -1175,17 +1315,23 @@ namespace utils
          hvNreb[iord]->Write();
       }
 
+std::cout<<"get here 6"<<std::endl;
+
       // Free memory from huge vectors
       for(int i = 0; i < qNM.size(); ++i)
       {
+/*
          for(int j = 0; j < qNM.size(); ++j)
          {
             qNM[i][j].clear();
             wqNM[i][j].clear();
          }
+*/
          qNM[i].clear();
          wqNM[i].clear();
       }
+std::cout<<"get here 7"<<std::endl;
+
       qNM.clear();
       wqNM.clear();
       std::vector< std::vector< std::vector<double> > >().swap(qNM);       

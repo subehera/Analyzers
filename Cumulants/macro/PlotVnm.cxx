@@ -44,7 +44,7 @@ main(int argc, char** argv) {
 	parser.add<std::string>("input",  '\0', "input file name and path", false, "../test/cumulants.root");
         parser.add<std::string>("folder", '\0', "folder of tree", false, "anaV2");
 	parser.add<int>("noffmin"       , '\0', "minimum N_{trk}^offline", false, 0);
-	parser.add<int>("noffmax"       , '\0', "maximum N_{trk}^offline", false, 800);
+	parser.add<int>("noffmax"       , '\0', "maximum N_{trk}^offline", false, 80);
 	parser.add<int>("cumumaxorder"  , '\0', "maximum cumulant order", false, 8);
 	parser.add<int>("harmonicorder0", '\0', "harmonic order", false, 2);
         parser.add<int>("harmonicorder1", '\0', "harmonic order", false, 2);
@@ -74,10 +74,12 @@ main(int argc, char** argv) {
         int subevts = parser.get<int>( "subevt" );
 
 //pPb 8TeV: 0, 10, 30, 50, 70, 90, 120, 150, 185, 220, 250, 300, 320, 350,
-        //int binarray[] = {0,   10,  30,  50,  70,  90,
-        int binarray[] = {0,   10,  20,  30,  40,  50, 60, 70, 80, 90, 100, 110,
-                          120, 150, 185, 190, 220, 250, 
-                          300, 320, 350, 800};
+//        int binarray[] = {0,   10,  20,  30,  40,  50, 60, 70, 80, 90, 100, 110,
+//                          120, 150, 185, 190, 220, 250, 
+//                          300, 320, 350, 800};
+
+int binarray[] = {0,10,20,30,40,50,60,70,80};
+
         const int nbins = sizeof(binarray)/sizeof(int) - 1;;
 
       //---------------------------------------------------------

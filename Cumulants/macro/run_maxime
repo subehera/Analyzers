@@ -1,0 +1,7 @@
+#./PlotVnm --input "/eos/cms/store/group/phys_heavyions/flowcorr/SubCumu18/PAMinimumBias9/*Pbp*_c2_*/*/*/cumulants_3sub_4*.root" --output ../output/c2_3sub.root --subevt 3 --cumumaxorder 4
+#./PlotVnm --input "/eos/cms/store/group/phys_heavyions/flowcorr/SubCumu18/PAMinimumBias9/*Pbp*_c2_*/*/*/cumulants_2sub_40.root" --output ../output/c2_2sub.root --subevt 2 --cumumaxorder 4
+./PlotVnm --input "/eos/cms/store/group/phys_heavyions/flowcorr/SubCumu18/PAMinimumBias9/*Pbp*_sc_*/*/*/cumulants_2sub_*.root" --output ../output/sc23_2sub.root --folder anaSC23 --subevt 2 --cumumaxorder 4 --harmonicorder0 2 --harmonicorder1 3
+#./PlotVnm --input "/eos/cms/store/group/phys_heavyions/flowcorr/SubCumu18/PAMinimumBias9/*Pbp*_sc_*/*/*/cumulants_3sub_*.root" --output ../output/sc23_3sub.root --folder anaSC23 --subevt 3 --cumumaxorder 4 --harmonicorder0 2 --harmonicorder1 3
+#
+#
+#./PlotVnm --input /eos/cms/store/group/phys_heavyions/flowcorr/SubCumu18/PAMinimumBias1/crab_pPb2016_Pbp_cumulants_3sub_b1_c2_v1/180111_113241/0000/cumulants_3sub_40.root --output ../output/c2_3sub.root --subevt 3
