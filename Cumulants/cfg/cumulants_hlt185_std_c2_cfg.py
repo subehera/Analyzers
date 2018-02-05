@@ -6,11 +6,11 @@ process = cms.Process("Cumulants")
 # __________________ General _________________
 
 # Configure the logger
-process.load("FWCore.MessageService.MessageLogger_cfi")
-process.MessageLogger.cerr.FwkReport.reportEvery = 100
-
-process.options = cms.untracked.PSet(
-)
+#process.load("FWCore.MessageService.MessageLogger_cfi")
+#process.MessageLogger.cerr.FwkReport.reportEvery = 100
+#
+#process.options = cms.untracked.PSet(
+#)
 
 #NTHREADS =8
 #process.options.numberOfThreads = cms.untracked.uint32( 8 )
@@ -19,7 +19,7 @@ process.options = cms.untracked.PSet(
 # Configure the number of maximum event the analyser run on in interactive mode
 # -1 == ALL
 process.maxEvents = cms.untracked.PSet( 
-    input = cms.untracked.int32(300) 
+    input = cms.untracked.int32(-1) 
 )
 
 #process.Timing = cms.Service("Timing",

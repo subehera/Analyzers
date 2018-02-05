@@ -6,19 +6,19 @@ process = cms.Process("Cumulants")
 # __________________ General _________________
 
 # Configure the logger
-process.load("FWCore.MessageService.MessageLogger_cfi")
-process.MessageLogger.cerr.FwkReport.reportEvery = 100
+#process.load("FWCore.MessageService.MessageLogger_cfi")
+#process.MessageLogger.cerr.FwkReport.reportEvery = 100
 
 # Configure the number of maximum event the analyser run on in interactive mode
 # -1 == ALL
 process.maxEvents = cms.untracked.PSet( 
-    input = cms.untracked.int32(1000) 
+    input = cms.untracked.int32(-1) 
 )
 
-process.Timing = cms.Service("Timing",
-  summaryOnly = cms.untracked.bool(True),
-  useJobReport = cms.untracked.bool(False)
-)
+#process.Timing = cms.Service("Timing",
+#  summaryOnly = cms.untracked.bool(True),
+#  useJobReport = cms.untracked.bool(False)
+#)
 
 # __________________ I/O files _________________
 

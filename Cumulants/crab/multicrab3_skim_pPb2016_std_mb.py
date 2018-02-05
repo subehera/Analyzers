@@ -16,10 +16,10 @@ if __name__ == '__main__':
     config.JobType.maxMemoryMB = 2500
     config.JobType.maxJobRuntimeMin = 2750
     config.JobType.psetName = '../cfg/cumulants_std_cfg.py'
-    config.Data.unitsPerJob = 10
+    config.Data.unitsPerJob = 15
     config.Data.totalUnits = -1
     config.Data.splitting = 'LumiBased'
-    config.Data.outLFNDirBase = '/store/group/phys_heavyions/flowcorr/SubCumu/'
+    config.Data.outLFNDirBase = '/store/group/phys_heavyions/flowcorr/SubCumu18/'
     config.Data.publication = False
 #    config.Site.storageSite = 'T2_US_MIT'
 #    config.Site.storageSite = 'T3_US_Rice'
