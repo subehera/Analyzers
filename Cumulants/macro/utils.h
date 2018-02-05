@@ -22,34 +22,30 @@ namespace utils
          brnames.push_back(Form("%sC%d%d%d_18", suffix.c_str(), harm1, harm0, 2));
          brnames.push_back(Form("%sC%d%d%d_34", suffix.c_str(), harm1, harm1, 2));
       }
-/*
       if( nsub > 2 && harm0 == harm1 )
       {
+         brnames.push_back(Form("%sC%d%d%d_20", suffix.c_str(), harm0, harm1, 2));
+         brnames.push_back(Form("%sC%d%d%d_36", suffix.c_str(), harm0, harm1, 2));
          brnames.push_back(Form("%sC%d%d%d_53",  suffix.c_str(), harm0, harm1, 4));
-         brnames.push_back(Form("%sC%d%d%d_54",  suffix.c_str(), harm0, harm1, 4));
+         brnames.push_back(Form("%sC%d%d%d_58",  suffix.c_str(), harm0, harm1, 4));
+         brnames.push_back(Form("%sC%d%d%d_60",  suffix.c_str(), harm0, harm1, 4));
          brnames.push_back(Form("%sC%d%d%d_83",  suffix.c_str(), harm0, harm1, 4));
          brnames.push_back(Form("%sC%d%d%d_85",  suffix.c_str(), harm0, harm1, 4));
-         brnames.push_back(Form("%sC%d%d%d_86",  suffix.c_str(), harm0, harm1, 4));
+         brnames.push_back(Form("%sC%d%d%d_90",  suffix.c_str(), harm0, harm1, 4));
          brnames.push_back(Form("%sC%d%d%d_99",  suffix.c_str(), harm0, harm1, 4));
          brnames.push_back(Form("%sC%d%d%d_101", suffix.c_str(), harm0, harm1, 4));
-         brnames.push_back(Form("%sC%d%d%d_102", suffix.c_str(), harm0, harm1, 4));
+         brnames.push_back(Form("%sC%d%d%d_108", suffix.c_str(), harm0, harm1, 4));
+         brnames.push_back(Form("%sC%d%d%d_163", suffix.c_str(), harm0, harm1, 4));
+         brnames.push_back(Form("%sC%d%d%d_165", suffix.c_str(), harm0, harm1, 4));
+         brnames.push_back(Form("%sC%d%d%d_170", suffix.c_str(), harm0, harm1, 4));
          brnames.push_back(Form("%sC%d%d%d_123", suffix.c_str(), harm0, harm1, 6));
          brnames.push_back(Form("%sC%d%d%d_125", suffix.c_str(), harm0, harm1, 6));
-         brnames.push_back(Form("%sC%d%d%d_126", suffix.c_str(), harm0, harm1, 6));
          brnames.push_back(Form("%sC%d%d%d_183", suffix.c_str(), harm0, harm1, 6));
          brnames.push_back(Form("%sC%d%d%d_187", suffix.c_str(), harm0, harm1, 6));
-         brnames.push_back(Form("%sC%d%d%d_189", suffix.c_str(), harm0, harm1, 6));
-         brnames.push_back(Form("%sC%d%d%d_190", suffix.c_str(), harm0, harm1, 6));
-         brnames.push_back(Form("%sC%d%d%d_215", suffix.c_str(), harm0, harm1, 6));
-         brnames.push_back(Form("%sC%d%d%d_219", suffix.c_str(), harm0, harm1, 6));
-         brnames.push_back(Form("%sC%d%d%d_221", suffix.c_str(), harm0, harm1, 6));
-         brnames.push_back(Form("%sC%d%d%d_222", suffix.c_str(), harm0, harm1, 6));
          brnames.push_back(Form("%sC%d%d%d_231", suffix.c_str(), harm0, harm1, 6));
-         brnames.push_back(Form("%sC%d%d%d_235", suffix.c_str(), harm0, harm1, 6));
          brnames.push_back(Form("%sC%d%d%d_237", suffix.c_str(), harm0, harm1, 6));
-         brnames.push_back(Form("%sC%d%d%d_238", suffix.c_str(), harm0, harm1, 6));
       }
-*/
+
       return brnames;
    }
 
@@ -237,31 +233,28 @@ std::cout<<"printing out parameters: "<<harm0<<" "<<harm1<<" "<<nsub<<" "<<CNM.s
 //           order 4: 33
 //           order 5: 18
 //           order 6: 34
+//           order 7: 20
+//           order 8: 36  
 // for four
-//           order 0: 53
-//           order 0: 54
-//           order 0: 83
-//           order 0: 85
-//           order 0: 86
-//           order 0: 99
-//           order 0: 101
-//           order 0: 102
+//           order 9: 53
+//           order 10: 58
+//           order 11: 60
+//           order 12: 83
+//           order 13: 85
+//           order 14: 90
+//           order 15: 99
+//           order 16: 101
+//           order 17: 108
+//           order 18: 163
+//           order 19: 165
+//           order 20: 170
 // for six
-//           order 0: 123
-//           order 0: 125
-//           order 0: 126
-//           order 0: 183
-//           order 0: 187
-//           order 0: 189
-//           order 0: 190
-//           order 0: 215 
-//           order 0: 219
-//           order 0: 221
-//           order 0: 222
-//           order 0: 231
-//           order 0: 235
-//           order 0: 237
-//           order 0: 238
+//           order 21: 123
+//           order 22: 125
+//           order 23: 183
+//           order 24: 187
+//           order 25: 231
+//           order 26: 237
             case 0:
                if( wqNM[0][inoff][iref] != 0. )
                {
@@ -271,8 +264,7 @@ std::cout<<"printing out parameters: "<<harm0<<" "<<harm1<<" "<<nsub<<" "<<CNM.s
                }
                break;
             case 1:
-               if( wqNM[1][inoff][iref]   != 0. && 
-                   wqNM[0][inoff][iref] != 0. )
+               if( wqNM[1][inoff][iref] != 0.)
                {
                   cNM[order][inoff]  += ( qNM[1][inoff][iref]   / wqNM[1][inoff][iref] -   //   <<4>>
                                         2*qNM[0][inoff][iref] / wqNM[0][inoff][iref]   //-2*<<2>>^{2}
@@ -282,9 +274,7 @@ std::cout<<"printing out parameters: "<<harm0<<" "<<harm1<<" "<<nsub<<" "<<CNM.s
                }
                break;
             case 2:
-               if( wqNM[2][inoff][iref]   != 0. && 
-                   wqNM[1][inoff][iref] != 0. &&
-                   wqNM[0][inoff][iref] != 0. )
+               if( wqNM[2][inoff][iref] != 0. )
                {
                   cNM[order][inoff]  += ( qNM[2][inoff][iref]   / wqNM[2][inoff][iref]   - //    <<6>>
                                         9*qNM[1][inoff][iref] / wqNM[1][inoff][iref]   //- 9*<<4>><<2>>
@@ -297,10 +287,7 @@ std::cout<<"printing out parameters: "<<harm0<<" "<<harm1<<" "<<nsub<<" "<<CNM.s
                }
                break;
             case 3:
-               if( wqNM[3][inoff][iref] != 0. && 
-                   wqNM[2][inoff][iref] != 0. &&
-                   wqNM[1][inoff][iref] != 0. &&
-                   wqNM[0][inoff][iref] != 0. )
+               if( wqNM[3][inoff][iref] != 0. )
                {
                   cNM[order][inoff]  += ( qNM[3][inoff][iref]   / wqNM[3][inoff][iref]   - //     <<8>>
                                        16*qNM[2][inoff][iref] / wqNM[2][inoff][iref]   //- 16*<<6>><<2>>
@@ -336,10 +323,7 @@ std::cout<<"printing out parameters: "<<harm0<<" "<<harm1<<" "<<nsub<<" "<<CNM.s
                }
                break;
             case 1:
-               if( wqNM[1][inoff][iref] != 0. &&
-                   wqNM[4][inoff][iref] != 0. && wqNM[0][inoff][iref] != 0. &&
-                   wqNM[5][inoff][iref] != 0. && wqNM[6][inoff][iref] != 0.
-               )
+               if( wqNM[1][inoff][iref] != 0.)
                {
                   cNM[order][inoff]  += ( qNM[1][inoff][iref] / wqNM[1][inoff][iref] -  // <<4>>-<<33>>*<<18>>-<<34>>*<<17>>
                                           qNM[4][inoff][iref] / wqNM[4][inoff][iref]
@@ -369,54 +353,58 @@ std::cout<<"printing out parameters: "<<harm0<<" "<<harm1<<" "<<nsub<<" "<<CNM.s
                }
                break;
             case 1:
-               if( wqNM[1][inoff][iref] != 0. &&
-                   wqNM[4][inoff][iref] != 0. &&
-                   wqNM[5][inoff][iref] != 0.
-                 )
+               if( wqNM[1][inoff][iref] != 0.)
                {
-                  cNM[order][inoff]  += ( qNM[1][inoff][iref]   / wqNM[1][inoff][iref] -  // <<4>>-2<<33>>*<<18>>
-                                          2*qNM[4][inoff][iref] / wqNM[4][inoff][iref]
-                                         *qNM[5][inoff][iref] / wqNM[5][inoff][iref] 
+                  cNM[order][inoff]  += ( qNM[1][inoff][iref]   / wqNM[1][inoff][iref] -  // <<4>>-2<<33>>*<<17>>
+                                          2*qNM[0][inoff][iref] / wqNM[0][inoff][iref]
+                                         *qNM[4][inoff][iref] / wqNM[4][inoff][iref] 
                                          )
                                          *wqNM[1][inoff][iref];
                   wcNM[order][inoff] += wqNM[1][inoff][iref];
                }
                break;
             case 2:
-               if( wqNM[order][inoff][iref]   != 0. && 
-                   wqNM[order-1][inoff][iref] != 0. &&
-                   wqNM[order-5][inoff][iref] != 0. )
+               if( wqNM[2][inoff][iref]   != 0. ) 
                {
-                  cNM[order][inoff]  += ( qNM[order][inoff][iref]   / wqNM[order][inoff][iref]   - //    <<6>>
-                                        9*qNM[order-1][inoff][iref] / wqNM[order-1][inoff][iref]   //- 9*<<4>><<2>>
-                                         *qNM[order-5][inoff][iref] / wqNM[order-5][inoff][iref] + //
-                                       12*qNM[order-5][inoff][iref] / wqNM[order-5][inoff][iref]   //+12*<<2>>^{3}
-                                         *qNM[order-5][inoff][iref] / wqNM[order-5][inoff][iref]
-                                         *qNM[order-5][inoff][iref] / wqNM[order-5][inoff][iref] ) 
-                                         *wqNM[order][inoff][iref];
-                  wcNM[order][inoff] += wqNM[order][inoff][iref];
+                  cNM[order][inoff]  += ( qNM[2][inoff][iref]   / wqNM[2][inoff][iref]   - //    <<6>>
+                                        2*qNM[1][inoff][iref] / wqNM[1][inoff][iref]   
+                                         *qNM[8][inoff][iref] / wqNM[8][inoff][iref] - 
+                                          qNM[7][inoff][iref] / wqNM[7][inoff][iref]   
+                                         *qNM[15][inoff][iref] / wqNM[15][inoff][iref] - 
+                                        4*qNM[9][inoff][iref] / wqNM[9][inoff][iref]
+                                         *qNM[4][inoff][iref] / wqNM[4][inoff][iref] -
+                                        2*qNM[0][inoff][iref] / wqNM[0][inoff][iref]
+                                         *qNM[16][inoff][iref] / wqNM[16][inoff][iref] +
+                                        8*qNM[0][inoff][iref] / wqNM[0][inoff][iref]
+                                         *qNM[4][inoff][iref] / wqNM[4][inoff][iref] 
+                                         *qNM[8][inoff][iref] / wqNM[8][inoff][iref] +
+                                        4*qNM[7][inoff][iref] / wqNM[7][inoff][iref]
+                                         *qNM[4][inoff][iref] / wqNM[4][inoff][iref] 
+                                         *qNM[4][inoff][iref] / wqNM[4][inoff][iref] ) 
+                                         *wqNM[2][inoff][iref];
+                  wcNM[order][inoff] += wqNM[2][inoff][iref];
                }
                break;
             case 3:
-               if( wqNM[order][inoff][iref]   != 0. && 
-                   wqNM[order-1][inoff][iref] != 0. &&
-                   wqNM[order-2][inoff][iref] != 0. &&
-                   wqNM[order-6][inoff][iref] != 0. )
+               if( wqNM[3][inoff][iref]   != 0. )
                {
-                  cNM[order][inoff]  += ( qNM[order][inoff][iref]   / wqNM[order][inoff][iref]   - //     <<8>>
-                                       16*qNM[order-1][inoff][iref] / wqNM[order-1][inoff][iref]   //- 16*<<6>><<2>>
-                                         *qNM[order-6][inoff][iref] / wqNM[order-6][inoff][iref] - //
-                                       18*qNM[order-2][inoff][iref] / wqNM[order-2][inoff][iref]   //- 18*<<4>>^{2}
-                                         *qNM[order-2][inoff][iref] / wqNM[order-2][inoff][iref] + //
-                                      144*qNM[order-2][inoff][iref] / wqNM[order-2][inoff][iref]   //+144*<<4>><<2>>^{2}
-                                         *qNM[order-6][inoff][iref] / wqNM[order-6][inoff][iref]   //
-                                         *qNM[order-6][inoff][iref] / wqNM[order-6][inoff][iref] - //-144*<<2>>^{4}
-                                      144*qNM[order-6][inoff][iref] / wqNM[order-6][inoff][iref]
-                                         *qNM[order-6][inoff][iref] / wqNM[order-6][inoff][iref]
-                                         *qNM[order-6][inoff][iref] / wqNM[order-6][inoff][iref]
-                                         *qNM[order-6][inoff][iref] / wqNM[order-6][inoff][iref] )
-                                         *wqNM[order][inoff][iref];
-                  wcNM[order][inoff] += wqNM[order][inoff][iref];
+                  cNM[order][inoff]  += ( qNM[3][inoff][iref]   / wqNM[3][inoff][iref]   - //    <<8>>
+                                          qNM[6][inoff][iref] / wqNM[6][inoff][iref]
+                                         *qNM[13][inoff][iref] / wqNM[13][inoff][iref] -
+                                        2*qNM[4][inoff][iref] / wqNM[4][inoff][iref]
+                                         *qNM[12][inoff][iref] / wqNM[12][inoff][iref] -
+                                        2*qNM[9][inoff][iref] / wqNM[9][inoff][iref]
+                                         *qNM[5][inoff][iref] / wqNM[5][inoff][iref] -
+                                        4*qNM[0][inoff][iref] / wqNM[0][inoff][iref]
+                                         *qNM[1][inoff][iref] / wqNM[1][inoff][iref] +
+                                        8*qNM[0][inoff][iref] / wqNM[0][inoff][iref]
+                                         *qNM[4][inoff][iref] / wqNM[4][inoff][iref]
+                                         *qNM[5][inoff][iref] / wqNM[5][inoff][iref] +
+                                        4*qNM[6][inoff][iref] / wqNM[6][inoff][iref]
+                                         *qNM[0][inoff][iref] / wqNM[0][inoff][iref]
+                                         *qNM[0][inoff][iref] / wqNM[0][inoff][iref] )
+                                         *wqNM[3][inoff][iref];
+                  wcNM[order][inoff] += wqNM[3][inoff][iref];
                }
                break;
             default:
@@ -437,10 +425,7 @@ std::cout<<"printing out parameters: "<<harm0<<" "<<harm1<<" "<<nsub<<" "<<CNM.s
                }
                break;
             case 1:
-               if( wqNM[1][inoff][iref] != 0. &&
-                   wqNM[4][inoff][iref] != 0. && wqNM[0][inoff][iref] != 0. &&
-                   wqNM[5][inoff][iref] != 0. && wqNM[6][inoff][iref] != 0.
-                 )
+               if( wqNM[1][inoff][iref] != 0. )
                {
                   cNM[order][inoff]  += ( qNM[1][inoff][iref]   / wqNM[1][inoff][iref] -  // <<4>>-<<33>>*<<18>>-<<34>>*<<17>>
                                           qNM[4][inoff][iref] / wqNM[4][inoff][iref]
@@ -453,40 +438,122 @@ std::cout<<"printing out parameters: "<<harm0<<" "<<harm1<<" "<<nsub<<" "<<CNM.s
                }
                break;
             case 2:
-               if( wqNM[order][inoff][iref]   != 0. &&
-                   wqNM[order-1][inoff][iref] != 0. &&
-                   wqNM[order-5][inoff][iref] != 0. )
+               if( wqNM[2][inoff][iref] != 0. )
                {
-                  cNM[order][inoff]  += ( qNM[order][inoff][iref]   / wqNM[order][inoff][iref]   - //    <<6>>
-                                        9*qNM[order-1][inoff][iref] / wqNM[order-1][inoff][iref]   //- 9*<<4>><<2>>
-                                         *qNM[order-5][inoff][iref] / wqNM[order-5][inoff][iref] + //
-                                       12*qNM[order-5][inoff][iref] / wqNM[order-5][inoff][iref]   //+12*<<2>>^{3}
-                                         *qNM[order-5][inoff][iref] / wqNM[order-5][inoff][iref]
-                                         *qNM[order-5][inoff][iref] / wqNM[order-5][inoff][iref] )
-                                         *wqNM[order][inoff][iref];
-                  wcNM[order][inoff] += wqNM[order][inoff][iref];
+                  cNM[order][inoff]  += ( qNM[2][inoff][iref]   / wqNM[2][inoff][iref]   - //    <<6>>
+                                        3*qNM[4][inoff][iref] / wqNM[4][inoff][iref]  
+                                         *qNM[22][inoff][iref] / wqNM[22][inoff][iref] - 
+                                        3*qNM[0][inoff][iref] / wqNM[0][inoff][iref]
+                                         *qNM[26][inoff][iref] / wqNM[26][inoff][iref] -
+                                        6*qNM[2][inoff][iref] / wqNM[2][inoff][iref]
+                                         *qNM[8][inoff][iref] / wqNM[8][inoff][iref] -
+                                        2*qNM[7][inoff][iref] / wqNM[7][inoff][iref]
+                                         *qNM[25][inoff][iref] / wqNM[25][inoff][iref] -
+                                        3*qNM[11][inoff][iref] / wqNM[11][inoff][iref]
+                                         *qNM[15][inoff][iref] / wqNM[15][inoff][iref] -
+                                        3*qNM[1][inoff][iref] / wqNM[1][inoff][iref]
+                                         *qNM[17][inoff][iref] / wqNM[17][inoff][iref] -
+                                       12*qNM[9][inoff][iref] / wqNM[9][inoff][iref]
+                                         *qNM[15][inoff][iref] / wqNM[15][inoff][iref] +
+                                       12*qNM[1][inoff][iref] / wqNM[1][inoff][iref]  
+                                         *qNM[8][inoff][iref] / wqNM[8][inoff][iref]
+                                         *qNM[8][inoff][iref] / wqNM[8][inoff][iref] +
+                                       12*qNM[11][inoff][iref] / wqNM[11][inoff][iref]
+                                         *qNM[4][inoff][iref] / wqNM[4][inoff][iref]
+                                         *qNM[4][inoff][iref] / wqNM[4][inoff][iref] +
+                                       12*qNM[0][inoff][iref] / wqNM[0][inoff][iref]
+                                         *qNM[4][inoff][iref] / wqNM[4][inoff][iref]
+                                         *qNM[17][inoff][iref] / wqNM[17][inoff][iref] +
+                                       48*qNM[4][inoff][iref] / wqNM[4][inoff][iref]
+                                         *qNM[7][inoff][iref] / wqNM[7][inoff][iref]
+                                         *qNM[15][inoff][iref] / wqNM[15][inoff][iref] +
+                                       24*qNM[4][inoff][iref] / wqNM[4][inoff][iref]
+                                         *qNM[8][inoff][iref] / wqNM[8][inoff][iref]
+                                         *qNM[9][inoff][iref] / wqNM[9][inoff][iref] +
+                                       24*qNM[0][inoff][iref] / wqNM[0][inoff][iref]
+                                         *qNM[8][inoff][iref] / wqNM[8][inoff][iref]
+                                         *qNM[15][inoff][iref] / wqNM[15][inoff][iref] +
+                                       12*qNM[4][inoff][iref] / wqNM[4][inoff][iref]
+                                         *qNM[7][inoff][iref] / wqNM[7][inoff][iref]
+                                         *qNM[15][inoff][iref] / wqNM[15][inoff][iref] -
+                                       72*qNM[7][inoff][iref] / wqNM[7][inoff][iref]
+                                         *qNM[8][inoff][iref] / wqNM[8][inoff][iref]
+                                         *qNM[4][inoff][iref] / wqNM[4][inoff][iref]
+                                         *qNM[4][inoff][iref] / wqNM[4][inoff][iref] -
+                                       72*qNM[0][inoff][iref] / wqNM[0][inoff][iref]
+                                         *qNM[4][inoff][iref] / wqNM[4][inoff][iref]
+                                         *qNM[8][inoff][iref] / wqNM[8][inoff][iref]
+                                         *qNM[8][inoff][iref] / wqNM[8][inoff][iref] )
+                                         *wqNM[2][inoff][iref];
+                  wcNM[order][inoff] += wqNM[2][inoff][iref];
                }
                break;
             case 3:
-               if( wqNM[order][inoff][iref]   != 0. &&
-                   wqNM[order-1][inoff][iref] != 0. &&
-                   wqNM[order-2][inoff][iref] != 0. &&
-                   wqNM[order-6][inoff][iref] != 0. )
+               if( wqNM[3][inoff][iref] != 0. )
                {
-                  cNM[order][inoff]  += ( qNM[order][inoff][iref]   / wqNM[order][inoff][iref]   - //     <<8>>
-                                       16*qNM[order-1][inoff][iref] / wqNM[order-1][inoff][iref]   //- 16*<<6>><<2>>
-                                         *qNM[order-6][inoff][iref] / wqNM[order-6][inoff][iref] - //
-                                       18*qNM[order-2][inoff][iref] / wqNM[order-2][inoff][iref]   //- 18*<<4>>^{2}
-                                         *qNM[order-2][inoff][iref] / wqNM[order-2][inoff][iref] + //
-                                      144*qNM[order-2][inoff][iref] / wqNM[order-2][inoff][iref]   //+144*<<4>><<2>>^{2}
-                                         *qNM[order-6][inoff][iref] / wqNM[order-6][inoff][iref]   //
-                                         *qNM[order-6][inoff][iref] / wqNM[order-6][inoff][iref] - //-144*<<2>>^{4}
-                                      144*qNM[order-6][inoff][iref] / wqNM[order-6][inoff][iref]
-                                         *qNM[order-6][inoff][iref] / wqNM[order-6][inoff][iref]
-                                         *qNM[order-6][inoff][iref] / wqNM[order-6][inoff][iref]
-                                         *qNM[order-6][inoff][iref] / wqNM[order-6][inoff][iref] )
-                                         *wqNM[order][inoff][iref];
-                  wcNM[order][inoff] += wqNM[order][inoff][iref];
+                  cNM[order][inoff]  += ( qNM[3][inoff][iref]   / wqNM[3][inoff][iref]   - //     <<8>>
+                                        4*qNM[4][inoff][iref] / wqNM[4][inoff][iref]   
+                                         *qNM[21][inoff][iref] / wqNM[21][inoff][iref] - 
+                                        4*qNM[24][inoff][iref] / wqNM[24][inoff][iref]   
+                                         *qNM[17][inoff][iref] / wqNM[17][inoff][iref] -
+                                        4*qNM[2][inoff][iref] / wqNM[2][inoff][iref]   
+                                         *qNM[6][inoff][iref] / wqNM[6][inoff][iref] -
+                                        4*qNM[23][inoff][iref] / wqNM[23][inoff][iref]   
+                                         *qNM[5][inoff][iref] / wqNM[5][inoff][iref] -
+                                        8*qNM[1][inoff][iref] / wqNM[1][inoff][iref]   
+                                         *qNM[1][inoff][iref] / wqNM[1][inoff][iref] -
+                                          qNM[14][inoff][iref] / wqNM[14][inoff][iref]   
+                                         *qNM[19][inoff][iref] / wqNM[19][inoff][iref] -
+                                          qNM[13][inoff][iref] / wqNM[13][inoff][iref]   
+                                         *qNM[20][inoff][iref] / wqNM[20][inoff][iref] -
+                                        4*qNM[9][inoff][iref] / wqNM[9][inoff][iref]   
+                                         *qNM[10][inoff][iref] / wqNM[10][inoff][iref] -
+                                        4*qNM[12][inoff][iref] / wqNM[12][inoff][iref]   
+                                         *qNM[18][inoff][iref] / wqNM[18][inoff][iref] + 
+                                       32*qNM[1][inoff][iref] / wqNM[1][inoff][iref]
+                                         *qNM[4][inoff][iref] / wqNM[4][inoff][iref]
+                                         *qNM[5][inoff][iref] / wqNM[5][inoff][iref] +
+                                       32*qNM[0][inoff][iref] / wqNM[0][inoff][iref]
+                                         *qNM[1][inoff][iref] / wqNM[1][inoff][iref]
+                                         *qNM[6][inoff][iref] / wqNM[6][inoff][iref] + 
+                                        4*qNM[14][inoff][iref] / wqNM[14][inoff][iref]
+                                         *qNM[4][inoff][iref] / wqNM[4][inoff][iref]
+                                         *qNM[4][inoff][iref] / wqNM[4][inoff][iref] + 
+                                        4*qNM[19][inoff][iref] / wqNM[19][inoff][iref]
+                                         *qNM[5][inoff][iref] / wqNM[5][inoff][iref]
+                                         *qNM[5][inoff][iref] / wqNM[5][inoff][iref] +
+                                        4*qNM[13][inoff][iref] / wqNM[13][inoff][iref]
+                                         *qNM[6][inoff][iref] / wqNM[6][inoff][iref]
+                                         *qNM[6][inoff][iref] / wqNM[6][inoff][iref] + 
+                                        4*qNM[20][inoff][iref] / wqNM[20][inoff][iref]
+                                         *qNM[0][inoff][iref] / wqNM[0][inoff][iref]
+                                         *qNM[0][inoff][iref] / wqNM[0][inoff][iref] + 
+                                       16*qNM[10][inoff][iref] / wqNM[10][inoff][iref]
+                                         *qNM[0][inoff][iref] / wqNM[0][inoff][iref]
+                                         *qNM[4][inoff][iref] / wqNM[4][inoff][iref] + 
+                                       16*qNM[9][inoff][iref] / wqNM[9][inoff][iref]
+                                         *qNM[5][inoff][iref] / wqNM[5][inoff][iref]
+                                         *qNM[6][inoff][iref] / wqNM[6][inoff][iref] + 
+                                       16*qNM[12][inoff][iref] / wqNM[12][inoff][iref]
+                                         *qNM[6][inoff][iref] / wqNM[6][inoff][iref]
+                                         *qNM[4][inoff][iref] / wqNM[4][inoff][iref] + 
+                                       16*qNM[18][inoff][iref] / wqNM[18][inoff][iref]   
+                                         *qNM[5][inoff][iref] / wqNM[5][inoff][iref]  
+                                         *qNM[0][inoff][iref] / wqNM[0][inoff][iref] -
+                                       72*qNM[5][inoff][iref] / wqNM[5][inoff][iref]
+                                         *qNM[6][inoff][iref] / wqNM[6][inoff][iref]
+                                         *qNM[0][inoff][iref] / wqNM[0][inoff][iref]
+                                         *qNM[4][inoff][iref] / wqNM[4][inoff][iref] -
+                                       36*qNM[5][inoff][iref] / wqNM[5][inoff][iref]
+                                         *qNM[5][inoff][iref] / wqNM[5][inoff][iref]
+                                         *qNM[4][inoff][iref] / wqNM[4][inoff][iref]
+                                         *qNM[4][inoff][iref] / wqNM[4][inoff][iref] -
+                                       36*qNM[0][inoff][iref] / wqNM[0][inoff][iref]
+                                         *qNM[0][inoff][iref] / wqNM[0][inoff][iref]
+                                         *qNM[6][inoff][iref] / wqNM[6][inoff][iref]
+                                         *qNM[6][inoff][iref] / wqNM[6][inoff][iref] )
+                                         *wqNM[3][inoff][iref];
+                  wcNM[order][inoff] += wqNM[3][inoff][iref];
                }
                break;
             default:

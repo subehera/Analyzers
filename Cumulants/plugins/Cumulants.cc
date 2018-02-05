@@ -216,51 +216,69 @@ void Cumulants::beginJob()
    {
      trEvent_->Branch(Form("C%d%d6_123",harm_[0],harm_[1]),  &CN6_123_,  Form("C%d%d6_123/D",harm_[0],harm_[1])); // 01111011
      trEvent_->Branch(Form("C%d%d6_125",harm_[0],harm_[1]),  &CN6_125_,  Form("C%d%d6_125/D",harm_[0],harm_[1])); // 01111101
-     trEvent_->Branch(Form("C%d%d6_126",harm_[0],harm_[1]),  &CN6_126_,  Form("C%d%d6_126/D",harm_[0],harm_[1])); // 01111110
+//     trEvent_->Branch(Form("C%d%d6_126",harm_[0],harm_[1]),  &CN6_126_,  Form("C%d%d6_126/D",harm_[0],harm_[1])); // 01111110
      trEvent_->Branch(Form("C%d%d6_183",harm_[0],harm_[1]),  &CN6_183_,  Form("C%d%d6_183/D",harm_[0],harm_[1])); // 10110111
      trEvent_->Branch(Form("C%d%d6_187",harm_[0],harm_[1]),  &CN6_187_,  Form("C%d%d6_187/D",harm_[0],harm_[1])); // 10111011
-     trEvent_->Branch(Form("C%d%d6_189",harm_[0],harm_[1]),  &CN6_189_,  Form("C%d%d6_189/D",harm_[0],harm_[1])); // 10111101
-     trEvent_->Branch(Form("C%d%d6_190",harm_[0],harm_[1]),  &CN6_190_,  Form("C%d%d6_190/D",harm_[0],harm_[1])); // 10111110
-     trEvent_->Branch(Form("C%d%d6_215",harm_[0],harm_[1]),  &CN6_215_,  Form("C%d%d6_215/D",harm_[0],harm_[1])); // 11010111
-     trEvent_->Branch(Form("C%d%d6_219",harm_[0],harm_[1]),  &CN6_219_,  Form("C%d%d6_219/D",harm_[0],harm_[1])); // 11011011 
-     trEvent_->Branch(Form("C%d%d6_221",harm_[0],harm_[1]),  &CN6_221_,  Form("C%d%d6_221/D",harm_[0],harm_[1])); // 11011101
-     trEvent_->Branch(Form("C%d%d6_222",harm_[0],harm_[1]),  &CN6_222_,  Form("C%d%d6_222/D",harm_[0],harm_[1])); // 11011110
+//     trEvent_->Branch(Form("C%d%d6_189",harm_[0],harm_[1]),  &CN6_189_,  Form("C%d%d6_189/D",harm_[0],harm_[1])); // 10111101
+//     trEvent_->Branch(Form("C%d%d6_190",harm_[0],harm_[1]),  &CN6_190_,  Form("C%d%d6_190/D",harm_[0],harm_[1])); // 10111110
+//     trEvent_->Branch(Form("C%d%d6_215",harm_[0],harm_[1]),  &CN6_215_,  Form("C%d%d6_215/D",harm_[0],harm_[1])); // 11010111
+//     trEvent_->Branch(Form("C%d%d6_219",harm_[0],harm_[1]),  &CN6_219_,  Form("C%d%d6_219/D",harm_[0],harm_[1])); // 11011011 
+//     trEvent_->Branch(Form("C%d%d6_221",harm_[0],harm_[1]),  &CN6_221_,  Form("C%d%d6_221/D",harm_[0],harm_[1])); // 11011101
+//     trEvent_->Branch(Form("C%d%d6_222",harm_[0],harm_[1]),  &CN6_222_,  Form("C%d%d6_222/D",harm_[0],harm_[1])); // 11011110
      trEvent_->Branch(Form("C%d%d6_231",harm_[0],harm_[1]),  &CN6_231_,  Form("C%d%d6_231/D",harm_[0],harm_[1])); // 11100111
-     trEvent_->Branch(Form("C%d%d6_235",harm_[0],harm_[1]),  &CN6_235_,  Form("C%d%d6_235/D",harm_[0],harm_[1])); // 11101011
+//     trEvent_->Branch(Form("C%d%d6_235",harm_[0],harm_[1]),  &CN6_235_,  Form("C%d%d6_235/D",harm_[0],harm_[1])); // 11101011
      trEvent_->Branch(Form("C%d%d6_237",harm_[0],harm_[1]),  &CN6_237_,  Form("C%d%d6_237/D",harm_[0],harm_[1])); // 11101101
-     trEvent_->Branch(Form("C%d%d6_238",harm_[0],harm_[1]),  &CN6_238_,  Form("C%d%d6_238/D",harm_[0],harm_[1])); // 11101110
+//     trEvent_->Branch(Form("C%d%d6_238",harm_[0],harm_[1]),  &CN6_238_,  Form("C%d%d6_238/D",harm_[0],harm_[1])); // 11101110
      trEvent_->Branch(Form("C%d%d4_53",harm_[0],harm_[1]),  &CN4_53_,  Form("C%d%d4_53/D",harm_[0],harm_[1])); // 00110101
-     trEvent_->Branch(Form("C%d%d4_54",harm_[0],harm_[1]),  &CN4_54_,  Form("C%d%d4_54/D",harm_[0],harm_[1])); // 00110110
+//     trEvent_->Branch(Form("C%d%d4_54",harm_[0],harm_[1]),  &CN4_54_,  Form("C%d%d4_54/D",harm_[0],harm_[1])); // 00110110
      trEvent_->Branch(Form("C%d%d4_83",harm_[0],harm_[1]),  &CN4_83_,  Form("C%d%d4_83/D",harm_[0],harm_[1])); // 01010011
      trEvent_->Branch(Form("C%d%d4_85",harm_[0],harm_[1]),  &CN4_85_,  Form("C%d%d4_85/D",harm_[0],harm_[1])); // 01010101
-     trEvent_->Branch(Form("C%d%d4_86",harm_[0],harm_[1]),  &CN4_86_,  Form("C%d%d4_86/D",harm_[0],harm_[1])); // 01010110
+//     trEvent_->Branch(Form("C%d%d4_86",harm_[0],harm_[1]),  &CN4_86_,  Form("C%d%d4_86/D",harm_[0],harm_[1])); // 01010110
      trEvent_->Branch(Form("C%d%d4_99",harm_[0],harm_[1]),  &CN4_99_,  Form("C%d%d4_99/D",harm_[0],harm_[1])); // 01100011
      trEvent_->Branch(Form("C%d%d4_101",harm_[0],harm_[1]),  &CN4_101_,  Form("C%d%d4_101/D",harm_[0],harm_[1])); // 01100101
-     trEvent_->Branch(Form("C%d%d4_102",harm_[0],harm_[1]),  &CN4_102_,  Form("C%d%d4_102/D",harm_[0],harm_[1])); // 01100110
+//     trEvent_->Branch(Form("C%d%d4_102",harm_[0],harm_[1]),  &CN4_102_,  Form("C%d%d4_102/D",harm_[0],harm_[1])); // 01100110
+     trEvent_->Branch(Form("C%d%d4_58",harm_[0],harm_[1]),  &CN4_58_,  Form("C%d%d4_58/D",harm_[0],harm_[1])); // 00111010
+     trEvent_->Branch(Form("C%d%d4_60",harm_[0],harm_[1]),  &CN4_60_,  Form("C%d%d4_60/D",harm_[0],harm_[1])); // 00111100
+     trEvent_->Branch(Form("C%d%d4_90",harm_[0],harm_[1]),  &CN4_90_,  Form("C%d%d4_90/D",harm_[0],harm_[1])); // 01011010
+     trEvent_->Branch(Form("C%d%d4_108",harm_[0],harm_[1]),  &CN4_108_,  Form("C%d%d4_108/D",harm_[0],harm_[1])); // 01101100
+     trEvent_->Branch(Form("C%d%d4_163",harm_[0],harm_[1]),  &CN4_163_,  Form("C%d%d4_163/D",harm_[0],harm_[1])); // 10100011
+     trEvent_->Branch(Form("C%d%d4_165",harm_[0],harm_[1]),  &CN4_165_,  Form("C%d%d4_165/D",harm_[0],harm_[1])); // 10100101
+     trEvent_->Branch(Form("C%d%d4_170",harm_[0],harm_[1]),  &CN4_170_,  Form("C%d%d4_170/D",harm_[0],harm_[1])); // 10101010
+     trEvent_->Branch(Form("C%d%d2_36",harm_[0],harm_[1]),  &CN2_36_,  Form("C%d%d2_36/D",harm_[0],harm_[1])); // 00100100
+     trEvent_->Branch(Form("C%d%d2_20",harm_[0],harm_[1]),  &CN2_20_,  Form("C%d%d2_20/D",harm_[0],harm_[1])); // 00010100
 
      trEvent_->Branch(Form("wC%d%d6_123",harm_[0],harm_[1]),  &wCN6_123_,  Form("wC%d%d6_123/D",harm_[0],harm_[1])); // 01111011
      trEvent_->Branch(Form("wC%d%d6_125",harm_[0],harm_[1]),  &wCN6_125_,  Form("wC%d%d6_125/D",harm_[0],harm_[1])); // 01111101
-     trEvent_->Branch(Form("wC%d%d6_126",harm_[0],harm_[1]),  &wCN6_126_,  Form("wC%d%d6_126/D",harm_[0],harm_[1])); // 01111110
+//     trEvent_->Branch(Form("wC%d%d6_126",harm_[0],harm_[1]),  &wCN6_126_,  Form("wC%d%d6_126/D",harm_[0],harm_[1])); // 01111110
      trEvent_->Branch(Form("wC%d%d6_183",harm_[0],harm_[1]),  &wCN6_183_,  Form("wC%d%d6_183/D",harm_[0],harm_[1])); // 10110111
      trEvent_->Branch(Form("wC%d%d6_187",harm_[0],harm_[1]),  &wCN6_187_,  Form("wC%d%d6_187/D",harm_[0],harm_[1])); // 10111011
-     trEvent_->Branch(Form("wC%d%d6_189",harm_[0],harm_[1]),  &wCN6_189_,  Form("wC%d%d6_189/D",harm_[0],harm_[1])); // 10111101
-     trEvent_->Branch(Form("wC%d%d6_190",harm_[0],harm_[1]),  &wCN6_190_,  Form("wC%d%d6_190/D",harm_[0],harm_[1])); // 10111110
-     trEvent_->Branch(Form("wC%d%d6_215",harm_[0],harm_[1]),  &wCN6_215_,  Form("wC%d%d6_215/D",harm_[0],harm_[1])); // 11010111
-     trEvent_->Branch(Form("wC%d%d6_219",harm_[0],harm_[1]),  &wCN6_219_,  Form("wC%d%d6_219/D",harm_[0],harm_[1])); // 11011011 
-     trEvent_->Branch(Form("wC%d%d6_221",harm_[0],harm_[1]),  &wCN6_221_,  Form("wC%d%d6_221/D",harm_[0],harm_[1])); // 11011101
-     trEvent_->Branch(Form("wC%d%d6_222",harm_[0],harm_[1]),  &wCN6_222_,  Form("wC%d%d6_222/D",harm_[0],harm_[1])); // 11011110
+//     trEvent_->Branch(Form("wC%d%d6_189",harm_[0],harm_[1]),  &wCN6_189_,  Form("wC%d%d6_189/D",harm_[0],harm_[1])); // 10111101
+//     trEvent_->Branch(Form("wC%d%d6_190",harm_[0],harm_[1]),  &wCN6_190_,  Form("wC%d%d6_190/D",harm_[0],harm_[1])); // 10111110
+//     trEvent_->Branch(Form("wC%d%d6_215",harm_[0],harm_[1]),  &wCN6_215_,  Form("wC%d%d6_215/D",harm_[0],harm_[1])); // 11010111
+//     trEvent_->Branch(Form("wC%d%d6_219",harm_[0],harm_[1]),  &wCN6_219_,  Form("wC%d%d6_219/D",harm_[0],harm_[1])); // 11011011 
+//     trEvent_->Branch(Form("wC%d%d6_221",harm_[0],harm_[1]),  &wCN6_221_,  Form("wC%d%d6_221/D",harm_[0],harm_[1])); // 11011101
+//     trEvent_->Branch(Form("wC%d%d6_222",harm_[0],harm_[1]),  &wCN6_222_,  Form("wC%d%d6_222/D",harm_[0],harm_[1])); // 11011110
      trEvent_->Branch(Form("wC%d%d6_231",harm_[0],harm_[1]),  &wCN6_231_,  Form("wC%d%d6_231/D",harm_[0],harm_[1])); // 11100111
-     trEvent_->Branch(Form("wC%d%d6_235",harm_[0],harm_[1]),  &wCN6_235_,  Form("wC%d%d6_235/D",harm_[0],harm_[1])); // 11101011
+//     trEvent_->Branch(Form("wC%d%d6_235",harm_[0],harm_[1]),  &wCN6_235_,  Form("wC%d%d6_235/D",harm_[0],harm_[1])); // 11101011
      trEvent_->Branch(Form("wC%d%d6_237",harm_[0],harm_[1]),  &wCN6_237_,  Form("wC%d%d6_237/D",harm_[0],harm_[1])); // 11101101
-     trEvent_->Branch(Form("wC%d%d6_238",harm_[0],harm_[1]),  &wCN6_238_,  Form("wC%d%d6_238/D",harm_[0],harm_[1])); // 11101110
+//     trEvent_->Branch(Form("wC%d%d6_238",harm_[0],harm_[1]),  &wCN6_238_,  Form("wC%d%d6_238/D",harm_[0],harm_[1])); // 11101110
      trEvent_->Branch(Form("wC%d%d4_53",harm_[0],harm_[1]),  &wCN4_53_,  Form("wC%d%d4_53/D",harm_[0],harm_[1])); // 00110101
-     trEvent_->Branch(Form("wC%d%d4_54",harm_[0],harm_[1]),  &wCN4_54_,  Form("wC%d%d4_54/D",harm_[0],harm_[1])); // 00110110
+//     trEvent_->Branch(Form("wC%d%d4_54",harm_[0],harm_[1]),  &wCN4_54_,  Form("wC%d%d4_54/D",harm_[0],harm_[1])); // 00110110
      trEvent_->Branch(Form("wC%d%d4_83",harm_[0],harm_[1]),  &wCN4_83_,  Form("wC%d%d4_83/D",harm_[0],harm_[1])); // 01010011
      trEvent_->Branch(Form("wC%d%d4_85",harm_[0],harm_[1]),  &wCN4_85_,  Form("wC%d%d4_85/D",harm_[0],harm_[1])); // 01010101
-     trEvent_->Branch(Form("wC%d%d4_86",harm_[0],harm_[1]),  &wCN4_86_,  Form("wC%d%d4_86/D",harm_[0],harm_[1])); // 01010110
+//     trEvent_->Branch(Form("wC%d%d4_86",harm_[0],harm_[1]),  &wCN4_86_,  Form("wC%d%d4_86/D",harm_[0],harm_[1])); // 01010110
      trEvent_->Branch(Form("wC%d%d4_99",harm_[0],harm_[1]),  &wCN4_99_,  Form("wC%d%d4_99/D",harm_[0],harm_[1])); // 01100011
      trEvent_->Branch(Form("wC%d%d4_101",harm_[0],harm_[1]),  &wCN4_101_,  Form("wC%d%d4_101/D",harm_[0],harm_[1])); // 01100101
-     trEvent_->Branch(Form("wC%d%d4_102",harm_[0],harm_[1]),  &wCN4_102_,  Form("wC%d%d4_102/D",harm_[0],harm_[1])); // 01100110
+//     trEvent_->Branch(Form("wC%d%d4_102",harm_[0],harm_[1]),  &wCN4_102_,  Form("wC%d%d4_102/D",harm_[0],harm_[1])); // 01100110
+     trEvent_->Branch(Form("wC%d%d4_58",harm_[0],harm_[1]),  &wCN4_58_,  Form("wC%d%d4_58/D",harm_[0],harm_[1])); // 00111010
+     trEvent_->Branch(Form("wC%d%d4_60",harm_[0],harm_[1]),  &wCN4_60_,  Form("wC%d%d4_60/D",harm_[0],harm_[1])); // 00111100
+     trEvent_->Branch(Form("wC%d%d4_90",harm_[0],harm_[1]),  &wCN4_90_,  Form("wC%d%d4_90/D",harm_[0],harm_[1])); // 01011010
+     trEvent_->Branch(Form("wC%d%d4_108",harm_[0],harm_[1]),  &wCN4_108_,  Form("wC%d%d4_108/D",harm_[0],harm_[1])); // 01101100
+     trEvent_->Branch(Form("wC%d%d4_163",harm_[0],harm_[1]),  &wCN4_163_,  Form("wC%d%d4_163/D",harm_[0],harm_[1])); // 10100011
+     trEvent_->Branch(Form("wC%d%d4_165",harm_[0],harm_[1]),  &wCN4_165_,  Form("wC%d%d4_165/D",harm_[0],harm_[1])); // 10100101
+     trEvent_->Branch(Form("wC%d%d4_170",harm_[0],harm_[1]),  &wCN4_170_,  Form("wC%d%d4_170/D",harm_[0],harm_[1])); // 10101010
+     trEvent_->Branch(Form("wC%d%d2_36",harm_[0],harm_[1]),  &wCN2_36_,  Form("wC%d%d2_36/D",harm_[0],harm_[1])); // 00100100
+     trEvent_->Branch(Form("wC%d%d2_20",harm_[0],harm_[1]),  &wCN2_20_,  Form("wC%d%d2_20/D",harm_[0],harm_[1])); // 00010100
    }
 }
 
@@ -593,30 +611,64 @@ Cumulants::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 
    if(nsubevt_>2 && harm_[0]==harm_[1])
    {
+     cumulant::Correlator c2_20 = cumulant::Correlator(20, qNmap);
+     CN2_20_  = c2_20.v.real();
+     wCN2_20_ = c2_20.w.real();
+     cumulant::Correlator c2_36 = cumulant::Correlator(36, qNmap);
+     CN2_36_  = c2_36.v.real();
+     wCN2_36_ = c2_36.w.real();
+
      cumulant::Correlator c4_53 = cumulant::Correlator(53, qNmap);
      CN4_53_  = c4_53.v.real();
      wCN4_53_ = c4_53.w.real();
+/*
      cumulant::Correlator c4_54 = cumulant::Correlator(54, qNmap);
      CN4_54_  = c4_54.v.real();
      wCN4_54_ = c4_54.w.real();
+*/
      cumulant::Correlator c4_83 = cumulant::Correlator(83, qNmap);
      CN4_83_  = c4_83.v.real();
      wCN4_83_ = c4_83.w.real();
      cumulant::Correlator c4_85 = cumulant::Correlator(85, qNmap);
      CN4_85_  = c4_85.v.real();
      wCN4_85_ = c4_85.w.real();
+/*
      cumulant::Correlator c4_86 = cumulant::Correlator(86, qNmap);
      CN4_86_  = c4_86.v.real();
      wCN4_86_ = c4_86.w.real();
+*/
      cumulant::Correlator c4_99 = cumulant::Correlator(99, qNmap);
      CN4_99_  = c4_99.v.real();
      wCN4_99_ = c4_99.w.real();
      cumulant::Correlator c4_101 = cumulant::Correlator(101, qNmap);
      CN4_101_  = c4_101.v.real();
      wCN4_101_ = c4_101.w.real();
+/*
      cumulant::Correlator c4_102 = cumulant::Correlator(102, qNmap);
      CN4_102_  = c4_102.v.real();
      wCN4_102_ = c4_102.w.real();
+*/
+     cumulant::Correlator c4_58 = cumulant::Correlator(58, qNmap);
+     CN4_58_  = c4_58.v.real();
+     wCN4_58_ = c4_58.w.real();
+     cumulant::Correlator c4_60 = cumulant::Correlator(60, qNmap);
+     CN4_60_  = c4_60.v.real();
+     wCN4_60_ = c4_60.w.real();
+     cumulant::Correlator c4_90 = cumulant::Correlator(90, qNmap);
+     CN4_90_  = c4_90.v.real();
+     wCN4_90_ = c4_90.w.real();
+     cumulant::Correlator c4_108 = cumulant::Correlator(108, qNmap);
+     CN4_108_  = c4_108.v.real();
+     wCN4_108_ = c4_108.w.real();
+     cumulant::Correlator c4_163 = cumulant::Correlator(163, qNmap);
+     CN4_163_  = c4_163.v.real();
+     wCN4_163_ = c4_163.w.real();
+     cumulant::Correlator c4_165 = cumulant::Correlator(165, qNmap);
+     CN4_165_  = c4_165.v.real();
+     wCN4_165_ = c4_165.w.real();
+     cumulant::Correlator c4_170 = cumulant::Correlator(170, qNmap);
+     CN4_170_  = c4_170.v.real();
+     wCN4_170_ = c4_170.w.real();
 
      cumulant::Correlator c6_123 = cumulant::Correlator(123, qNmap);
      CN6_123_  = c6_123.v.real();
@@ -624,15 +676,18 @@ Cumulants::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
      cumulant::Correlator c6_125 = cumulant::Correlator(125, qNmap);
      CN6_125_  = c6_125.v.real();
      wCN6_125_ = c6_125.w.real();
+/*
      cumulant::Correlator c6_126 = cumulant::Correlator(126, qNmap);
      CN6_126_  = c6_126.v.real();
      wCN6_126_ = c6_126.w.real();
+*/
      cumulant::Correlator c6_183 = cumulant::Correlator(183, qNmap);
      CN6_183_  = c6_183.v.real();
      wCN6_183_ = c6_183.w.real();
      cumulant::Correlator c6_187 = cumulant::Correlator(187, qNmap);
      CN6_187_  = c6_187.v.real();
      wCN6_187_ = c6_187.w.real();
+/*
      cumulant::Correlator c6_189 = cumulant::Correlator(189, qNmap);
      CN6_189_  = c6_189.v.real();
      wCN6_189_ = c6_189.w.real();
@@ -651,18 +706,23 @@ Cumulants::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
      cumulant::Correlator c6_222 = cumulant::Correlator(222, qNmap);
      CN6_222_  = c6_222.v.real();
      wCN6_222_ = c6_222.w.real();
+*/
      cumulant::Correlator c6_231 = cumulant::Correlator(231, qNmap);
      CN6_231_  = c6_231.v.real();
      wCN6_231_ = c6_231.w.real();
+/*
      cumulant::Correlator c6_235 = cumulant::Correlator(235, qNmap);
      CN6_235_  = c6_235.v.real();
      wCN6_235_ = c6_235.w.real();
+*/
      cumulant::Correlator c6_237 = cumulant::Correlator(237, qNmap);
      CN6_237_  = c6_237.v.real();
      wCN6_237_ = c6_237.w.real();
+/*
      cumulant::Correlator c6_238 = cumulant::Correlator(238, qNmap);
      CN6_238_  = c6_238.v.real();
      wCN6_238_ = c6_238.w.real();
+*/
    }
 
    // Fill TTree
