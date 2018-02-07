@@ -122,7 +122,6 @@ main(int argc, char** argv) {
 
         //output file
         TFile* fout = 0x0;
-         
            //if process, recreate output file
            fout = TFile::Open(outputFileName.c_str(), "RECREATE");
 
@@ -133,7 +132,7 @@ main(int argc, char** argv) {
                           nbins, binarray,
                           nevents, subevts);
            
-        fout->Close();
+           fout->Close();
         delete fout;
 
         if(!b)  delete b;

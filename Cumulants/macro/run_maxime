@@ -1,5 +1,5 @@
 #./PlotVnm --input "/eos/cms/store/group/phys_heavyions/flowcorr/SubCumu18/PAMinimumBias9/*Pbp*_c2_*/*/*/cumulants_3sub_*.root" --output ../output/c2_3sub.root --subevt 3 --cumumaxorder 6
-./PlotVnm --input "/afs/cern.ch/user/d/davidlw/CMSSW/CMSSW_8_0_24/src/Analyzers/Cumulants/cfg/cumulants_std.root" --output ../output/c2_3sub_TEST.root --subevt 3 --cumumaxorder 8
+#./PlotVnm --input "/afs/cern.ch/user/d/davidlw/CMSSW/CMSSW_8_0_24/src/Analyzers/Cumulants/cfg/cumulants_std.root" --output ../output/c2_3sub_TEST.root --subevt 3 --cumumaxorder 8
 #./PlotVnm --input "/afs/cern.ch/user/d/davidlw/CMSSW/CMSSW_8_0_24/src/Analyzers/Cumulants/cfg/cumulants_std.root" --output ../output/c2_4sub_TEST.root --subevt 4 --cumumaxorder 8
 #./PlotVnm --input "/eos/cms/store/group/phys_heavyions/flowcorr/SubCumu18/PAMinimumBias9/*Pbp*_c2_*/*/*/cumulants_2sub_*.root" --output ../output/c2_2sub.root --subevt 2 --cumumaxorder 8
 #./PlotVnm --input "/eos/cms/store/group/phys_heavyions/flowcorr/SubCumu18/PAMinimumBias9/*Pbp*_sc_*/*/*/cumulants_std_*.root" --output ../output/sc23_std.root --folder anaSC23 --subevt 1 --cumumaxorder 4 --harmonicorder0 2 --harmonicorder1 3
@@ -8,3 +8,8 @@
 #
 #
 #./PlotVnm --input /eos/cms/store/group/phys_heavyions/flowcorr/SubCumu18/PAMinimumBias1/crab_pPb2016_Pbp_cumulants_3sub_b1_c2_v1/180111_113241/0000/cumulants_3sub_40.root --output ../output/c2_3sub.root --subevt 3
+#
+#
+#
+./PlotVnm --input "/eos/cms/store/group/phys_heavyions/flowcorr/SubCumu18/PAHighMultiplicity7/*2sub*sc*/*/*/*.root" --output ../output/sc23_2sub_test050218.root --folder anaSC23 --subevt 2 --cumumaxorder 4 --harmonicorder0 2 --harmonicorder1 3
+

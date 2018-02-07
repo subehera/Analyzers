@@ -158,16 +158,16 @@ std::cout<<"printing out parameters: "<<harm0<<" "<<harm1<<" "<<nsub<<" "<<CNM.s
       while ( (ch->GetEntry(ievt) && ievt <= analyzedEvts) ||
               (ch->GetEntry(ievt) && analyzedEvts == -1)      ) 
       {
-         if(!(ievt%1000))
-         {
-            std::cout << 
-            "\rievt = " << ievt 
-            <<
-            ", tree number = " << ch->GetTreeNumber()
-            <<
-            " ~~~> " << std::setprecision(3) << (static_cast<double>(ch->GetTreeNumber())/static_cast<double>(ntrees))*100.  << " %" 
-            << std::flush;
-         }
+         //if(!(ievt%1000))
+         //{
+         //   std::cout << 
+         //   "\rievt = " << ievt 
+         //   <<
+         //   ", tree number = " << ch->GetTreeNumber()
+         //   <<
+         //   " ~~~> " << std::setprecision(3) << (static_cast<double>(ch->GetTreeNumber())/static_cast<double>(ntrees))*100.  << " %" 
+         //   << std::flush;
+         //}
         
          // Skip event if multiplicity is zero 
          //if(mult <= 10) 
@@ -730,9 +730,6 @@ std::cout<<"printing out parameters: "<<harm0<<" "<<harm1<<" "<<nsub<<" "<<CNM.s
       }
    }
    
-   //___________________________________________________
-   //
-   // compute v_{n}
    //___________________________________________________
    //
    // compute v_{n}

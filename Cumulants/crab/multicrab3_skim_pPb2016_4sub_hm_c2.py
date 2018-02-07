@@ -15,7 +15,7 @@ if __name__ == '__main__':
     config.JobType.pluginName = 'Analysis'
     config.JobType.maxJobRuntimeMin = 2750
     config.JobType.psetName = '../cfg/cumulants_hlt185_4sub_c2_cfg.py'
-    config.Data.unitsPerJob = 100
+    config.Data.unitsPerJob = 50
 #    config.Data.unitsPerJob = 40 for V0 only
     config.Data.totalUnits = -1
     config.Data.splitting = 'LumiBased'
