@@ -1,5 +1,9 @@
+#ifndef JACKNIFE_H
+#define JACKNIFE_H
+
 //file that contains some useful functions
 #include "ChainBuilder.h"
+#include "Cumulant.h" 
 
 namespace jacknife
 {
@@ -603,3 +607,5 @@ namespace jacknife
        std::vector< std::vector<double> >().swap(wcNMreb); 
    }
 }
+
+#endif

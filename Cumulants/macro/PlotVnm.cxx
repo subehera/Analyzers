@@ -22,6 +22,7 @@
 //utlis include
 #include "utils.h"
 #include "jacknife.h"
+#include "subsample.h"
 
 using namespace std;
 
@@ -51,10 +52,10 @@ main(int argc, char** argv) {
         parser.add<int>("harmonicorder1", '\0', "harmonic order", false, 2);
 	parser.add<int>("nevents"       , '\0', "Number of events to be analyzed", false, -1);
 	parser.add<int>("subevt"        , '\0', "Number of sub-events", false, 1);
+	parser.add<int>("nsubsample"    , '\0', "Number of sub-sample for error calculation", false, 10);
 	parser.add("process"            , '\0', "process TTree");
 	parser.add("jacknife"           , '\0', "compute error with jacknife");
-	parser.add("subsample"          , '\0', "compute error with subsample");
-	parser.add<int>("nsubsample"    , '\0', "Number of sub-sample for error calculation", false, 10);
+	parser.add("sampling"           , '\0', "compute error with subsample");
 	parser.parse_check( argc, argv );
 
 	//std::cout << parser.usage() << endl;
@@ -63,7 +64,7 @@ main(int argc, char** argv) {
 //================== Start Analysis ======================
 //--------------------------------------------------------
 
-        if( parser.exist( "subsample" ) && parser.exist( "jacknife" ) )
+        if( parser.exist( "sampling" ) && parser.exist( "jacknife" ) )
         {
            LOG_S(ERROR) << "Please choose only one error estimation method";
            std::cout << parser.usage() << endl;
@@ -147,6 +148,7 @@ main(int argc, char** argv) {
            
            fout->Close();
         }
+
         if(parser.exist( "jacknife" ))
         {
            //re-open output file
@@ -166,15 +168,31 @@ main(int argc, char** argv) {
                              nevents, subevts);
            fout->Close();
         }
-        else if(parser.exist( "subsample" ))
+        else if(parser.exist( "sampling" ))
         {
-           int nsubsample = parser.get<int>( "subsample" );
+           //re-open output file
+           fout = TFile::Open(outputFileName.c_str(), "UPDATE");
+           
+           //check file exist
+           if(!fout)
+           {
+              LOG_S(ERROR) << "Cannot found output file. Make sure it exist already";
+              return 0;
+           }
+
+           int nsubsample = parser.get<int>( "nsubsample" );
+           subsample::process(ch, fout, folderName, 
+                             noffmin, noffmax, multmax, 
+                             cumumaxorder, harmonicorder0, harmonicorder1, 
+                             nbins, binarray,
+                             nevents, subevts, nsubsample);
+           fout->Close();
         }
         else
         {
               LOG_S(INFO) << "WARNING:: No error calculations for this task";
         }
-        delete fout;
+        if(!fout) delete fout;
 
         if(!b)  delete b;
         if(!ch) delete ch;
