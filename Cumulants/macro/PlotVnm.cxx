@@ -21,6 +21,7 @@
 #include "../interface/MultiCumulants/vendor/cmdline.h"
 //utlis include
 #include "utils.h"
+#include "jacknife.h"
 
 using namespace std;
 
@@ -51,13 +52,23 @@ main(int argc, char** argv) {
 	parser.add<int>("nevents"       , '\0', "Number of events to be analyzed", false, -1);
 	parser.add<int>("subevt"        , '\0', "Number of sub-events", false, 1);
 	parser.add("process"            , '\0', "process TTree");
+	parser.add("jacknife"           , '\0', "compute error with jacknife");
+	parser.add("subsample"          , '\0', "compute error with subsample");
+	parser.add<int>("nsubsample"    , '\0', "Number of sub-sample for error calculation", false, 10);
 	parser.parse_check( argc, argv );
 
-	std::cout << parser.usage() << endl;
+	//std::cout << parser.usage() << endl;
 
 //--------------------------------------------------------
 //================== Start Analysis ======================
 //--------------------------------------------------------
+
+        if( parser.exist( "subsample" ) && parser.exist( "jacknife" ) )
+        {
+           LOG_S(ERROR) << "Please choose only one error estimation method";
+           std::cout << parser.usage() << endl;
+           return 0;
+        }
 
         gStyle->SetOptStat(110);
         std::string inputFileNames = parser.get<std::string>( "input" );
@@ -122,6 +133,8 @@ main(int argc, char** argv) {
 
         //output file
         TFile* fout = 0x0;
+        if(parser.exist( "process" ))
+        { 
            //if process, recreate output file
            fout = TFile::Open(outputFileName.c_str(), "RECREATE");
 
@@ -133,6 +146,34 @@ main(int argc, char** argv) {
                           nevents, subevts);
            
            fout->Close();
+        }
+        if(parser.exist( "jacknife" ))
+        {
+           //re-open output file
+           fout = TFile::Open(outputFileName.c_str(), "UPDATE");
+           
+           //check file exist
+           if(!fout)
+           {
+              LOG_S(ERROR) << "Cannot found output file. Make sure it exist already";
+              return 0;
+           }
+
+           jacknife::process(ch, fout, folderName, 
+                             noffmin, noffmax, multmax, 
+                             cumumaxorder, harmonicorder0, harmonicorder1, 
+                             nbins, binarray,
+                             nevents, subevts);
+           fout->Close();
+        }
+        else if(parser.exist( "subsample" ))
+        {
+           int nsubsample = parser.get<int>( "subsample" );
+        }
+        else
+        {
+              LOG_S(INFO) << "WARNING:: No error calculations for this task";
+        }
         delete fout;
 
         if(!b)  delete b;

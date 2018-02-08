@@ -4,7 +4,7 @@
 
 SRCS=$(wildcard *.cc)
 EXEC=PlotVnm.cxx
-INCLUDES=$(SRCS:.cc=.h) utils.h ChainBuilder.h
+INCLUDES=$(SRCS:.cc=.h) utils.h ChainBuilder.h Cumulant.h jacknife.h
 OBJS=$(SRCS:.cc=.o)
 OBJS+=$(EXEC:.cxx=.o)
 
