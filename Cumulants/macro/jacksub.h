@@ -1,11 +1,11 @@
-#ifndef SUBSAMP_H
-#define SUBSAMP_H
+#ifndef JACKSUB_H
+#define JACKSUB_H
 
 //file that contains some useful functions
 #include "ChainBuilder.h"
 #include "Cumulant.h"
 
-namespace subsample
+namespace jacksub
 {
 
    //___________________________________________________
@@ -235,16 +235,19 @@ namespace subsample
          int ntest = rand() % nSubSamp;
          for(int itest = 0; itest < nSubSamp; ++itest)
          {
-            for(int ibr = 0; ibr < static_cast<int>(CNM.size()); ibr++)
+            if(itest != ntest)
             {
-              if( noff < qNM[itest][ibr].size() )
-              {
-                 if( mult < qNM[itest][ibr][noff].size() )
+               for(int ibr = 0; ibr < static_cast<int>(CNM.size()); ibr++)
+               {
+                 if( noff < qNM[itest][ibr].size() )
                  {
-                     qNM[itest][ibr][noff][mult] +=  CNM[ibr];
-                    wqNM[itest][ibr][noff][mult] += wCNM[ibr];
+                    if( mult < qNM[itest][ibr][noff].size() )
+                    {
+                        qNM[itest][ibr][noff][mult] +=  CNM[ibr];
+                       wqNM[itest][ibr][noff][mult] += wCNM[ibr];
+                    }
                  }
-              }
+               }
             }
          }
          // Next event
@@ -538,16 +541,17 @@ namespace subsample
       LOG_S(INFO) << "Calculation done";
 
       LOG_S(INFO) << "Filling Histograms with errors";
+      double scale = (double) (nSubSamp-1.) / (double) nSubSamp;
       for(int iord = 0; iord < hcN.size(); ++iord)
       {
         for(int ibin = 0; ibin < hcN[iord]->GetNbinsX(); ++ibin)
         {
            if(cNMvar[iord][ibin] > 0.)
            {
-              hcN[iord]->SetBinError(ibin+1, TMath::Sqrt(cNMvar[iord][ibin]/(double)nSubSamp));
+              hcN[iord]->SetBinError(ibin+1, TMath::Sqrt(cNMvar[iord][ibin]*scale);
               hvN[iord]->SetBinError(ibin+1, errorVn(iord,
                                                     hcN[iord]->GetBinContent(ibin+1),
-                                                    TMath::Sqrt(cNMvar[iord][ibin]/(double)nSubSamp),
+                                                    TMath::Sqrt(cNMvar[iord][ibin]*scale),
                                                     hvN[iord]->GetBinContent(ibin+1), nsub));
            }
            else
@@ -560,10 +564,10 @@ namespace subsample
         {
            if(cNMvarreb[iord][ibin] > 0.)
            { 
-              hcNreb[iord]->SetBinError(ibin+1, TMath::Sqrt(cNMvarreb[iord][ibin]/(double)nSubSamp));
+              hcNreb[iord]->SetBinError(ibin+1, TMath::Sqrt(cNMvarreb[iord][ibin]*scale);
               hvNreb[iord]->SetBinError(ibin+1, errorVn(iord,
                                                         hcNreb[iord]->GetBinContent(ibin+1),
-                                                        TMath::Sqrt(cNMvarreb[iord][ibin]/(double)nSubSamp),
+                                                        TMath::Sqrt(cNMvarreb[iord][ibin]*scale),
                                                         hvNreb[iord]->GetBinContent(ibin+1), nsub));
            }
            else

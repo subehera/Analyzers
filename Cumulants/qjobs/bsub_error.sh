@@ -17,6 +17,6 @@ jq=8nh
 #echo $9
 
 debug=echo
-bsub -R "pool>30000" -q $jq -J $9 run.sh $1 $2 $3 $4 $5 $6 $7 $8
-#./run.sh $1 $2 $3 $4 $5 $6 $7 $8  
+bsub -R "pool>30000" -q $jq -J $9 run_error.sh $1 $2 $3 $4 $5 $6 $7 $8
+#./run_error.sh $1 $2 $3 $4 $5 $6 $7 $8  
 sleep 1

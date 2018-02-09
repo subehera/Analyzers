@@ -135,16 +135,16 @@ ls $tdir
 fname="sc${harm0}${harm1}_vnm_PD${HM}_HM${trg}_${multmin}_${multmax}_nsub${subevt}.root"
 if [ ${subevt} -eq 1 ] 
 then
-  macro/PlotVnm --input "/eos/cms/store/group/phys_heavyions/flowcorr/SubCumu18/PAHighMultiplicity*/*${trg}*std_sc_v1/*/*/*.root" --noffmin ${multmin} --noffmax ${multmax} --subevt ${subevt} --output ${fname} --harmonicorder0 ${harm0} --harmonicorder1 ${harm1} --folder ${folder} --cumumaxorder 4 --process
+  macro/PlotVnm --input "/eos/cms/store/group/phys_heavyions/flowcorr/SubCumu18/PAHighMultiplicity*/*${trg}*std_sc_v1/*/*/*.root" --noffmin ${multmin} --noffmax ${multmax} --subevt ${subevt} --output "/eos/cms/store/user/mguilbau/cumulant/error/${fname}" --harmonicorder0 ${harm0} --harmonicorder1 ${harm1} --folder ${folder} --cumumaxorder 4 --jacknife
 elif [ ${subevt} -eq 2 ]
 then
-  macro/PlotVnm --input "/eos/cms/store/group/phys_heavyions/flowcorr/SubCumu18/PAHighMultiplicity*/*${trg}*${subevt}sub_sc_v1/*/*/*.root" --noffmin ${multmin} --noffmax ${multmax} --subevt ${subevt} --output ${fname} --harmonicorder0 ${harm0} --harmonicorder1 ${harm1} --folder ${folder} --cumumaxorder 4 --process
+  macro/PlotVnm --input "/eos/cms/store/group/phys_heavyions/flowcorr/SubCumu18/PAHighMultiplicity*/*${trg}*${subevt}sub_sc_v1/*/*/*.root" --noffmin ${multmin} --noffmax ${multmax} --subevt ${subevt} --output "/eos/cms/store/user/mguilbau/cumulant/error/${fname}" --harmonicorder0 ${harm0} --harmonicorder1 ${harm1} --folder ${folder} --cumumaxorder 4 --jacknife
 elif [ ${subevt} -eq 3 ]
 then
-  macro/PlotVnm --input "/eos/cms/store/group/phys_heavyions/flowcorr/SubCumu/PAHighMultiplicity*/*${trg}*_${subevt}sub_v11/*/*/*sc*.root" --noffmin ${multmin} --noffmax ${multmax} --subevt ${subevt} --output ${fname} --harmonicorder0 ${harm0} --harmonicorder1 ${harm1} --folder ${folder} --cumumaxorder 4 --process
+  macro/PlotVnm --input "/eos/cms/store/group/phys_heavyions/flowcorr/SubCumu/PAHighMultiplicity*/*${trg}*_${subevt}sub_v11/*/*/*sc*.root" --noffmin ${multmin} --noffmax ${multmax} --subevt ${subevt} --output "/eos/cms/store/user/mguilbau/cumulant/error/${fname}" --harmonicorder0 ${harm0} --harmonicorder1 ${harm1} --folder ${folder} --cumumaxorder 4 --jacknife
 elif [ ${subevt} -eq 4 ]
 then
-  macro/PlotVnm --input "/eos/cms/store/group/phys_heavyions/flowcorr/SubCumu18/PAHighMultiplicity*/*${trg}*${subevt}sub_sc_v1/*/*/*.root" --noffmin ${multmin} --noffmax ${multmax} --subevt ${subevt} --output ${fname} --harmonicorder0 ${harm0} --harmonicorder1 ${harm1} --folder ${folder} --cumumaxorder 4 --process
+  macro/PlotVnm --input "/eos/cms/store/group/phys_heavyions/flowcorr/SubCumu18/PAHighMultiplicity*/*${trg}*${subevt}sub_sc_v1/*/*/*.root" --noffmin ${multmin} --noffmax ${multmax} --subevt ${subevt} --output "/eos/cms/store/user/mguilbau/cumulant/error/${fname}" --harmonicorder0 ${harm0} --harmonicorder1 ${harm1} --folder ${folder} --cumumaxorder 4 --jacknife
 else
  echo "wrong subevent number"
 fi
