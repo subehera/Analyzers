@@ -233,19 +233,16 @@ namespace subsample
 
          // Variance
          int ntest = rand() % nSubSamp;
-         for(int itest = 0; itest < nSubSamp; ++itest)
+         for(int ibr = 0; ibr < static_cast<int>(CNM.size()); ibr++)
          {
-            for(int ibr = 0; ibr < static_cast<int>(CNM.size()); ibr++)
-            {
-              if( noff < qNM[itest][ibr].size() )
+           if( noff < qNM[ntest][ibr].size() )
+           {
+              if( mult < qNM[ntest][ibr][noff].size() )
               {
-                 if( mult < qNM[itest][ibr][noff].size() )
-                 {
-                     qNM[itest][ibr][noff][mult] +=  CNM[ibr];
-                    wqNM[itest][ibr][noff][mult] += wCNM[ibr];
-                 }
+                  qNM[ntest][ibr][noff][mult] +=  CNM[ibr];
+                 wqNM[ntest][ibr][noff][mult] += wCNM[ibr];
               }
-            }
+           }
          }
          // Next event
          ++ievt;

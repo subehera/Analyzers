@@ -548,7 +548,7 @@ namespace jacksub
         {
            if(cNMvar[iord][ibin] > 0.)
            {
-              hcN[iord]->SetBinError(ibin+1, TMath::Sqrt(cNMvar[iord][ibin]*scale);
+              hcN[iord]->SetBinError(ibin+1, TMath::Sqrt(cNMvar[iord][ibin]*scale));
               hvN[iord]->SetBinError(ibin+1, errorVn(iord,
                                                     hcN[iord]->GetBinContent(ibin+1),
                                                     TMath::Sqrt(cNMvar[iord][ibin]*scale),
@@ -564,7 +564,7 @@ namespace jacksub
         {
            if(cNMvarreb[iord][ibin] > 0.)
            { 
-              hcNreb[iord]->SetBinError(ibin+1, TMath::Sqrt(cNMvarreb[iord][ibin]*scale);
+              hcNreb[iord]->SetBinError(ibin+1, TMath::Sqrt(cNMvarreb[iord][ibin]*scale));
               hvNreb[iord]->SetBinError(ibin+1, errorVn(iord,
                                                         hcNreb[iord]->GetBinContent(ibin+1),
                                                         TMath::Sqrt(cNMvarreb[iord][ibin]*scale),

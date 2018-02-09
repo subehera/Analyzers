@@ -22,6 +22,7 @@
 //utlis include
 #include "utils.h"
 #include "jacknife.h"
+#include "jacksub.h"
 #include "subsample.h"
 
 using namespace std;
@@ -55,6 +56,7 @@ main(int argc, char** argv) {
 	parser.add<int>("nsubsample"    , '\0', "Number of sub-sample for error calculation", false, 10);
 	parser.add("process"            , '\0', "process TTree");
 	parser.add("jacknife"           , '\0', "compute error with jacknife");
+	parser.add("jacksub"            , '\0', "compute error with jacknife and subsample");
 	parser.add("sampling"           , '\0', "compute error with subsample");
 	parser.parse_check( argc, argv );
 
@@ -64,7 +66,9 @@ main(int argc, char** argv) {
 //================== Start Analysis ======================
 //--------------------------------------------------------
 
-        if( parser.exist( "sampling" ) && parser.exist( "jacknife" ) )
+        if( ( parser.exist( "sampling" ) && parser.exist( "jacknife" ) ) ||
+            ( parser.exist( "sampling" ) && parser.exist( "jacksub"  ) ) ||
+            ( parser.exist( "jacksub" )  && parser.exist( "jacknife" ) ))
         {
            LOG_S(ERROR) << "Please choose only one error estimation method";
            std::cout << parser.usage() << endl;
@@ -166,6 +170,26 @@ main(int argc, char** argv) {
                              cumumaxorder, harmonicorder0, harmonicorder1, 
                              nbins, binarray,
                              nevents, subevts);
+           fout->Close();
+        }
+        else if(parser.exist( "jacksub" ))
+        {
+           //re-open output file
+           fout = TFile::Open(outputFileName.c_str(), "UPDATE");
+           
+           //check file exist
+           if(!fout)
+           {
+              LOG_S(ERROR) << "Cannot found output file. Make sure it exist already";
+              return 0;
+           }
+
+           int nsubsample = parser.get<int>( "nsubsample" );
+           jacksub::process(ch, fout, folderName, 
+                            noffmin, noffmax, multmax, 
+                            cumumaxorder, harmonicorder0, harmonicorder1, 
+                            nbins, binarray,
+                            nevents, subevts, nsubsample);
            fout->Close();
         }
         else if(parser.exist( "sampling" ))
