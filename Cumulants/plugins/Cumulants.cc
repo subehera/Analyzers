@@ -484,7 +484,7 @@ Cumulants::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
        if(pt < ptmin_ || pt > ptmax_)     continue;
 
        // Compute weights
-       double weight = 0.0;
+       double weight = 1.0;
        if( cweight_ )
        {
            int idx = getEffNoffIndex();
@@ -500,7 +500,6 @@ Cumulants::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
                  weight = 1./heff_[idx]->GetBinContent(heff_[idx]->FindBin(eta,pt));
            }
        }
-
        // Increase N valid tracks
        ++mult_;
 

@@ -2,7 +2,7 @@
 
 #for i in `ls -d CumulantHM/*2sub*`
 #for i in `ls -d CumulantHM/*3sub*_*_v1`
-for i in `ls -d CumulantHM/crab_pPb2016_*_4sub_*_c*`
+for i in `ls -d CumulantHM/crab_pPb2016_*_std*`
 do
 
    echo " " 

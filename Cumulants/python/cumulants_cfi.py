@@ -43,5 +43,6 @@ defaultCumu = cms.EDAnalyzer('Cumulants', #Analyzer named: Correspond to the cla
                              #deltaeta = cms.untracked.double(0.),
                              #Acc X Eff
                              fname = cms.untracked.InputTag('Hijing_8TeV_dataBS.root'),
+                             #fname = cms.untracked.InputTag('Hijing_8TeV_MB_eff_v2.root'),
                              effmultbin = cms.untracked.vint32(0,10000)
 )
