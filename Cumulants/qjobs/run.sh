@@ -3,7 +3,7 @@
 IN_DIR="/afs/cern.ch/user/m/mguilbau/AnalyzerForWei/CMSSW_8_0_24/src"
 MACRO_DIR="Analyzers/Cumulants/macro"
 INCLUDE_DIR="Analyzers/Cumulants/interface"
-OUT_DIR="/eos/cms/store/user/mguilbau/cumulant"
+OUT_DIR="/eos/cms/store/user/mguilbau/cumulant/run120218"
 
 HM=$1
 multmin=$2
