@@ -117,9 +117,7 @@ void cumulant(const std::vector< std::vector< std::vector<double> > > &qNM,
          case 1:
             if( wqNM[1][inoff][iref] != 0.)
             {
-               cNM[order][inoff]  += ( qNM[1][inoff][iref] / wqNM[1][inoff][iref] -  // <<4>>-<<33>>*<<18>>-<<34>>*<<17>>
-                                       qNM[4][inoff][iref] / wqNM[4][inoff][iref]
-                                      *qNM[5][inoff][iref] / wqNM[5][inoff][iref] -
+               cNM[order][inoff]  += ( qNM[1][inoff][iref] / wqNM[1][inoff][iref] -  // <<4>>-<<34>>*<<17>>
                                        qNM[0][inoff][iref] / wqNM[0][inoff][iref]
                                       *qNM[6][inoff][iref] / wqNM[6][inoff][iref]
                                       )
@@ -465,8 +463,6 @@ void uncumulant(const std::vector< std::vector< std::vector<double> > > &qNM,
             if( wqNM[1][inoff][iref] != 0.)
             {
                cNM[order][inoff]  -= ( qNM[1][inoff][iref] / wqNM[1][inoff][iref] -  // <<4>>-<<33>>*<<18>>-<<34>>*<<17>>
-                                       qNM[4][inoff][iref] / wqNM[4][inoff][iref]
-                                      *qNM[5][inoff][iref] / wqNM[5][inoff][iref] -
                                        qNM[0][inoff][iref] / wqNM[0][inoff][iref]
                                       *qNM[6][inoff][iref] / wqNM[6][inoff][iref]
                                       )
