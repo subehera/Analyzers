@@ -3,6 +3,7 @@
 
 #include "Analyzers/Cumulants/interface/MultiCumulants/MultiCumulants/QTerms.h"
 #include "Analyzers/Cumulants/interface/MultiCumulants/MultiCumulants/QVectorSet.h"
+#include "Analyzers/Cumulants/interface/MultiCumulants/MultiCumulants/NativeMaskLUT.h"
 
 #include "Analyzers/Cumulants/interface/MultiCumulants/vendor/loguru/loguru.hpp"
 

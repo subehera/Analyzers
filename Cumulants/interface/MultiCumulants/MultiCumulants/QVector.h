@@ -110,7 +110,7 @@ namespace cumulant{
                 size_t _i;
                 size_t _j;
 	protected:
-                bool DEBUG = true;
+                bool DEBUG = false;
 	        Complex _qvector;
 	        Real _weights;
 	        Harmonic _harm;

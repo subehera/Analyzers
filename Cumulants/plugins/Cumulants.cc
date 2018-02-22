@@ -26,7 +26,7 @@
 
 // user include files
 #include "Analyzers/Cumulants/interface/Cumulants.h"
-#include "Analyzers/Cumulants/interface/MultiCumulants/MultiCumulants/NativeMaskLUT.h"
+
 //
 // constructors and destructor
 //
@@ -589,143 +589,143 @@ Cumulants::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 
    cumulant::Correlator c2_17 = cumulant::Correlator(17, qNmap);
    CN2_17_  = c2_17.v.real(); 
-   wCN2_17_ = c2_17.w.real();
+   wCN2_17_ = c2_17.w;
    cumulant::Correlator c4_51 = cumulant::Correlator(51, qNmap);
    CN4_51_  = c4_51.v.real();
-   wCN4_51_ = c4_51.w.real();
+   wCN4_51_ = c4_51.w;
    cumulant::Correlator c6_119 = cumulant::Correlator(119, qNmap);
    CN6_119_  = c6_119.v.real();
-   wCN6_119_ = c6_119.w.real();
+   wCN6_119_ = c6_119.w;
    cumulant::Correlator c8 = cumulant::Correlator(255, qNmap);
    CN8_  = c8.v.real();
-   wCN8_ = c8.w.real();
+   wCN8_ = c8.w;
 
    if((nsubevt_<=2 && harm_[0]!=harm_[1]) || (nsubevt_>2))
    {
      cumulant::Correlator c2_18 = cumulant::Correlator(18, qNmap);
      CN2_18_  = c2_18.v.real();
-     wCN2_18_ = c2_18.w.real();
+     wCN2_18_ = c2_18.w;
      cumulant::Correlator c2_33 = cumulant::Correlator(33, qNmap);
      CN2_33_  = c2_33.v.real();
-     wCN2_33_ = c2_33.w.real();
+     wCN2_33_ = c2_33.w;
      cumulant::Correlator c2_34 = cumulant::Correlator(34, qNmap);
      CN2_34_  = c2_34.v.real();
-     wCN2_34_ = c2_34.w.real();
+     wCN2_34_ = c2_34.w;
    }
 
    if(nsubevt_>2 && harm_[0]==harm_[1])
    {
      cumulant::Correlator c2_20 = cumulant::Correlator(20, qNmap);
      CN2_20_  = c2_20.v.real();
-     wCN2_20_ = c2_20.w.real();
+     wCN2_20_ = c2_20.w;
      cumulant::Correlator c2_36 = cumulant::Correlator(36, qNmap);
      CN2_36_  = c2_36.v.real();
-     wCN2_36_ = c2_36.w.real();
+     wCN2_36_ = c2_36.w;
 
      cumulant::Correlator c4_53 = cumulant::Correlator(53, qNmap);
      CN4_53_  = c4_53.v.real();
-     wCN4_53_ = c4_53.w.real();
+     wCN4_53_ = c4_53.w;
 /*
      cumulant::Correlator c4_54 = cumulant::Correlator(54, qNmap);
      CN4_54_  = c4_54.v.real();
-     wCN4_54_ = c4_54.w.real();
+     wCN4_54_ = c4_54.w;
 */
      cumulant::Correlator c4_83 = cumulant::Correlator(83, qNmap);
      CN4_83_  = c4_83.v.real();
-     wCN4_83_ = c4_83.w.real();
+     wCN4_83_ = c4_83.w;
      cumulant::Correlator c4_85 = cumulant::Correlator(85, qNmap);
      CN4_85_  = c4_85.v.real();
-     wCN4_85_ = c4_85.w.real();
+     wCN4_85_ = c4_85.w;
 /*
      cumulant::Correlator c4_86 = cumulant::Correlator(86, qNmap);
      CN4_86_  = c4_86.v.real();
-     wCN4_86_ = c4_86.w.real();
+     wCN4_86_ = c4_86.w;
 */
      cumulant::Correlator c4_99 = cumulant::Correlator(99, qNmap);
      CN4_99_  = c4_99.v.real();
-     wCN4_99_ = c4_99.w.real();
+     wCN4_99_ = c4_99.w;
      cumulant::Correlator c4_101 = cumulant::Correlator(101, qNmap);
      CN4_101_  = c4_101.v.real();
-     wCN4_101_ = c4_101.w.real();
+     wCN4_101_ = c4_101.w;
 /*
      cumulant::Correlator c4_102 = cumulant::Correlator(102, qNmap);
      CN4_102_  = c4_102.v.real();
-     wCN4_102_ = c4_102.w.real();
+     wCN4_102_ = c4_102.w;
 */
      cumulant::Correlator c4_58 = cumulant::Correlator(58, qNmap);
      CN4_58_  = c4_58.v.real();
-     wCN4_58_ = c4_58.w.real();
+     wCN4_58_ = c4_58.w;
      cumulant::Correlator c4_60 = cumulant::Correlator(60, qNmap);
      CN4_60_  = c4_60.v.real();
-     wCN4_60_ = c4_60.w.real();
+     wCN4_60_ = c4_60.w;
      cumulant::Correlator c4_90 = cumulant::Correlator(90, qNmap);
      CN4_90_  = c4_90.v.real();
-     wCN4_90_ = c4_90.w.real();
+     wCN4_90_ = c4_90.w;
      cumulant::Correlator c4_108 = cumulant::Correlator(108, qNmap);
      CN4_108_  = c4_108.v.real();
-     wCN4_108_ = c4_108.w.real();
+     wCN4_108_ = c4_108.w;
      cumulant::Correlator c4_163 = cumulant::Correlator(163, qNmap);
      CN4_163_  = c4_163.v.real();
-     wCN4_163_ = c4_163.w.real();
+     wCN4_163_ = c4_163.w;
      cumulant::Correlator c4_165 = cumulant::Correlator(165, qNmap);
      CN4_165_  = c4_165.v.real();
-     wCN4_165_ = c4_165.w.real();
+     wCN4_165_ = c4_165.w;
      cumulant::Correlator c4_170 = cumulant::Correlator(170, qNmap);
      CN4_170_  = c4_170.v.real();
-     wCN4_170_ = c4_170.w.real();
+     wCN4_170_ = c4_170.w;
 
      cumulant::Correlator c6_123 = cumulant::Correlator(123, qNmap);
      CN6_123_  = c6_123.v.real();
-     wCN6_123_ = c6_123.w.real();
+     wCN6_123_ = c6_123.w;
      cumulant::Correlator c6_125 = cumulant::Correlator(125, qNmap);
      CN6_125_  = c6_125.v.real();
-     wCN6_125_ = c6_125.w.real();
+     wCN6_125_ = c6_125.w;
 /*
      cumulant::Correlator c6_126 = cumulant::Correlator(126, qNmap);
      CN6_126_  = c6_126.v.real();
-     wCN6_126_ = c6_126.w.real();
+     wCN6_126_ = c6_126.w;
 */
      cumulant::Correlator c6_183 = cumulant::Correlator(183, qNmap);
      CN6_183_  = c6_183.v.real();
-     wCN6_183_ = c6_183.w.real();
+     wCN6_183_ = c6_183.w;
      cumulant::Correlator c6_187 = cumulant::Correlator(187, qNmap);
      CN6_187_  = c6_187.v.real();
-     wCN6_187_ = c6_187.w.real();
+     wCN6_187_ = c6_187.w;
 /*
      cumulant::Correlator c6_189 = cumulant::Correlator(189, qNmap);
      CN6_189_  = c6_189.v.real();
-     wCN6_189_ = c6_189.w.real();
+     wCN6_189_ = c6_189.w;
      cumulant::Correlator c6_190 = cumulant::Correlator(190, qNmap);
      CN6_190_  = c6_190.v.real();
-     wCN6_190_ = c6_190.w.real();
+     wCN6_190_ = c6_190.w;
      cumulant::Correlator c6_215 = cumulant::Correlator(215, qNmap);
      CN6_215_  = c6_215.v.real();
-     wCN6_215_ = c6_215.w.real();
+     wCN6_215_ = c6_215.w;
      cumulant::Correlator c6_219 = cumulant::Correlator(219, qNmap);
      CN6_219_  = c6_219.v.real();
-     wCN6_219_ = c6_219.w.real();
+     wCN6_219_ = c6_219.w;
      cumulant::Correlator c6_221 = cumulant::Correlator(221, qNmap);
      CN6_221_  = c6_221.v.real();
-     wCN6_221_ = c6_221.w.real();
+     wCN6_221_ = c6_221.w;
      cumulant::Correlator c6_222 = cumulant::Correlator(222, qNmap);
      CN6_222_  = c6_222.v.real();
-     wCN6_222_ = c6_222.w.real();
+     wCN6_222_ = c6_222.w;
 */
      cumulant::Correlator c6_231 = cumulant::Correlator(231, qNmap);
      CN6_231_  = c6_231.v.real();
-     wCN6_231_ = c6_231.w.real();
+     wCN6_231_ = c6_231.w;
 /*
      cumulant::Correlator c6_235 = cumulant::Correlator(235, qNmap);
      CN6_235_  = c6_235.v.real();
-     wCN6_235_ = c6_235.w.real();
+     wCN6_235_ = c6_235.w;
 */
      cumulant::Correlator c6_237 = cumulant::Correlator(237, qNmap);
      CN6_237_  = c6_237.v.real();
-     wCN6_237_ = c6_237.w.real();
+     wCN6_237_ = c6_237.w;
 /*
      cumulant::Correlator c6_238 = cumulant::Correlator(238, qNmap);
      CN6_238_  = c6_238.v.real();
-     wCN6_238_ = c6_238.w.real();
+     wCN6_238_ = c6_238.w;
 */
    }
 

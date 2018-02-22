@@ -32,7 +32,7 @@ process.source = cms.Source("PoolSource",
 # Define output file name
 import os
 process.TFileService = cms.Service("TFileService",
-     fileName = cms.string('cumulants_4sub.root')
+     fileName = cms.string('cumulants_hlt120_4sub.root')
 )
 
 

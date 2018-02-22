@@ -14,6 +14,9 @@
 using std::vector;
 namespace cumulant{
 
+    //extern const std::vector<NativeMaskLUT> NativeMaskLUTs;    
+    //extern std::vector<CoefficientLUT> CoefficientKs;
+
     class QTerms {
 
     public:
