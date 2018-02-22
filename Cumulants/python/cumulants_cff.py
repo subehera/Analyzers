@@ -76,6 +76,9 @@ stdV3Analysis.harm = cms.untracked.vint32(3,3,3,3)
 stdV4Analysis = stdAnalysis.clone()
 stdV4Analysis.harm = cms.untracked.vint32(4,4,4,4)
 
+stdAnalysis_minptvtx = stdAnalysis.clone()
+stdAnalysis_minptvtx.isBVselByMult = cms.untracked.bool(False)
+
 ### pt-differential cumulants
 sub2Analysis_Pt10POS = sub2Analysis.clone()
 sub2Analysis_Pt10POS.branchSave = cms.untracked.int32(2)

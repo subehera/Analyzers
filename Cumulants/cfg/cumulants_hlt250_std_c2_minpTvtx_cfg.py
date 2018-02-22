@@ -12,7 +12,7 @@ process = cms.Process("Cumulants")
 # Configure the number of maximum event the analyser run on in interactive mode
 # -1 == ALL
 process.maxEvents = cms.untracked.PSet( 
-    input = cms.untracked.int32(1) 
+    input = cms.untracked.int32(-1) 
 )
 
 #process.Timing = cms.Service("Timing",
@@ -32,7 +32,7 @@ process.source = cms.Source("PoolSource",
 # Define output file name
 import os
 process.TFileService = cms.Service("TFileService",
-     fileName = cms.string('cumulants_3sub.root')
+     fileName = cms.string('cumulants_std.root')
 )
 
 
@@ -58,7 +58,7 @@ process.GlobalTag = GlobalTag(process.GlobalTag, '80X_dataRun2_Express_v15', '')
 
 # Define the trigger selection
 from Analyzers.Cumulants.hltFilter_cff import *
-process.defaultTrigSel = hlt120.clone()
+process.defaultTrigSel = hlt250.clone()
 
 # Load HI event selection modules
 process.load('HeavyIonsAnalysis.Configuration.collisionEventSelection_cff')
@@ -75,7 +75,7 @@ process.load("TrackingCode.pileUpFilter.pileUpFilter_cff")
 
 # Load you analyzer with initial configuration
 process.load("Analyzers.Cumulants.cumulants_cff")
-process.anaV2 = process.sub2Analysis.clone()
+process.anaV2 = process.stdAnalysis_minptvtx.clone()
 
 process.p = cms.Path(process.defaultTrigSel *            # Select MB events
                      process.collisionEventSelectionPA * # PA event selection

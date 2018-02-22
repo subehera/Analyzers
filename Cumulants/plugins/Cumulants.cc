@@ -485,6 +485,7 @@ Cumulants::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 
        // Compute weights
        double weight = 1.0;
+       //std::cout << "Is the correction selected? " << cweight_ << ", weight = " << weight << std::endl;
        if( cweight_ )
        {
            int idx = getEffNoffIndex();
@@ -497,7 +498,10 @@ Cumulants::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 	   if( feff_ && heff_[idx] ) 
            { 
               if( heff_[idx]->GetBinContent(heff_[idx]->FindBin(eta,pt)) != 0. ) 
+              {
                  weight = 1./heff_[idx]->GetBinContent(heff_[idx]->FindBin(eta,pt));
+                 //std::cout << "weight = " << weight << std::endl;
+              }
            }
        }
        // Increase N valid tracks
@@ -507,6 +511,7 @@ Cumulants::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
        val[0] = pt;
        val[1] = eta;
        qN_.fill(val, phi, weight);
+       //std::cout << qN_.print() << std::endl;
 
        // Fill trk histograms
        hEtaTrk_->Fill(eta);
