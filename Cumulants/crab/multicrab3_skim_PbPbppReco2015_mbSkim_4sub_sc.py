@@ -20,6 +20,7 @@ if __name__ == '__main__':
     config.Data.totalUnits = -1
     config.Data.splitting = 'LumiBased'
     config.Data.useParent = True
+    config.Data.inputDBS = 'phys03'
     #config.Data.outLFNDirBase = '/store/user/%s/' % (getUsernameFromSiteDB())
     config.Data.outLFNDirBase = '/store/group/phys_heavyions/flowcorr/SubCumuNew/'
     config.Data.lumiMask = 'Cert_262548-263757_PromptReco_HICollisions15_JSON_v2.txt'
@@ -55,6 +56,7 @@ if __name__ == '__main__':
 
     config.General.requestName = 'PbPbppRereco2015_TrkOnly_cumulants_4sub_b5_sc_v1'
     config.Data.useParent = False
+    config.Data.inputDBS = 'global'
     config.JobType.psetName = '../cfg/cumulants_mb_4sub_sc_cfg.py'
     config.Data.lumiMask = 'Cert_263685-263757_PromptReco_HICollisions15_TrackerOnly_JSON.txt'
     config.Data.inputDataset = '/HIMinimumBias5/HIRun2015-02May2016-v1/AOD'
