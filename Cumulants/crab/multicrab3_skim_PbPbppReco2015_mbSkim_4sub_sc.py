@@ -54,18 +54,20 @@ if __name__ == '__main__':
     submit(config)
 
     config.General.requestName = 'PbPbppRereco2015_TrkOnly_cumulants_4sub_b5_sc_v1'
+    config.Data.useParent = False
+    config.JobType.psetName = '../cfg/cumulants_mb_4sub_sc_cfg.py'
     config.Data.lumiMask = 'Cert_263685-263757_PromptReco_HICollisions15_TrackerOnly_JSON.txt'
-    config.Data.inputDataset = '/HIMinimumBias5/qwang-crab_HIMB5_ppReco_GMOVtxV0_Skim_v2-609c7cc39bfd4228bd9b8717a70a3c41/USER'
+    config.Data.inputDataset = '/HIMinimumBias5/HIRun2015-02May2016-v1/AOD'
     config.Data.outputDatasetTag = 'RecoSkim2015ppRereco_TrkOnly_PbPb_cumulants_4sub_b7_v1'
     submit(config)
 
     config.General.requestName = 'PbPbppRereco2015_TrkOnly_cumulants_4sub_b6_sc_v1'
-    config.Data.inputDataset = '/HIMinimumBias6/qwang-crab_HIMB6_ppReco_GMOVtxV0_Skim_v2-609c7cc39bfd4228bd9b8717a70a3c41/USER'
+    config.Data.inputDataset = '/HIMinimumBias6/HIRun2015-02May2016-v1/AOD'
     config.Data.outputDatasetTag = 'RecoSkim2015ppRereco_TrkOnly_PbPb_cumulants_4sub_b7_v1'
     submit(config)
 
     config.General.requestName = 'PbPbppRereco2015_TrkOnly_cumulants_4sub_b7_sc_v1'
-    config.Data.inputDataset = '/HIMinimumBias7/qwang-crab_HIMB7_ppReco_GMOVtxV0_Skim_v2-609c7cc39bfd4228bd9b8717a70a3c41/USER'
+    config.Data.inputDataset = '/HIMinimumBias7/HIRun2015-02May2016-v1/AOD'
     config.Data.outputDatasetTag = 'RecoSkim2015ppRereco_TrkOnly_PbPb_cumulants_4sub_b7_v1'
     submit(config)
 
