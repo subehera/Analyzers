@@ -35,8 +35,8 @@ Cumulants::Cumulants(const edm::ParameterSet& iConfig) :
   trackTags_(consumes<reco::TrackCollection>(iConfig.getParameter<edm::InputTag>("tracks"))),
   //vertex
   vtxTags_(consumes<reco::VertexCollection>(iConfig.getParameter<edm::InputTag>("vertex"))),
-  //caloTower
-  caloTowersTags_(consumes<CaloTowerCollection>(iConfig.getParameter<edm::InputTag>("caloTower"))),
+  ////caloTower
+  //caloTowersTags_(consumes<CaloTowerCollection>(iConfig.getParameter<edm::InputTag>("caloTower"))),
   //centrality
   centralityTags_(consumes<reco::Centrality>(iConfig.getParameter<edm::InputTag>("centralitySrc"))),
   centralityBinTags_(consumes<int>(iConfig.getParameter<edm::InputTag>("centralityBinSrc"))),
@@ -183,10 +183,10 @@ void Cumulants::beginJob()
    hEtaNoff_ = fTrkHist.make<TH1F>("hEtaNoff", "", 30, -3.,   3.);
    hPtNoff_  = fTrkHist.make<TH1F>("hPtNoff",  "", 10,  0.,  10.);
    hPhiNoff_ = fTrkHist.make<TH1F>("hPhiNoff", "", 64, -3.2,  3.2);
-   TFileDirectory fCTowHist = fs->mkdir("CaloTowers");
-   hEtaCTow_ = fCTowHist.make<TH1F>("hEtatow", "", 12, -6.,   6.);
-   hEtCTow_  = fCTowHist.make<TH1F>("hEttow",  "", 10,  0.,  10.);
-   hPhiCTow_ = fCTowHist.make<TH1F>("hPhitow", "", 64, -3.2,  3.2);
+   //TFileDirectory fCTowHist = fs->mkdir("CaloTowers");
+   //hEtaCTow_ = fCTowHist.make<TH1F>("hEtatow", "", 12, -6.,   6.);
+   //hEtCTow_  = fCTowHist.make<TH1F>("hEttow",  "", 10,  0.,  10.);
+   //hPhiCTow_ = fCTowHist.make<TH1F>("hPhitow", "", 64, -3.2,  3.2);
    // TTree
    trEvent_ = fs->make<TTree>("trEvent", "trEvent");
    trEvent_->Branch("centrality", &cent_, "centrality/I");
@@ -521,32 +521,32 @@ Cumulants::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 
 
    // ----- Calotower selection -----
-   // Get calo tower collection by token
-   edm::Handle< CaloTowerCollection > calotowers;
-   iEvent.getByToken(caloTowersTags_, calotowers);
-   if( !calotowers->size() )
-   {
-       edm::LogWarning ("Missing Collection") <<"Invalid or empty caloTower collection!";
-       return;
-   }
-   // Loop over caloTowers
-   for( CaloTowerCollection::const_iterator itCTow = calotowers->begin();
-        itCTow != calotowers->end();
-        ++itCTow )
-   {
-       // Get eta, pt and phi of the calo tower
-       double eta  = itCTow->eta();
-       double et   = itCTow->et();
-       double phi  = itCTow->phi();
+   //// Get calo tower collection by token
+   //edm::Handle< CaloTowerCollection > calotowers;
+   //iEvent.getByToken(caloTowersTags_, calotowers);
+   //if( !calotowers->size() )
+   //{
+   //    edm::LogWarning ("Missing Collection") <<"Invalid or empty caloTower collection!";
+   //    return;
+   //}
+   //// Loop over caloTowers
+   //for( CaloTowerCollection::const_iterator itCTow = calotowers->begin();
+   //     itCTow != calotowers->end();
+   //     ++itCTow )
+   //{
+   //    // Get eta, pt and phi of the calo tower
+   //    double eta  = itCTow->eta();
+   //    double et   = itCTow->et();
+   //    double phi  = itCTow->phi();
 
-       // Select calo tower based on quality
-       if( et < 0.01 ) continue;
+   //    // Select calo tower based on quality
+   //    if( et < 0.01 ) continue;
 
-       // Fill trk histograms
-       hEtaCTow_->Fill(eta);
-       hEtCTow_ ->Fill(et);
-       hPhiCTow_->Fill(phi);
-   }
+   //    // Fill trk histograms
+   //    hEtaCTow_->Fill(eta);
+   //    hEtCTow_ ->Fill(et);
+   //    hPhiCTow_->Fill(phi);
+   //}
 
    //Compute cumulants
    //WARNING: Clarity of this step to be improved in the framework
