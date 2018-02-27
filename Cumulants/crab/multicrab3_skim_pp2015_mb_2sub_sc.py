@@ -39,80 +39,100 @@ if __name__ == '__main__':
 
     config.General.requestName = 'pp2015E_cumulants_2sub_b1_sc_v1'
     config.Data.inputDataset = '/MinimumBias1/Run2015E-PromptReco-v1/AOD'
+    config.Data.outputDatasetTag = 'pp2015E_cumulants_2sub_b1_sc_v1'
     submit(config)
 
     config.General.requestName = 'pp2015E_cumulants_2sub_b2_sc_v1'
     config.Data.inputDataset = '/MinimumBias2/Run2015E-PromptReco-v1/AOD'
+    config.Data.outputDatasetTag = 'pp2015E_cumulants_2sub_b2_sc_v1'
     submit(config)
 
     config.General.requestName = 'pp2015E_cumulants_2sub_b3_sc_v1'
     config.Data.inputDataset = '/MinimumBias3/Run2015E-PromptReco-v1/AOD'
+    config.Data.outputDatasetTag = 'pp2015E_cumulants_2sub_b3_sc_v1'
     submit(config)
 
     config.General.requestName = 'pp2015E_cumulants_2sub_b4_sc_v1'
     config.Data.inputDataset = '/MinimumBias4/Run2015E-PromptReco-v1/AOD'
+    config.Data.outputDatasetTag = 'pp2015E_cumulants_2sub_b4_sc_v1'
     submit(config)
 
     config.General.requestName = 'pp2015E_cumulants_2sub_b5_sc_v1'
     config.Data.inputDataset = '/MinimumBias5/Run2015E-PromptReco-v1/AOD'
+    config.Data.outputDatasetTag = 'pp2015E_cumulants_2sub_b5_sc_v1'
     submit(config)
 
     config.General.requestName = 'pp2015E_cumulants_2sub_b6_sc_v1'
     config.Data.inputDataset = '/MinimumBias6/Run2015E-PromptReco-v1/AOD'
+    config.Data.outputDatasetTag = 'pp2015E_cumulants_2sub_b6_sc_v1'
     submit(config)
 
     config.General.requestName = 'pp2015E_cumulants_2sub_b7_sc_v1'
     config.Data.inputDataset = '/MinimumBias7/Run2015E-PromptReco-v1/AOD'
+    config.Data.outputDatasetTag = 'pp2015E_cumulants_2sub_b7_sc_v1'
     submit(config)
 
     config.General.requestName = 'pp2015E_cumulants_2sub_b8_sc_v1'
     config.Data.inputDataset = '/MinimumBias8/Run2015E-PromptReco-v1/AOD'
+    config.Data.outputDatasetTag = 'pp2015E_cumulants_2sub_b8_sc_v1'
     submit(config)
 
     config.General.requestName = 'pp2015E_cumulants_2sub_b9_sc_v1'
     config.Data.inputDataset = '/MinimumBias9/Run2015E-PromptReco-v1/AOD'
+    config.Data.outputDatasetTag = 'pp2015E_cumulants_2sub_b9_sc_v1'
     submit(config)
 
     config.General.requestName = 'pp2015E_cumulants_2sub_b10_sc_v1'
     config.Data.inputDataset = '/MinimumBias10/Run2015E-PromptReco-v1/AOD'
+    config.Data.outputDatasetTag = 'pp2015E_cumulants_2sub_b10_sc_v1'
     submit(config)
 
     config.General.requestName = 'pp2015E_cumulants_2sub_b11_sc_v1'
     config.Data.inputDataset = '/MinimumBias11/Run2015E-PromptReco-v1/AOD'
+    config.Data.outputDatasetTag = 'pp2015E_cumulants_2sub_b11_sc_v1'
     submit(config)
 
     config.General.requestName = 'pp2015E_cumulants_2sub_b12_sc_v1'
     config.Data.inputDataset = '/MinimumBias12/Run2015E-PromptReco-v1/AOD'
+    config.Data.outputDatasetTag = 'pp2015E_cumulants_2sub_b12_sc_v1'
     submit(config)
 
     config.General.requestName = 'pp2015E_cumulants_2sub_b13_sc_v1'
     config.Data.inputDataset = '/MinimumBias13/Run2015E-PromptReco-v1/AOD'
+    config.Data.outputDatasetTag = 'pp2015E_cumulants_2sub_b13_sc_v1'
     submit(config)
 
     config.General.requestName = 'pp2015E_cumulants_2sub_b14_sc_v1'
     config.Data.inputDataset = '/MinimumBias14/Run2015E-PromptReco-v1/AOD'
+    config.Data.outputDatasetTag = 'pp2015E_cumulants_2sub_b14_sc_v1'
     submit(config)
 
     config.General.requestName = 'pp2015E_cumulants_2sub_b15_sc_v1'
     config.Data.inputDataset = '/MinimumBias15/Run2015E-PromptReco-v1/AOD'
+    config.Data.outputDatasetTag = 'pp2015E_cumulants_2sub_b15_sc_v1'
     submit(config)
 
     config.General.requestName = 'pp2015E_cumulants_2sub_b16_sc_v1'
     config.Data.inputDataset = '/MinimumBias16/Run2015E-PromptReco-v1/AOD'
+    config.Data.outputDatasetTag = 'pp2015E_cumulants_2sub_b16_sc_v1'
     submit(config)
 
     config.General.requestName = 'pp2015E_cumulants_2sub_b17_sc_v1'
     config.Data.inputDataset = '/MinimumBias17/Run2015E-PromptReco-v1/AOD'
+    config.Data.outputDatasetTag = 'pp2015E_cumulants_2sub_b17_sc_v1'
     submit(config)
 
     config.General.requestName = 'pp2015E_cumulants_2sub_b18_sc_v1'
     config.Data.inputDataset = '/MinimumBias18/Run2015E-PromptReco-v1/AOD'
+    config.Data.outputDatasetTag = 'pp2015E_cumulants_2sub_b18_sc_v1'
     submit(config)
 
     config.General.requestName = 'pp2015E_cumulants_2sub_b19_sc_v1'
     config.Data.inputDataset = '/MinimumBias19/Run2015E-PromptReco-v1/AOD'
+    config.Data.outputDatasetTag = 'pp2015E_cumulants_2sub_b19_sc_v1'
     submit(config)
 
     config.General.requestName = 'pp2015E_cumulants_2sub_b20_sc_v1'
     config.Data.inputDataset = '/MinimumBias20/Run2015E-PromptReco-v1/AOD'
+    config.Data.outputDatasetTag = 'pp2015E_cumulants_2sub_b20_sc_v1'
     submit(config)
