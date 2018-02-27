@@ -193,14 +193,19 @@ void Cumulants::beginJob()
    trEvent_->Branch("nVtx",       &nvtx_, "nVtx/I");
    trEvent_->Branch("Noff",       &noff_, "Noff/I");
    trEvent_->Branch("Mult",       &mult_, "Mult/I");
-   trEvent_->Branch(Form("C%d%d8",harm_[0],harm_[1]),  &CN8_,  Form("C%d%d8/D",harm_[0],harm_[1]));
-   trEvent_->Branch(Form("C%d%d6_119",harm_[0],harm_[1]),  &CN6_119_,  Form("C%d%d6_119/D",harm_[0],harm_[1])); // 01110111
+
    trEvent_->Branch(Form("C%d%d4_51",harm_[0],harm_[1]),  &CN4_51_,  Form("C%d%d4_51/D",harm_[0],harm_[1])); // 00110011
    trEvent_->Branch(Form("C%d%d2_17",harm_[0],harm_[0]),  &CN2_17_,  Form("C%d%d2_17/D",harm_[0],harm_[0])); // 00010001
-   trEvent_->Branch(Form("wC%d%d8",harm_[0],harm_[1]), &wCN8_, Form("wC%d%d8/D",harm_[0],harm_[1]));
-   trEvent_->Branch(Form("wC%d%d6_119",harm_[0],harm_[1]),  &wCN6_119_,  Form("wC%d%d6_119/D",harm_[0],harm_[1])); // 01110111
    trEvent_->Branch(Form("wC%d%d4_51",harm_[0],harm_[1]),  &wCN4_51_,  Form("wC%d%d4_51/D",harm_[0],harm_[1])); // 00110011
    trEvent_->Branch(Form("wC%d%d2_17",harm_[0],harm_[0]), &wCN2_17_, Form("wC%d%d2_17/D",harm_[0],harm_[0])); // 00010001 
+
+   if( harm_[0]==harm_[1] ) // Do not calculate for SC 
+   {
+     trEvent_->Branch(Form("C%d%d6_119",harm_[0],harm_[1]),  &CN6_119_,  Form("C%d%d6_119/D",harm_[0],harm_[1])); // 01110111
+     trEvent_->Branch(Form("C%d%d8",harm_[0],harm_[1]),  &CN8_,  Form("C%d%d8/D",harm_[0],harm_[1]));
+     trEvent_->Branch(Form("wC%d%d6_119",harm_[0],harm_[1]),  &wCN6_119_,  Form("wC%d%d6_119/D",harm_[0],harm_[1])); // 01110111
+     trEvent_->Branch(Form("wC%d%d8",harm_[0],harm_[1]), &wCN8_, Form("wC%d%d8/D",harm_[0],harm_[1]));
+   }
 
    if((nsubevt_<=2 && harm_[0]!=harm_[1]) || (nsubevt_>2) || branchSave_>=1) // calculate for SC with 2sub or std method; Or higher cumulants with >2 subevents
    {
@@ -593,12 +598,16 @@ Cumulants::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
    cumulant::Correlator c4_51 = cumulant::Correlator(51, qNmap);
    CN4_51_  = c4_51.v.real();
    wCN4_51_ = c4_51.w;
-   cumulant::Correlator c6_119 = cumulant::Correlator(119, qNmap);
-   CN6_119_  = c6_119.v.real();
-   wCN6_119_ = c6_119.w;
-   cumulant::Correlator c8 = cumulant::Correlator(255, qNmap);
-   CN8_  = c8.v.real();
-   wCN8_ = c8.w;
+
+   if( harm_[0]==harm_[1] ) //do not calculate for SC
+   {
+     cumulant::Correlator c6_119 = cumulant::Correlator(119, qNmap);
+     CN6_119_  = c6_119.v.real();
+     wCN6_119_ = c6_119.w;
+     cumulant::Correlator c8 = cumulant::Correlator(255, qNmap);
+     CN8_  = c8.v.real();
+     wCN8_ = c8.w;
+   }
 
    if((nsubevt_<=2 && harm_[0]!=harm_[1]) || (nsubevt_>2))
    {
