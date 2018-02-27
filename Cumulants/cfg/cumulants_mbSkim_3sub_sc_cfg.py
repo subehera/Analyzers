@@ -7,7 +7,7 @@ process = cms.Process("Cumulants")
 
 # Configure the logger
 process.load("FWCore.MessageService.MessageLogger_cfi")
-process.MessageLogger.cerr.FwkReport.reportEvery = 1000
+process.MessageLogger.cerr.FwkReport.reportEvery = 10000
 
 # Configure the number of maximum event the analyser run on in interactive mode
 # -1 == ALL
@@ -25,14 +25,18 @@ process.maxEvents = cms.untracked.PSet(
 # Define the input file to run on in interactive mode
 process.source = cms.Source("PoolSource",
     fileNames = cms.untracked.vstring(
-     'root://cms-xrd-global.cern.ch///store/hidata/HIRun2015/HIMinimumBias5/AOD/02May2016-v1/00000/002C1765-9B2E-E611-BA4B-F01FAFD5992D.root'
+     #'root://cms-xrd-global.cern.ch///store/hidata/HIRun2015/HIMinimumBias5/AOD/02May2016-v1/00000/002C1765-9B2E-E611-BA4B-F01FAFD5992D.root'
+     'root://cms-xrd-global.cern.ch///store/group/phys_heavyions/qwang/PbPb2015/HIMinimumBias5/crab_HIMB5_ppReco_GMOVtxV0_Skim_v2/171130_055240/0000/reco_1.root'
+    ),
+    secondaryFileNames = cms.untracked.vstring(
+     'root://cms-xrd-global.cern.ch///store/hidata/HIRun2015/HIMinimumBias5/AOD/02May2016-v1/10000/08353B18-3D22-E611-A771-F01FAFD8EDA2.root'
     )
 )
 
 # Define output file name
 import os
 process.TFileService = cms.Service("TFileService",
-     fileName = cms.string('cumulants_std.root')
+     fileName = cms.string('cumulants_PbPb_3sub.root')
 )
 
 
@@ -70,26 +74,6 @@ process.defaultTrigSel.throw = cms.bool(False)
 process.load('HeavyIonsAnalysis.Configuration.collisionEventSelection_cff')
 #process.load('Configuration.EventContent.EventContentHeavyIons_cff')
 
-#Primary vertex re-fitter
-process.load("RecoVertex.Configuration.RecoVertex_cff")
-process.myVertexSequence = process.unsortedOfflinePrimaryVertices.clone(
-  TkFilterParameters = cms.PSet(
-        algorithm=cms.string('filter'),
-        maxNormalizedChi2 = cms.double(20.0),
-        minPixelLayersWithHits=cms.int32(2),
-        minSiliconLayersWithHits = cms.int32(5),
-        maxD0Significance = cms.double(3.0),
-        minPt = cms.double(0.0),
-        trackQuality = cms.string("any")
-    ),
-    TkClusParameters = cms.PSet(
-        algorithm   = cms.string("gap"),
-        TkGapClusParameters = cms.PSet(
-            zSeparation = cms.double(1.0)
-        )
-    ),
-)
-
 #Reject beam scraping events standard pp configuration
 process.NoScraping = cms.EDFilter("FilterOutScraping",
     applyfilter = cms.untracked.bool(True),
@@ -98,18 +82,15 @@ process.NoScraping = cms.EDFilter("FilterOutScraping",
     thresh = cms.untracked.double(0.25)
 )
 
-process.primaryVertexFilter.src = cms.InputTag("myVertexSequence")
-process.primaryVertexFilter.cut = cms.string("!isFake && abs(z) <= 25 && position.Rho <= 2 && tracksSize >= 2")
-process.primaryVertexFilter.filter = cms.bool(True)
-
-process.eventSelPbPb = cms.Sequence(process.myVertexSequence * process.hfCoincFilter3 * process.primaryVertexFilter)
+process.primaryVertexFilter.src = cms.InputTag("GMOVertex")
+process.eventSelPbPb = cms.Sequence(process.hfCoincFilter3 * process.primaryVertexFilter)
 
 # __________________ Analyzer _________________
 
 # Load you analyzer with initial configuration
 process.load("Analyzers.Cumulants.cumulants_cff")
-process.anaSC23 = process.stdAnalysisSC23.clone()
-process.anaSC24 = process.stdAnalysisSC24.clone()
+process.anaSC23 = process.sub3AnalysisSC23.clone()
+process.anaSC24 = process.sub3AnalysisSC24.clone()
 
 process.p3 = cms.Path(
                      process.eventSelPbPb *    # events sel

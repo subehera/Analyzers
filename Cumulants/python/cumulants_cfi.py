@@ -4,7 +4,7 @@ defaultCumu = cms.EDAnalyzer('Cumulants', #Analyzer named: Correspond to the cla
                              #Track collection
                              tracks    = cms.InputTag('generalTracks'),
                              #Vertex collection
-                             vertex    = cms.InputTag('offlinePrimaryVertices'),
+                             vertex    = cms.InputTag('GMOVertex'),
                              #Centrality
                              centralitySrc    = cms.InputTag("hiCentrality"),
                              centralityBinSrc = cms.InputTag("centralityBin","HFtowers"),
