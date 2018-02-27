@@ -15,10 +15,10 @@ process.maxEvents = cms.untracked.PSet(
     input = cms.untracked.int32(10) 
 )
 
-process.Timing = cms.Service("Timing",
-  summaryOnly = cms.untracked.bool(True),
-  useJobReport = cms.untracked.bool(False)
-)
+#process.Timing = cms.Service("Timing",
+#  summaryOnly = cms.untracked.bool(True),
+#  useJobReport = cms.untracked.bool(False)
+#)
 
 # __________________ I/O files _________________
 

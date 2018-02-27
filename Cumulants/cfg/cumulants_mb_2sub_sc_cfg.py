@@ -15,10 +15,10 @@ process.maxEvents = cms.untracked.PSet(
     input = cms.untracked.int32(10) 
 )
 
-process.Timing = cms.Service("Timing",
-  summaryOnly = cms.untracked.bool(True),
-  useJobReport = cms.untracked.bool(False)
-)
+#process.Timing = cms.Service("Timing",
+#  summaryOnly = cms.untracked.bool(True),
+#  useJobReport = cms.untracked.bool(False)
+#)
 
 # __________________ I/O files _________________
 
@@ -108,26 +108,8 @@ process.eventSelPbPb = cms.Sequence(process.myVertexSequence * process.hfCoincFi
 
 # Load you analyzer with initial configuration
 process.load("Analyzers.Cumulants.cumulants_cff")
-process.anaV2 = process.sub2Analysis.clone()
-process.anaV3 = process.sub2V3Analysis.clone()
-process.anaV4 = process.sub2V4Analysis.clone()
 process.anaSC23 = process.sub2AnalysisSC23.clone()
 process.anaSC24 = process.sub2AnalysisSC24.clone()
-
-process.p = cms.Path(
-                     process.eventSelPbPb *    # events sel
-                     process.defaultTrigSel *  # Select MB events
-                     process.anaV2)            # Run the analyzer
-
-process.p1 = cms.Path(
-                     process.eventSelPbPb *    # events sel
-                     process.defaultTrigSel *  # Select MB events
-                     process.anaV3)            # Run the analyzer
-
-process.p2 = cms.Path(
-                     process.eventSelPbPb *    # events sel
-                     process.defaultTrigSel *  # Select MB events
-                     process.anaV4)            # Run the analyzer
 
 process.p3 = cms.Path(
                      process.eventSelPbPb *    # events sel

@@ -91,6 +91,10 @@ class Cumulants : public edm::one::EDAnalyzer<edm::one::SharedResources>  {
       // used to select what vertex to read from configuration file
       edm::EDGetTokenT<reco::VertexCollection> vtxTags_; 
 
+      // ## calotower ##
+      // used to select what calo tower to read from configuration file
+      edm::EDGetTokenT<CaloTowerCollection> caloTowersTags_; 
+
       // ## centrality ##
       // used to select what centrality collection to read from configuration file
       edm::EDGetTokenT<reco::Centrality> centralityTags_;
@@ -186,6 +190,13 @@ class Cumulants : public edm::one::EDAnalyzer<edm::one::SharedResources>  {
       double CN4_99_;
       double CN4_101_;
       double CN4_102_;
+      double CN4_58_;
+      double CN4_60_;
+      double CN4_90_;
+      double CN4_108_;
+      double CN4_163_;
+      double CN4_165_;
+      double CN4_170_;
       double wCN4_51_;
       double wCN4_53_;
       double wCN4_54_;
@@ -195,6 +206,14 @@ class Cumulants : public edm::one::EDAnalyzer<edm::one::SharedResources>  {
       double wCN4_99_;
       double wCN4_101_;
       double wCN4_102_;
+      double wCN4_58_;
+      double wCN4_60_;
+      double wCN4_90_;
+      double wCN4_108_;
+      double wCN4_163_;
+      double wCN4_165_;
+      double wCN4_170_;
+
       double CN2_17_;
       double wCN2_17_;
       double CN2_18_;
@@ -203,6 +222,10 @@ class Cumulants : public edm::one::EDAnalyzer<edm::one::SharedResources>  {
       double wCN2_33_;
       double CN2_34_;
       double wCN2_34_;
+      double CN2_20_;
+      double wCN2_20_;
+      double CN2_36_;
+      double wCN2_36_;
       
       // ## file acc & eff & fake ##
       edm::InputTag fname_;         //file name that contains acc X eff corrections

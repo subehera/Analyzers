@@ -108,15 +108,9 @@ process.eventSelPbPb = cms.Sequence(process.myVertexSequence * process.hfCoincFi
 
 # Load you analyzer with initial configuration
 process.load("Analyzers.Cumulants.cumulants_cff")
-process.anaSC23 = process.sub3AnalysisSC23.clone()
-process.anaSC24 = process.sub3AnalysisSC24.clone()
+process.anaV2 = process.sub4Analysis.clone()
 
-process.p3 = cms.Path(
+process.p = cms.Path(
                      process.eventSelPbPb *    # events sel
                      process.defaultTrigSel *  # Select MB events
-                     process.anaSC23)          # Run the analyzer
-
-process.p4 = cms.Path(
-                     process.eventSelPbPb *    # events sel
-                     process.defaultTrigSel *  # Select MB events
-                     process.anaSC24)          # Run the analyzer
+                     process.anaV2)            # Run the analyzer
