@@ -72,7 +72,7 @@ process.load('HeavyIonsAnalysis.Configuration.collisionEventSelection_cff')
 
 #Primary vertex re-fitter
 process.load("RecoVertex.Configuration.RecoVertex_cff")
-process.myVertexSequence = process.unsortedOfflinePrimaryVertices.clone(
+process.GMOVertex = process.unsortedOfflinePrimaryVertices.clone(
   TkFilterParameters = cms.PSet(
         algorithm=cms.string('filter'),
         maxNormalizedChi2 = cms.double(20.0),
@@ -98,11 +98,11 @@ process.NoScraping = cms.EDFilter("FilterOutScraping",
     thresh = cms.untracked.double(0.25)
 )
 
-process.primaryVertexFilter.src = cms.InputTag("myVertexSequence")
+process.primaryVertexFilter.src = cms.InputTag("GMOVertex")
 process.primaryVertexFilter.cut = cms.string("!isFake && abs(z) <= 25 && position.Rho <= 2 && tracksSize >= 2")
 process.primaryVertexFilter.filter = cms.bool(True)
 
-process.eventSelPbPb = cms.Sequence(process.myVertexSequence * process.hfCoincFilter3 * process.primaryVertexFilter)
+process.eventSelPbPb = cms.Sequence(process.GMOVertex * process.hfCoincFilter3 * process.primaryVertexFilter)
 
 # __________________ Analyzer _________________
 
