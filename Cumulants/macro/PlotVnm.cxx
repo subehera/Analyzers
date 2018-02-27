@@ -90,9 +90,11 @@ main(int argc, char** argv) {
         int subevts = parser.get<int>( "subevt" );
 
 //pPb 8TeV: 0, 10, 30, 50, 70, 90, 120, 150, 185, 220, 250, 300, 320, 350,
-        int binarray[] = {0,   10,  20,  30,  40,  50, 60, 70, 80, 90, 100, 110,
-                          120, 150, 185, 190, 220, 250, 
-                          300, 320, 350, 800};
+        //int binarray[] = {0,   10,  20,  30,  40,  50, 60, 70, 80, 90, 100, 110,
+        //                  120, 150, 185, 190, 220, 250, 
+        //                  300, 320, 350, 800};
+        int binarray[] = {0,   10,  20,  40, 80, 
+                          120, 150, 185, 250, 350, 800};
 
 //int binarray[] = {0,10,20,30,40,50,60,70,80};
 
@@ -116,9 +118,9 @@ main(int argc, char** argv) {
       //Check that TChain is valid
       LOG_S(INFO) << "Getting chain ";
       TChain* ch = b->GetChain();
-      LOG_S(INFO) << "Trying run on: " << ch->GetName();
+      LOG_S(INFO) << "Trying run on: address = " << ch << " -- name = " << ch->GetName();
 
-      if( !ch )
+      if( b->isEmpty() )
       {
          LOG_S(ERROR) << "Invalid TChain";
          return 0;

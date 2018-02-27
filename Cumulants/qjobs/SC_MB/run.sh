@@ -3,7 +3,7 @@
 IN_DIR="/afs/cern.ch/user/m/mguilbau/AnalyzerForWei/CMSSW_8_0_24/src"
 MACRO_DIR="Analyzers/Cumulants/macro"
 INCLUDE_DIR="Analyzers/Cumulants/interface"
-OUT_DIR="/eos/cms/store/user/mguilbau/cumulant/run120218_mb"
+OUT_DIR="/eos/cms/store/user/mguilbau/cumulant/sc_mb_jack"
 
 MB=$1
 multmin=$2
@@ -135,16 +135,16 @@ ls $tdir
 fname="sc${harm0}${harm1}_vnm_PD${MB}_MB${trg}_${multmin}_${multmax}_nsub${subevt}.root"
 if [ ${subevt} -eq 1 ] 
 then
-  macro/PlotVnm --input "/eos/cms/store/group/phys_heavyions/flowcorr/SubCumu/PAMinimumBias*/*_std_sc_v11/*/*/*sc*.root" --noffmin ${multmin} --noffmax ${multmax} --subevt ${subevt} --output ${fname} --harmonicorder0 ${harm0} --harmonicorder1 ${harm1} --folder ${folder} --cumumaxorder 4 --process --jacknife
+  macro/PlotVnm --input "/eos/cms/store/group/phys_heavyions/flowcorr/SubCumuNew/PAMinimumBias*/*_std_sc_v12/*/*/*.root" --noffmin ${multmin} --noffmax ${multmax} --subevt ${subevt} --output ${fname} --harmonicorder0 ${harm0} --harmonicorder1 ${harm1} --folder ${folder} --cumumaxorder 4 --process --jacknife
 elif [ ${subevt} -eq 2 ]
 then
-  macro/PlotVnm --input "/eos/cms/store/group/phys_heavyions/flowcorr/SubCumu/PAMinimumBias*/*2sub_sc_v11/*/*/*.root" --noffmin ${multmin} --noffmax ${multmax} --subevt ${subevt} --output ${fname} --harmonicorder0 ${harm0} --harmonicorder1 ${harm1} --folder ${folder} --cumumaxorder 4 --process --jacknife
+  macro/PlotVnm --input "/eos/cms/store/group/phys_heavyions/flowcorr/SubCumuNew/PAMinimumBias*/*2sub_sc_v12/*/*/*.root" --noffmin ${multmin} --noffmax ${multmax} --subevt ${subevt} --output ${fname} --harmonicorder0 ${harm0} --harmonicorder1 ${harm1} --folder ${folder} --cumumaxorder 4 --process --jacknife
 elif [ ${subevt} -eq 3 ]
 then
-  macro/PlotVnm --input "/eos/cms/store/group/phys_heavyions/flowcorr/SubCumu/PAMinimumBias*/*3sub_sc_v11/*/*/*.root" --noffmin ${multmin} --noffmax ${multmax} --subevt ${subevt} --output ${fname} --harmonicorder0 ${harm0} --harmonicorder1 ${harm1} --folder ${folder} --cumumaxorder 4 --process --jacknife
+  macro/PlotVnm --input "/eos/cms/store/group/phys_heavyions/flowcorr/SubCumuNew/PAMinimumBias*/*3sub_sc_v12/*/*/*.root" --noffmin ${multmin} --noffmax ${multmax} --subevt ${subevt} --output ${fname} --harmonicorder0 ${harm0} --harmonicorder1 ${harm1} --folder ${folder} --cumumaxorder 4 --process --jacknife
 elif [ ${subevt} -eq 4 ]
 then
-  macro/PlotVnm --input "/eos/cms/store/group/phys_heavyions/flowcorr/SubCumu/PAMinimumBias*/*4sub_sc_v11/*/*/*.root" --noffmin ${multmin} --noffmax ${multmax} --subevt ${subevt} --output ${fname} --harmonicorder0 ${harm0} --harmonicorder1 ${harm1} --folder ${folder} --cumumaxorder 4 --process --jacknife
+  macro/PlotVnm --input "/eos/cms/store/group/phys_heavyions/flowcorr/SubCumuNew/PAMinimumBias*/*4sub_sc_v12/*/*/*.root" --noffmin ${multmin} --noffmax ${multmax} --subevt ${subevt} --output ${fname} --harmonicorder0 ${harm0} --harmonicorder1 ${harm1} --folder ${folder} --cumumaxorder 4 --process --jacknife
 else
  echo "wrong subevent number"
 fi

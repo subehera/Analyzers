@@ -81,6 +81,12 @@ public:
        return files;
    }
 
+   bool isEmpty()
+   {
+      if( fileList_.size() != 0 ) return false;
+      else                        return true;
+   }
+
 private:
    std::vector<std::string> fileList_;
    std::vector<std::string> paths_;
