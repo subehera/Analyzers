@@ -13,9 +13,9 @@ if __name__ == '__main__':
     config.General.transferOutputs = True
     config.General.transferLogs = False
     config.JobType.pluginName = 'Analysis'
-    config.JobType.maxMemoryMB = 2500
+    #config.JobType.maxMemoryMB = 2500
     config.JobType.maxJobRuntimeMin = 2750
-    config.JobType.psetName = '../cfg/cumulants_std_cfg.py'
+    config.JobType.psetName = '../cfg/cumulants_hlt60_3sub_sc_cfg.py'
     config.Data.unitsPerJob = 10
     config.Data.totalUnits = -1
     config.Data.splitting = 'LumiBased'
@@ -37,27 +37,17 @@ if __name__ == '__main__':
     ## From now on that's what users should modify: this is the a-la-CRAB2 configuration part. ##
     #############################################################################################
 
-    config.General.requestName = 'pp2015E_cumulants_std_b1_v10'
-    config.JobType.psetName = '../cfg/cumulants_std_cfg.py'
-    config.Data.inputDataset = '/MinimumBias1/Run2015E-PromptReco-v1/AOD'
-    config.Data.outputDatasetTag = 'RecoSkim2015E_cumulants_std_test'
+    config.General.requestName = 'pp2015E_cumulants_3sub_hm60_sc_v1'
+    config.Data.inputDataset = '/HighMultiplicity/Run2015E-PromptReco-v1/AOD'
+    config.Data.outputDatasetTag = 'pp2015E_cumulants_3sub_hm60_sc_v1'
     submit(config)
 
-    config.General.requestName = 'pp2015E_cumulants_2sub_b1_v10'
-    config.JobType.psetName = '../cfg/cumulants_2sub_cfg.py'
-    config.Data.inputDataset = '/MinimumBias1/Run2015E-PromptReco-v1/AOD'
-    config.Data.outputDatasetTag = 'RecoSkim2015E_cumulants_2sub_test'
+    config.General.requestName = 'pp2015E_cumulants_3sub_hm85_sc_v1'
+    config.JobType.psetName = '../cfg/cumulants_hlt85_3sub_sc_cfg.py'
+    config.Data.outputDatasetTag = 'pp2015E_cumulants_3sub_hm85_sc_v1'
     submit(config)
 
-    config.General.requestName = 'pp2015E_cumulants_3sub_b1_v10'
-    config.JobType.psetName = '../cfg/cumulants_3sub_cfg.py'
-    config.Data.inputDataset = '/MinimumBias1/Run2015E-PromptReco-v1/AOD'
-    config.Data.outputDatasetTag = 'RecoSkim2015E_cumulants_3sub_test'
+    config.General.requestName = 'pp2015E_cumulants_3sub_hm110_sc_v1'
+    config.JobType.psetName = '../cfg/cumulants_hlt110_3sub_sc_cfg.py'
+    config.Data.outputDatasetTag = 'pp2015E_cumulants_3sub_hm110_sc_v1'
     submit(config)
-
-    config.General.requestName = 'pp2015E_cumulants_4sub_b1_v10'
-    config.JobType.psetName = '../cfg/cumulants_4sub_cfg.py'
-    config.Data.inputDataset = '/MinimumBias1/Run2015E-PromptReco-v1/AOD'
-    config.Data.outputDatasetTag = 'RecoSkim2015E_cumulants_4sub_test'
-    submit(config)
-

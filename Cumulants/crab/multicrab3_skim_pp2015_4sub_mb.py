@@ -20,7 +20,7 @@ if __name__ == '__main__':
     config.Data.totalUnits = -1
     config.Data.splitting = 'LumiBased'
     #config.Data.outLFNDirBase = '/store/user/%s/' % (getUsernameFromSiteDB())
-    config.Data.outLFNDirBase = '/store/group/phys_heavyions/flowcorr/SubCumu/'
+    config.Data.outLFNDirBase = '/store/group/phys_heavyions/flowcorr/SubCumuNew/'
     config.Data.lumiMask = 'Cert_262081-262328_5TeV_PromptReco_Collisions15_25ns_JSON.txt'
     config.Data.publication = False
     config.Site.storageSite = 'T2_CH_CERN'
