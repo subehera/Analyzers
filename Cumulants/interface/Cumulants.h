@@ -37,6 +37,10 @@
 #include "DataFormats/VertexReco/interface/Vertex.h"
 #include "DataFormats/VertexReco/interface/VertexFwd.h"
 
+#include "DataFormats/CaloTowers/interface/CaloTowerCollection.h"
+
+#include "DataFormats/HeavyIonEvent/interface/Centrality.h"
+
 #include "FWCore/Utilities/interface/InputTag.h"
 
 // user include files
@@ -87,6 +91,17 @@ class Cumulants : public edm::one::EDAnalyzer<edm::one::SharedResources>  {
       // used to select what vertex to read from configuration file
       edm::EDGetTokenT<reco::VertexCollection> vtxTags_; 
 
+      // ## calotower ##
+      // used to select what calo tower to read from configuration file
+      edm::EDGetTokenT<CaloTowerCollection> caloTowersTags_; 
+
+      // ## centrality ##
+      // used to select what centrality collection to read from configuration file
+      edm::EDGetTokenT<reco::Centrality> centralityTags_;
+      // used to access centrality bins 
+      edm::EDGetTokenT<int> centralityBinTags_;
+      int cent_;
+
       // ## multiplicity selection (Noff)
       int noffmin_;          //minimum multiplicity of an event to be considered
       int noffmax_;          //maximum multiplicity of an event to be considered
@@ -102,6 +117,10 @@ class Cumulants : public edm::one::EDAnalyzer<edm::one::SharedResources>  {
       double etamax_;    //max eta of the tracks
       double ptmin_;     //min pt of the tracks
       double ptmax_;     //max pt of the tracks
+      vector<double>  etasubmin_;  //min eta of the tracks for subevents
+      vector<double>  etasubmax_;  //max eta of the tracks for subevents
+      vector<double>  ptsubmin_;  //min pt of the tracks for subevents
+      vector<double>  ptsubmax_;  //max pt of the tracks for subevents
       double dzdzerror_; //cut on dz/dzerror of the tracks
       double d0d0error_; //cut on d0/d0error of the tracks
       double pterrorpt_; //cut on pterror/pt of the tracks
@@ -122,18 +141,91 @@ class Cumulants : public edm::one::EDAnalyzer<edm::one::SharedResources>  {
       double  zBestVtxError_; //z coordinate error of the best vertex
 
       // ## harmonic and cumulants ##
-      int harm_;     //harmonic order
+      std::vector<int> harm_;     //harmonic order
+      int nsubevt_;     // number of subevents
       bool cweight_; //use particle weight to correct from acc X eff
+      int branchSave_;  // whether force saving more branches
       cumulant::QVectorSet qN_;
-      double deltaeta_;
+//      double deltaeta_;
       double CN8_;
       double wCN8_;
-      double CN6_;
-      double wCN6_;
-      double CN4_;
-      double wCN4_;
-      double CN2_;
-      double wCN2_;
+      double CN6_119_;
+      double CN6_123_;
+      double CN6_125_;
+      double CN6_126_;
+      double CN6_183_;
+      double CN6_187_;
+      double CN6_189_;
+      double CN6_190_;
+      double CN6_215_;
+      double CN6_219_;
+      double CN6_221_;
+      double CN6_222_;
+      double CN6_231_;
+      double CN6_235_;
+      double CN6_237_;
+      double CN6_238_;
+      double wCN6_119_;
+      double wCN6_123_;
+      double wCN6_125_;
+      double wCN6_126_;
+      double wCN6_183_;
+      double wCN6_187_;
+      double wCN6_189_;
+      double wCN6_190_;
+      double wCN6_215_;
+      double wCN6_219_;
+      double wCN6_221_;
+      double wCN6_222_;
+      double wCN6_231_;
+      double wCN6_235_;
+      double wCN6_237_;
+      double wCN6_238_;
+      double CN4_51_;
+      double CN4_53_;
+      double CN4_54_;
+      double CN4_83_;
+      double CN4_85_;
+      double CN4_86_;
+      double CN4_99_;
+      double CN4_101_;
+      double CN4_102_;
+      double CN4_58_;
+      double CN4_60_;
+      double CN4_90_;
+      double CN4_108_;
+      double CN4_163_;
+      double CN4_165_;
+      double CN4_170_;
+      double wCN4_51_;
+      double wCN4_53_;
+      double wCN4_54_;
+      double wCN4_83_;
+      double wCN4_85_;
+      double wCN4_86_;
+      double wCN4_99_;
+      double wCN4_101_;
+      double wCN4_102_;
+      double wCN4_58_;
+      double wCN4_60_;
+      double wCN4_90_;
+      double wCN4_108_;
+      double wCN4_163_;
+      double wCN4_165_;
+      double wCN4_170_;
+
+      double CN2_17_;
+      double wCN2_17_;
+      double CN2_18_;
+      double wCN2_18_;
+      double CN2_33_;
+      double wCN2_33_;
+      double CN2_34_;
+      double wCN2_34_;
+      double CN2_20_;
+      double wCN2_20_;
+      double CN2_36_;
+      double wCN2_36_;
       
       // ## file acc & eff & fake ##
       edm::InputTag fname_;         //file name that contains acc X eff corrections
@@ -152,8 +244,12 @@ class Cumulants : public edm::one::EDAnalyzer<edm::one::SharedResources>  {
       TH1F* hEtaNoff_;
       TH1F* hPtNoff_; 
       TH1F* hPhiNoff_;
+      TH1F* hEtaCTow_;
+      TH1F* hEtCTow_;
+      TH1F* hPhiCTow_;
       // ## ttree ##
       TTree* trEvent_;
+      edm::Service<TFileService> fs;
 };
 
 //

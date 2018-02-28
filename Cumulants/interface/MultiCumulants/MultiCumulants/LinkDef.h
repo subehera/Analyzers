@@ -6,6 +6,4 @@
 
 #pragma link C++ class Subsets+;
 #pragma link C++ class QVector+;
-#pragma link C++ class QVectorSet+;
-#pragma link C++ class Correlator+;
 #pragma link C++ class Algorithm+;

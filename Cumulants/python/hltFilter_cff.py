@@ -5,18 +5,27 @@ import FWCore.ParameterSet.Config as cms
 import HLTrigger.HLTfilters.hltHighLevel_cfi
 
 #high multiplicity path
-hltHM80 = HLTrigger.HLTfilters.hltHighLevel_cfi.hltHighLevel.clone()
-hltHM80.HLTPaths = ['HLT_FullTracks_Multiplicity80_v*']
-hltHM80.andOr = cms.bool(True)
-hltHM80.throw = cms.bool(False)
+hltHM85 = HLTrigger.HLTfilters.hltHighLevel_cfi.hltHighLevel.clone()
+hltHM85.HLTPaths = ['HLT_PixelTracks_Multiplicity60*_v*','HLT_FullTracks_Multiplicity80_v*']
+hltHM85.andOr = cms.bool(True)
+hltHM85.throw = cms.bool(False)
 
-hltHM100 = HLTrigger.HLTfilters.hltHighLevel_cfi.hltHighLevel.clone()
-hltHM100.HLTPaths = ['HLT_FullTracks_Multiplicity100_v*']
-hltHM100.andOr = cms.bool(True)
-hltHM100.throw = cms.bool(False)
+hltHM105 = HLTrigger.HLTfilters.hltHighLevel_cfi.hltHighLevel.clone()
+hltHM105.HLTPaths = ['HLT_PixelTracks_Multiplicity60*_v*','HLT_PixelTracks_Multiplicity85*_v*','HLT_FullTracks_Multiplicity100_v*','HLT_FullTracks_Multiplicity80_v*']
+hltHM105.andOr = cms.bool(True)
+hltHM105.throw = cms.bool(False)
+
+hltHM105_85Off = HLTrigger.HLTfilters.hltHighLevel_cfi.hltHighLevel.clone()
+hltHM105_85Off.HLTPaths = ['HLT_PixelTracks_Multiplicity60*_v*','!HLT_PixelTracks_Multiplicity85*_v*']
+hltHM105_85Off.andOr = cms.bool(False)
+hltHM105_85Off.throw = cms.bool(False)
+
+hltHM135 = HLTrigger.HLTfilters.hltHighLevel_cfi.hltHighLevel.clone()
+hltHM135.HLTPaths = ['HLT_PixelTracks_Multiplicity60*_v*','HLT_PixelTracks_Multiplicity85*_v*','HLT_PixelTracks_Multiplicity110_v*','HLT_FullTracks_Multiplicity100_v*','HLT_FullTracks_Multiplicity80_v*','HLT_FullTracks_Multiplicity130_v*']
+hltHM135.andOr = cms.bool(True)
+hltHM135.throw = cms.bool(False)
 
 hltHMMB = HLTrigger.HLTfilters.hltHighLevel_cfi.hltHighLevel.clone()
 hltHMMB.HLTPaths = ['HLT_L1MinimumBiasHF_OR_part*','HLT_ZeroBias_part*_v*','HLT_L1MinimumBiasHF1OR_part*_v*']
 hltHMMB.andOr = cms.bool(True)
 hltHMMB.throw = cms.bool(False)
-

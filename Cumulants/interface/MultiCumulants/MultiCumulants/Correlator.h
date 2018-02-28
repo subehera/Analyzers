@@ -3,6 +3,7 @@
 
 #include "Analyzers/Cumulants/interface/MultiCumulants/MultiCumulants/QTerms.h"
 #include "Analyzers/Cumulants/interface/MultiCumulants/MultiCumulants/QVectorSet.h"
+#include "Analyzers/Cumulants/interface/MultiCumulants/MultiCumulants/NativeMaskLUT.h"
 
 #include "Analyzers/Cumulants/interface/MultiCumulants/vendor/loguru/loguru.hpp"
 
@@ -18,24 +19,46 @@ namespace cumulant{
     public:
         bool DEBUG = false;
         Complex v;
-        Complex w;
+        Real w;
 
         std::string repr;
         NativeMask _m;
 
-        Correlator() : v(0, 0), w(0, 0) {
+        Correlator() : v(0, 0), w(0) {
 
         }
-        Correlator( NativeMask m, QVectorMap &qvm) : v(0, 0), w(0, 0) {
+
+        Correlator( NativeMask m, QVectorMap &qvm) : v(0, 0), w(0) {
             build( m, qvm );
         }
 
-        int factorial( int n ){
-            if ( n <= 1 ) return 1;
-            return n * factorial( n - 1 );
+        ~Correlator()
+        {
+
         }
 
-        size_t countSetBits(NativeMask m){
+        Correlator& operator+=(const Correlator& rhs){
+            assert( this->_m == rhs._m && "Cannot add Correlators of different terms" );
+            this->v += rhs.v;
+            this->w += rhs.w;
+
+            return *this;
+        }
+
+        Correlator& operator*=(const Correlator& rhs){
+            assert( this->_m == rhs._m && "Cannot operate on Correlators of different terms" );
+            this->v *= rhs.v;
+            this->w *= rhs.w;
+
+            return *this;
+        }
+
+        static int factorial( int n ){
+            if ( n <= 1 ) return 1;
+            return n * Correlator::factorial( n - 1 );
+        }
+
+        static size_t countSetBits(NativeMask m){
             size_t count = 0;
             while (m){
                 m &= (m-1) ;
@@ -49,7 +72,7 @@ namespace cumulant{
         // example :
         // given im=0101, and mm=00110101
         // returns rm = 00010001, ie 1st and 3rd set bits in mask
-        NativeMask expandMask( NativeMask im, NativeMask mm, size_t start = 0, size_t stop = 8 ){
+        static NativeMask expandMask( NativeMask im, NativeMask mm, size_t start = 0, size_t stop = 8 ){
 
             vector<size_t> mlut;
             size_t n = 0;
@@ -70,34 +93,42 @@ namespace cumulant{
         void build( NativeMask m, QVectorMap &qvm){
             //LOG_SCOPE_FUNCTION(INFO);
             // just save for printing
-            _m = m;
+            // these are needed only for verbose printing
+            this->_m = m;
             std::string cmsg = "";
             std::string cdelim = "";
             std::stringstream sstr;
-            auto bm = std::bitset<8>( m );
-            size_t maskBitsSet = countSetBits( m );
+
+            auto bm = std::bitset<MAX_SET_SIZE>( m );
+            size_t maskBitsSet = Correlator::countSetBits( m );
             LOG_IF_F( INFO, DEBUG, "nSetBits(mask) = %lu", maskBitsSet );
 
-            auto lut = NativeMaskLUTs[ maskBitsSet-2 ];    
+            auto lut = NativeMaskLUTs[ maskBitsSet-1 ];    
 
             size_t nTerms = lut.size();
+            
             Complex qv(0, 0);
-            Complex qw(0, 0);
+            Real qw(0);
+
             for ( size_t i = 0; i < nTerms; i++ ){
                 LOG_IF_F( INFO, DEBUG, "\n\nTERM %lu", i );
                 
                 double totalK = 1.0;
                 Complex tv(0,0);
-                Complex tw(0,0);
+                Real tw(0);
+
+                // only used for DEBUG printout
                 std::string msg = "";
                 std::string qmsg = "";
                 std::string qvmsg = "";
+
+
                 for ( size_t j = 0; j < lut[ i ].size(); j++ ){
                     NativeMask tm = lut[ i ][ j ];
-                    NativeMask em = expandMask( tm, m );
+                    NativeMask em = Correlator::expandMask( tm, m );
                     
-                    auto btm = std::bitset<8>( tm );
-                    auto bem = std::bitset<8>( em );
+                    auto btm = std::bitset<MAX_SET_SIZE>( tm );
+                    auto bem = std::bitset<MAX_SET_SIZE>( em );
                     
                     LOG_IF_F( INFO, DEBUG, "NativeMask=%s", std::bitset<8>( tm ).to_string().c_str() );
                     LOG_IF_F( INFO, DEBUG, "expandMask( im=%s, mm=%s ) = %s", btm.to_string().c_str(), bm.to_string().c_str(), bem.to_string().c_str() );
@@ -105,15 +136,18 @@ namespace cumulant{
                     if ( qvm.count( bem ) == 0 ){
                         LOG_F( WARNING, "QVector not found! mask=%s", bem.to_string().c_str() );
                     }
+                    
                     auto q = qvm[ bem ];
                     double ck = (pow(-1, q._i) * factorial(q._i));
                     totalK *= ck;
-                    qmsg += "" + maskString( em );
-                    msg += "*" + bem.to_string();
-
-                    sstr.str("");
-                    sstr << std::setprecision(3) << "Q(" <<q.getQV().real() << "+" << q.getQV().imag() << "i)";
-                    qvmsg += sstr.str();
+                    if ( true == DEBUG ){
+                        qmsg += "" + maskString( em );
+                        msg += "*" + bem.to_string();
+    
+                        sstr.str("");
+                        sstr << std::setprecision(3) << "Q(" <<q.getQV().real() << "+" << q.getQV().imag() << "i)";
+                        qvmsg += sstr.str();
+                    }
 
 
                     if ( 0 == j ){
@@ -127,18 +161,21 @@ namespace cumulant{
 
                 } // loop on j
 
-                LOG_IF_F( INFO, DEBUG, "%ld * %s", (Coefficient)totalK, qmsg.c_str() );
-                if ( i == 0 || ( i > 0 && totalK < 0 ) )
-                    cmsg += "\n" + std::to_string( (Coefficient)totalK ) + "*" + qmsg + "\t\t = " + qvmsg;
-                else if ( i > 0 && totalK > 0)
-                    cmsg += "\n+" + std::to_string( (Coefficient)totalK ) + "*" + qmsg + "\t\t = " + qvmsg;
+                if ( true == DEBUG ){
+                    LOG_IF_F( INFO, DEBUG, "%ld * %s", (Coefficient)totalK, qmsg.c_str() );
+                    if ( i == 0 || ( i > 0 && totalK < 0 ) )
+                        cmsg += "\n" + std::to_string( (Coefficient)totalK ) + "*" + qmsg + "\t\t = " + qvmsg;
+                    else if ( i > 0 && totalK > 0)
+                        cmsg += "\n+" + std::to_string( (Coefficient)totalK ) + "*" + qmsg + "\t\t = " + qvmsg;
+                }
 
                 qv += tv * totalK;
                 qw += tw * totalK;
 
             } // loop on i terms
     
-            // LOG_F( INFO, "Correlator = %s", cmsg.c_str() );
+            LOG_IF_F( INFO, DEBUG, "Correlator = %s", cmsg.c_str() );
+
             this->repr = cmsg;
 
             this->v = qv;
@@ -149,7 +186,10 @@ namespace cumulant{
         }
 
         Complex calculate(  ){
-            return (this->v.real() / this->w.real());
+            if(this->w != 0. ) 
+               return (this->v / this->w);
+            else
+               return 0;
         }
 
 
@@ -185,7 +225,7 @@ namespace cumulant{
             std::string s = "";
             s += "Correlator( m=" + std::bitset<8>( _m ).to_string() + " )[ ";
             s += "v=" + std::to_string( v.real() ) + " + " + std::to_string( v.imag() ) + "i, ";
-            s += "w=" + std::to_string( w.real() ) + " + " + std::to_string( w.imag() ) + "i";
+            s += "w=" + std::to_string( w );
             s += " ]";
             return s;
 
