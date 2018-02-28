@@ -37,9 +37,9 @@ process.TFileService = cms.Service("TFileService",
 
 # Configure the Global Tag
 # Global tag contains information about detector geometry, calibration, alignement, ...
-process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
-from Configuration.AlCa.GlobalTag import GlobalTag
-process.GlobalTag = GlobalTag(process.GlobalTag, '80X_dataRun2_Express_v15', '')
+#process.load('Configuration.StandardSequences.FrontierConditions_GlobalTag_cff')
+#from Configuration.AlCa.GlobalTag import GlobalTag
+#process.GlobalTag = GlobalTag(process.GlobalTag, '80X_dataRun2_Express_v15', '')
 
 
 # __________________ Event selection _________________
@@ -56,7 +56,7 @@ process.PUFilter = pileupVertexFilterCut_dz10_GplusPP
 # __________________ Analyzer _________________
 
 # Load you analyzer with initial configuration
-process.load("Analyzers.Cumulants.cumulants_cfi")
+process.load("Analyzers.Cumulants.cumulants_cff")
 process.anaSC23 = process.sub4AnalysisSC23.clone()
 process.anaSC24 = process.sub4AnalysisSC24.clone()
 

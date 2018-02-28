@@ -93,7 +93,7 @@ class Cumulants : public edm::one::EDAnalyzer<edm::one::SharedResources>  {
 
       // ## calotower ##
       // used to select what calo tower to read from configuration file
-      edm::EDGetTokenT<CaloTowerCollection> caloTowersTags_; 
+      //edm::EDGetTokenT<CaloTowerCollection> caloTowersTags_; 
 
       // ## centrality ##
       // used to select what centrality collection to read from configuration file
