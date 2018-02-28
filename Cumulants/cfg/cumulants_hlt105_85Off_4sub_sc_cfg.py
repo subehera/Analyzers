@@ -29,7 +29,7 @@ process.source = cms.Source("PoolSource",
 import os
 process.TFileService = cms.Service("TFileService",
      #fileName = cms.string(os.getenv('CMSSW_BASE') + '/src/Analyzers/Cumulants/test/cumulants.root')
-     fileName = cms.string('cumulants.root')
+     fileName = cms.string('cumulants_4sub.root')
 )
 
 
@@ -46,7 +46,7 @@ process.GlobalTag = GlobalTag(process.GlobalTag, '80X_dataRun2_Express_v15', '')
 
 # Define the trigger selection
 from Analyzers.Cumulants.hltFilter_cff import *
-process.defaultTrigSel = hltHMMB.clone()
+process.defaultTrigSel = hltHM105_85Off.clone()
 
 #Pileup filter
 from Analyzers.Cumulants.PPPileUpVertexFilter_cff import *
@@ -57,8 +57,13 @@ process.PUFilter = pileupVertexFilterCut_dz10_GplusPP
 
 # Load you analyzer with initial configuration
 process.load("Analyzers.Cumulants.cumulants_cfi")
-process.defaultAnalysis = process.defaultCumu.clone()
+process.anaSC23 = process.sub4AnalysisSC23.clone()
+process.anaSC24 = process.sub4AnalysisSC24.clone()
 
-process.p = cms.Path(process.defaultTrigSel * # Select MB events
-                     process.PUFilter *       # PU filter
-                     process.defaultAnalysis) # Run the analyzer
+process.p1 = cms.Path(process.defaultTrigSel * # Select MB events
+                      process.PUFilter *       # PU filter
+                      process.anaSC23)         # Run the analyzer
+
+process.p2 = cms.Path(process.defaultTrigSel * # Select MB events
+                      process.PUFilter *       # PU filter
+                      process.anaSC24)         # Run the analyzer
