@@ -249,52 +249,52 @@ if __name__ == '__main__':
     submit(config)
 
     config.General.requestName = 'VdM2016_pp13TeV_cumulants_4sub_mb0_sc_v1'
-    config.Data.inputDataset = '/L1MinimumBias0/davidlw-RecoSkim2016_2016B_VdMScan_MB0_v3-958277e0fa44e2e92209aae3b47c3ed2/USER'
+    config.Data.inputDataset = '/L1MinimumBias0/davidlw-RecoSkim2016_2016B_VdMScan_MB0_v3-e83d32f7a8d5ff64616c674d8395d834/USER'
     config.Data.outputDatasetTag = 'pp13TeV_VdM2016_cumulants_4sub_mb0_sc_v1'
     submit(config)
 
     config.General.requestName = 'VdM2016_pp13TeV_cumulants_4sub_mb1_sc_v1'
-    config.Data.inputDataset = '/L1MinimumBias1/davidlw-RecoSkim2016_2016B_VdMScan_MB1_v3-958277e0fa44e2e92209aae3b47c3ed2/USER'
+    config.Data.inputDataset = '/L1MinimumBias1/davidlw-RecoSkim2016_2016B_VdMScan_MB1_v3-e83d32f7a8d5ff64616c674d8395d834/USER'
     config.Data.outputDatasetTag = 'pp13TeV_VdM2016_cumulants_4sub_mb1_sc_v1'
     submit(config)
 
     config.General.requestName = 'VdM2016_pp13TeV_cumulants_4sub_mb2_sc_v1'
-    config.Data.inputDataset = '/L1MinimumBias2/davidlw-RecoSkim2016_2016B_VdMScan_MB2_v3-958277e0fa44e2e92209aae3b47c3ed2/USER'
+    config.Data.inputDataset = '/L1MinimumBias2/davidlw-RecoSkim2016_2016B_VdMScan_MB2_v3-e83d32f7a8d5ff64616c674d8395d834/USER'
     config.Data.outputDatasetTag = 'pp13TeV_VdM2016_cumulants_4sub_mb2_sc_v1'
     submit(config)
 
     config.General.requestName = 'VdM2016_pp13TeV_cumulants_4sub_mb3_sc_v1'
-    config.Data.inputDataset = '/L1MinimumBias3/davidlw-RecoSkim2016_2016B_VdMScan_MB3_v3-958277e0fa44e2e92209aae3b47c3ed2/USER'
+    config.Data.inputDataset = '/L1MinimumBias3/davidlw-RecoSkim2016_2016B_VdMScan_MB3_v3-e83d32f7a8d5ff64616c674d8395d834/USER'
     config.Data.outputDatasetTag = 'pp13TeV_VdM2016_cumulants_4sub_mb3_sc_v1'
     submit(config)
 
     config.General.requestName = 'VdM2016_pp13TeV_cumulants_4sub_mb4_sc_v1'
-    config.Data.inputDataset = '/L1MinimumBias4/davidlw-RecoSkim2016_2016B_VdMScan_MB4_v3-958277e0fa44e2e92209aae3b47c3ed2/USER'
+    config.Data.inputDataset = '/L1MinimumBias4/davidlw-RecoSkim2016_2016B_VdMScan_MB4_v3-e83d32f7a8d5ff64616c674d8395d834/USER'
     config.Data.outputDatasetTag = 'pp13TeV_VdM2016_cumulants_4sub_mb4_sc_v1'
     submit(config)
 
     config.General.requestName = 'VdM2016_pp13TeV_cumulants_4sub_mb5_sc_v1'
-    config.Data.inputDataset = '/L1MinimumBias5/davidlw-RecoSkim2016_2016B_VdMScan_MB5_v3-958277e0fa44e2e92209aae3b47c3ed2/USER'
+    config.Data.inputDataset = '/L1MinimumBias5/davidlw-RecoSkim2016_2016B_VdMScan_MB5_v3-e83d32f7a8d5ff64616c674d8395d834/USER'
     config.Data.outputDatasetTag = 'pp13TeV_VdM2016_cumulants_4sub_mb5_sc_v1'
     submit(config)
 
     config.General.requestName = 'VdM2016_pp13TeV_cumulants_4sub_mb6_sc_v1'
-    config.Data.inputDataset = '/L1MinimumBias6/davidlw-RecoSkim2016_2016B_VdMScan_MB6_v3-958277e0fa44e2e92209aae3b47c3ed2/USER'
+    config.Data.inputDataset = '/L1MinimumBias6/davidlw-RecoSkim2016_2016B_VdMScan_MB6_v3-e83d32f7a8d5ff64616c674d8395d834/USER'
     config.Data.outputDatasetTag = 'pp13TeV_VdM2016_cumulants_4sub_mb6_sc_v1'
     submit(config)
 
     config.General.requestName = 'VdM2016_pp13TeV_cumulants_4sub_mb7_sc_v1'
-    config.Data.inputDataset = '/L1MinimumBias7/davidlw-RecoSkim2016_2016B_VdMScan_MB7_v3-958277e0fa44e2e92209aae3b47c3ed2/USER'
+    config.Data.inputDataset = '/L1MinimumBias7/davidlw-RecoSkim2016_2016B_VdMScan_MB7_v3-e83d32f7a8d5ff64616c674d8395d834/USER'
     config.Data.outputDatasetTag = 'pp13TeV_VdM2016_cumulants_4sub_mb7_sc_v1'
     submit(config)
 
     config.General.requestName = 'VdM2016_pp13TeV_cumulants_4sub_mb8_sc_v1'
-    config.Data.inputDataset = '/L1MinimumBias8/davidlw-RecoSkim2016_2016B_VdMScan_MB8_v3-958277e0fa44e2e92209aae3b47c3ed2/USER'
+    config.Data.inputDataset = '/L1MinimumBias8/davidlw-RecoSkim2016_2016B_VdMScan_MB8_v3-e83d32f7a8d5ff64616c674d8395d834/USER'
     config.Data.outputDatasetTag = 'pp13TeV_VdM2016_cumulants_4sub_mb8_sc_v1'
     submit(config)
 
     config.General.requestName = 'VdM2016_pp13TeV_cumulants_4sub_mb9_sc_v1'
-    config.Data.inputDataset = '/L1MinimumBias9/davidlw-RecoSkim2016_2016B_VdMScan_MB9_v3-958277e0fa44e2e92209aae3b47c3ed2/USER'
+    config.Data.inputDataset = '/L1MinimumBias9/davidlw-RecoSkim2016_2016B_VdMScan_MB9_v3-e83d32f7a8d5ff64616c674d8395d834/USER'
     config.Data.outputDatasetTag = 'pp13TeV_VdM2016_cumulants_4sub_mb9_sc_v1'
     submit(config)
 
