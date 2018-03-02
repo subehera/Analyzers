@@ -21,6 +21,7 @@ if __name__ == '__main__':
     config.Data.splitting = 'LumiBased'
     config.Data.outLFNDirBase = '/store/group/phys_heavyions/flowcorr/SubCumuNew/'
     config.Data.publication = False
+    config.Data.inputDBS = 'phys03'
 #    config.Site.storageSite = 'T2_US_MIT'
 #    config.Site.storageSite = 'T3_US_Rice'
     config.Site.storageSite = 'T2_CH_CERN'
@@ -97,7 +98,7 @@ if __name__ == '__main__':
 
     config.General.requestName = 'MD2_pp13TeV_cumulants_std_hlt85_sc_v1'
     config.JobType.psetName = '../cfg/cumulants_hlt85_std_sc_cfg.py'
-    config.Data.inputDataset = '/HighMultiplicityEOF/davidlw-RecoSkim2016_2016G_MD2Run279489_HM_v1-120ac2c4f6b9f3699b9331175dcc4953/USER'
+    config.Data.inputDataset = '/HighMultiplicityEOF/davidlw-RecoSkim2016_2016G_MD2Run279489_HM_v3-120ac2c4f6b9f3699b9331175dcc4953/USER'
     config.Data.outputDatasetTag = 'pp13TeV_MD2_cumulants_std_hlt85_sc_v1'
     submit(config)
 
@@ -113,7 +114,7 @@ if __name__ == '__main__':
 
     config.General.requestName = 'MD34_pp13TeV_cumulants_std_hlt85_sc_v1'
     config.JobType.psetName = '../cfg/cumulants_hlt85_std_sc_cfg.py'
-    config.Data.inputDataset = '/HighMultiplicityEOF/davidlw-RecoSkim2016_2016H_MD34_HM_v1-120ac2c4f6b9f3699b9331175dcc4953/USER'
+    config.Data.inputDataset = '/HighMultiplicityEOF/davidlw-RecoSkim2016_2016H_MD34_HM_v3-120ac2c4f6b9f3699b9331175dcc4953/USER'
     config.Data.outputDatasetTag = 'pp13TeV_MD34_cumulants_std_hlt85_sc_v1'
     submit(config)
 
@@ -129,7 +130,7 @@ if __name__ == '__main__':
 
     config.General.requestName = 'VdM2016_pp13TeV_cumulants_std_hlt85_sc_v1'
     config.JobType.psetName = '../cfg/cumulants_hlt85_std_sc_cfg.py'
-    config.Data.inputDataset = '/HighMultiplicityEOF/davidlw-RecoSkim2016_2016B_VdMScan_HM_v1-120ac2c4f6b9f3699b9331175dcc4953/USER'
+    config.Data.inputDataset = '/HighMultiplicityEOF/davidlw-RecoSkim2016_2016B_VdMScan_HM_v3-120ac2c4f6b9f3699b9331175dcc4953/USER'
     config.Data.outputDatasetTag = 'pp13TeV_VdM2016_cumulants_std_hlt85_sc_v1'
     submit(config)
 

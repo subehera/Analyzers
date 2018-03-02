@@ -21,6 +21,7 @@ if __name__ == '__main__':
     config.Data.splitting = 'LumiBased'
     config.Data.outLFNDirBase = '/store/group/phys_heavyions/flowcorr/SubCumuNew/'
     config.Data.publication = False
+    config.Data.inputDBS = 'phys03'
 #    config.Site.storageSite = 'T2_US_MIT'
 #    config.Site.storageSite = 'T3_US_Rice'
     config.Site.storageSite = 'T2_CH_CERN'
@@ -158,142 +159,142 @@ if __name__ == '__main__':
     submit(config)
 
     config.General.requestName = 'MD2_pp13TeV_cumulants_2sub_mb1_sc_v1'
-    config.Data.inputDataset = '/L1MinimumBias1/davidlw-RecoSkim2016_2016G_MD2Run279489_MB1_v1-e83d32f7a8d5ff64616c674d8395d834/USER'
+    config.Data.inputDataset = '/L1MinimumBias1/davidlw-RecoSkim2016_2016G_MD2Run279489_MB1_v3-e83d32f7a8d5ff64616c674d8395d834/USER'
     config.Data.outputDatasetTag = 'pp13TeV_MD2_cumulants_2sub_mb1_sc_v1'
     submit(config)
 
     config.General.requestName = 'MD2_pp13TeV_cumulants_2sub_mb2_sc_v1'
-    config.Data.inputDataset = '/L1MinimumBias2/davidlw-RecoSkim2016_2016G_MD2Run279489_MB2_v1-e83d32f7a8d5ff64616c674d8395d834/USER'
+    config.Data.inputDataset = '/L1MinimumBias2/davidlw-RecoSkim2016_2016G_MD2Run279489_MB2_v3-e83d32f7a8d5ff64616c674d8395d834/USER'
     config.Data.outputDatasetTag = 'pp13TeV_MD2_cumulants_2sub_mb2_sc_v1'
     submit(config)
 
     config.General.requestName = 'MD2_pp13TeV_cumulants_2sub_mb3_sc_v1'
-    config.Data.inputDataset = '/L1MinimumBias3/davidlw-RecoSkim2016_2016G_MD2Run279489_MB3_v1-e83d32f7a8d5ff64616c674d8395d834/USER'
+    config.Data.inputDataset = '/L1MinimumBias3/davidlw-RecoSkim2016_2016G_MD2Run279489_MB3_v3-e83d32f7a8d5ff64616c674d8395d834/USER'
     config.Data.outputDatasetTag = 'pp13TeV_MD2_cumulants_2sub_mb3_sc_v1'
     submit(config)
 
     config.General.requestName = 'MD2_pp13TeV_cumulants_2sub_mb4_sc_v1'
-    config.Data.inputDataset = '/L1MinimumBias4/davidlw-RecoSkim2016_2016G_MD2Run279489_MB4_v1-e83d32f7a8d5ff64616c674d8395d834/USER'
+    config.Data.inputDataset = '/L1MinimumBias4/davidlw-RecoSkim2016_2016G_MD2Run279489_MB4_v3-e83d32f7a8d5ff64616c674d8395d834/USER'
     config.Data.outputDatasetTag = 'pp13TeV_MD2_cumulants_2sub_mb4_sc_v1'
     submit(config)
 
     config.General.requestName = 'MD2_pp13TeV_cumulants_2sub_mb5_sc_v1'
-    config.Data.inputDataset = '/L1MinimumBias5/davidlw-RecoSkim2016_2016G_MD2Run279489_MB5_v1-e83d32f7a8d5ff64616c674d8395d834/USER'
+    config.Data.inputDataset = '/L1MinimumBias5/davidlw-RecoSkim2016_2016G_MD2Run279489_MB5_v3-e83d32f7a8d5ff64616c674d8395d834/USER'
     config.Data.outputDatasetTag = 'pp13TeV_MD2_cumulants_2sub_mb5_sc_v1'
     submit(config)
 
     config.General.requestName = 'MD2_pp13TeV_cumulants_2sub_mb6_sc_v1'
-    config.Data.inputDataset = '/L1MinimumBias6/davidlw-RecoSkim2016_2016G_MD2Run279489_MB6_v1-e83d32f7a8d5ff64616c674d8395d834/USER'
+    config.Data.inputDataset = '/L1MinimumBias6/davidlw-RecoSkim2016_2016G_MD2Run279489_MB6_v3-e83d32f7a8d5ff64616c674d8395d834/USER'
     config.Data.outputDatasetTag = 'pp13TeV_MD2_cumulants_2sub_mb6_sc_v1'
     submit(config)
 
     config.General.requestName = 'MD2_pp13TeV_cumulants_2sub_mb7_sc_v1'
-    config.Data.inputDataset = '/L1MinimumBias7/davidlw-RecoSkim2016_2016G_MD2Run279489_MB7_v1-e83d32f7a8d5ff64616c674d8395d834/USER'
+    config.Data.inputDataset = '/L1MinimumBias7/davidlw-RecoSkim2016_2016G_MD2Run279489_MB7_v3-e83d32f7a8d5ff64616c674d8395d834/USER'
     config.Data.outputDatasetTag = 'pp13TeV_MD2_cumulants_2sub_mb7_sc_v1'
     submit(config)
 
     config.General.requestName = 'MD2_pp13TeV_cumulants_2sub_mb8_sc_v1'
-    config.Data.inputDataset = '/L1MinimumBias8/davidlw-RecoSkim2016_2016G_MD2Run279489_MB8_v1-e83d32f7a8d5ff64616c674d8395d834/USER'
+    config.Data.inputDataset = '/L1MinimumBias8/davidlw-RecoSkim2016_2016G_MD2Run279489_MB8_v3-e83d32f7a8d5ff64616c674d8395d834/USER'
     config.Data.outputDatasetTag = 'pp13TeV_MD2_cumulants_2sub_mb8_sc_v1'
     submit(config)
 
     config.General.requestName = 'MD2_pp13TeV_cumulants_2sub_mb9_sc_v1'
-    config.Data.inputDataset = '/L1MinimumBias9/davidlw-RecoSkim2016_2016G_MD2Run279489_MB9_v1-e83d32f7a8d5ff64616c674d8395d834/USER'
+    config.Data.inputDataset = '/L1MinimumBias9/davidlw-RecoSkim2016_2016G_MD2Run279489_MB9_v3-e83d32f7a8d5ff64616c674d8395d834/USER'
     config.Data.outputDatasetTag = 'pp13TeV_MD2_cumulants_2sub_mb9_sc_v1'
     submit(config)
 
     config.General.requestName = 'MD34_pp13TeV_cumulants_2sub_mb1_sc_v1'
-    config.Data.inputDataset = '/L1MinimumBias1/davidlw-RecoSkim2016_2016H_MD34_MB1_v1-e83d32f7a8d5ff64616c674d8395d834/USER'
+    config.Data.inputDataset = '/L1MinimumBias1/davidlw-RecoSkim2016_2016H_MD34_MB1_v3-e83d32f7a8d5ff64616c674d8395d834/USER'
     config.Data.outputDatasetTag = 'pp13TeV_MD34_cumulants_2sub_mb1_sc_v1'
     submit(config)
 
     config.General.requestName = 'MD34_pp13TeV_cumulants_2sub_mb2_sc_v1'
-    config.Data.inputDataset = '/L1MinimumBias2/davidlw-RecoSkim2016_2016H_MD34_MB2_v1-e83d32f7a8d5ff64616c674d8395d834/USER'
+    config.Data.inputDataset = '/L1MinimumBias2/davidlw-RecoSkim2016_2016H_MD34_MB2_v3-e83d32f7a8d5ff64616c674d8395d834/USER'
     config.Data.outputDatasetTag = 'pp13TeV_MD34_cumulants_2sub_mb2_sc_v1'
     submit(config)
 
     config.General.requestName = 'MD34_pp13TeV_cumulants_2sub_mb3_sc_v1'
-    config.Data.inputDataset = '/L1MinimumBias3/davidlw-RecoSkim2016_2016H_MD34_MB3_v1-e83d32f7a8d5ff64616c674d8395d834/USER'
+    config.Data.inputDataset = '/L1MinimumBias3/davidlw-RecoSkim2016_2016H_MD34_MB3_v3-e83d32f7a8d5ff64616c674d8395d834/USER'
     config.Data.outputDatasetTag = 'pp13TeV_MD34_cumulants_2sub_mb3_sc_v1'
     submit(config)
 
     config.General.requestName = 'MD34_pp13TeV_cumulants_2sub_mb4_sc_v1'
-    config.Data.inputDataset = '/L1MinimumBias4/davidlw-RecoSkim2016_2016H_MD34_MB4_v1-e83d32f7a8d5ff64616c674d8395d834/USER'
+    config.Data.inputDataset = '/L1MinimumBias4/davidlw-RecoSkim2016_2016H_MD34_MB4_v3-e83d32f7a8d5ff64616c674d8395d834/USER'
     config.Data.outputDatasetTag = 'pp13TeV_MD34_cumulants_2sub_mb4_sc_v1'
     submit(config)
 
     config.General.requestName = 'MD34_pp13TeV_cumulants_2sub_mb5_sc_v1'
-    config.Data.inputDataset = '/L1MinimumBias5/davidlw-RecoSkim2016_2016H_MD34_MB5_v1-e83d32f7a8d5ff64616c674d8395d834/USER'
+    config.Data.inputDataset = '/L1MinimumBias5/davidlw-RecoSkim2016_2016H_MD34_MB5_v3-e83d32f7a8d5ff64616c674d8395d834/USER'
     config.Data.outputDatasetTag = 'pp13TeV_MD34_cumulants_2sub_mb5_sc_v1'
     submit(config)
 
     config.General.requestName = 'MD34_pp13TeV_cumulants_2sub_mb6_sc_v1'
-    config.Data.inputDataset = '/L1MinimumBias6/davidlw-RecoSkim2016_2016H_MD34_MB6_v1-e83d32f7a8d5ff64616c674d8395d834/USER'
+    config.Data.inputDataset = '/L1MinimumBias6/davidlw-RecoSkim2016_2016H_MD34_MB6_v3-e83d32f7a8d5ff64616c674d8395d834/USER'
     config.Data.outputDatasetTag = 'pp13TeV_MD34_cumulants_2sub_mb6_sc_v1'
     submit(config)
 
     config.General.requestName = 'MD34_pp13TeV_cumulants_2sub_mb7_sc_v1'
-    config.Data.inputDataset = '/L1MinimumBias7/davidlw-RecoSkim2016_2016H_MD34_MB7_v1-e83d32f7a8d5ff64616c674d8395d834/USER'
+    config.Data.inputDataset = '/L1MinimumBias7/davidlw-RecoSkim2016_2016H_MD34_MB7_v3-e83d32f7a8d5ff64616c674d8395d834/USER'
     config.Data.outputDatasetTag = 'pp13TeV_MD34_cumulants_2sub_mb7_sc_v1'
     submit(config)
 
     config.General.requestName = 'MD34_pp13TeV_cumulants_2sub_mb8_sc_v1'
-    config.Data.inputDataset = '/L1MinimumBias8/davidlw-RecoSkim2016_2016H_MD34_MB8_v1-e83d32f7a8d5ff64616c674d8395d834/USER'
+    config.Data.inputDataset = '/L1MinimumBias8/davidlw-RecoSkim2016_2016H_MD34_MB8_v3-e83d32f7a8d5ff64616c674d8395d834/USER'
     config.Data.outputDatasetTag = 'pp13TeV_MD34_cumulants_2sub_mb8_sc_v1'
     submit(config)
 
     config.General.requestName = 'MD34_pp13TeV_cumulants_2sub_mb9_sc_v1'
-    config.Data.inputDataset = '/L1MinimumBias9/davidlw-RecoSkim2016_2016H_MD34_MB9_v1-e83d32f7a8d5ff64616c674d8395d834/USER'
+    config.Data.inputDataset = '/L1MinimumBias9/davidlw-RecoSkim2016_2016H_MD34_MB9_v3-e83d32f7a8d5ff64616c674d8395d834/USER'
     config.Data.outputDatasetTag = 'pp13TeV_MD34_cumulants_2sub_mb9_sc_v1'
     submit(config)
 
     config.General.requestName = 'VdM2016_pp13TeV_cumulants_2sub_mb0_sc_v1'
-    config.Data.inputDataset = '/L1MinimumBias0/davidlw-RecoSkim2016_2016B_VdMScan_MB0_v1-958277e0fa44e2e92209aae3b47c3ed2/USER'
+    config.Data.inputDataset = '/L1MinimumBias0/davidlw-RecoSkim2016_2016B_VdMScan_MB0_v3-958277e0fa44e2e92209aae3b47c3ed2/USER'
     config.Data.outputDatasetTag = 'pp13TeV_VdM2016_cumulants_2sub_mb0_sc_v1'
     submit(config)
 
     config.General.requestName = 'VdM2016_pp13TeV_cumulants_2sub_mb1_sc_v1'
-    config.Data.inputDataset = '/L1MinimumBias1/davidlw-RecoSkim2016_2016B_VdMScan_MB1_v1-958277e0fa44e2e92209aae3b47c3ed2/USER'
+    config.Data.inputDataset = '/L1MinimumBias1/davidlw-RecoSkim2016_2016B_VdMScan_MB1_v3-958277e0fa44e2e92209aae3b47c3ed2/USER'
     config.Data.outputDatasetTag = 'pp13TeV_VdM2016_cumulants_2sub_mb1_sc_v1'
     submit(config)
 
     config.General.requestName = 'VdM2016_pp13TeV_cumulants_2sub_mb2_sc_v1'
-    config.Data.inputDataset = '/L1MinimumBias2/davidlw-RecoSkim2016_2016B_VdMScan_MB2_v1-958277e0fa44e2e92209aae3b47c3ed2/USER'
+    config.Data.inputDataset = '/L1MinimumBias2/davidlw-RecoSkim2016_2016B_VdMScan_MB2_v3-958277e0fa44e2e92209aae3b47c3ed2/USER'
     config.Data.outputDatasetTag = 'pp13TeV_VdM2016_cumulants_2sub_mb2_sc_v1'
     submit(config)
 
     config.General.requestName = 'VdM2016_pp13TeV_cumulants_2sub_mb3_sc_v1'
-    config.Data.inputDataset = '/L1MinimumBias3/davidlw-RecoSkim2016_2016B_VdMScan_MB3_v1-958277e0fa44e2e92209aae3b47c3ed2/USER'
+    config.Data.inputDataset = '/L1MinimumBias3/davidlw-RecoSkim2016_2016B_VdMScan_MB3_v3-958277e0fa44e2e92209aae3b47c3ed2/USER'
     config.Data.outputDatasetTag = 'pp13TeV_VdM2016_cumulants_2sub_mb3_sc_v1'
     submit(config)
 
     config.General.requestName = 'VdM2016_pp13TeV_cumulants_2sub_mb4_sc_v1'
-    config.Data.inputDataset = '/L1MinimumBias4/davidlw-RecoSkim2016_2016B_VdMScan_MB4_v1-958277e0fa44e2e92209aae3b47c3ed2/USER'
+    config.Data.inputDataset = '/L1MinimumBias4/davidlw-RecoSkim2016_2016B_VdMScan_MB4_v3-958277e0fa44e2e92209aae3b47c3ed2/USER'
     config.Data.outputDatasetTag = 'pp13TeV_VdM2016_cumulants_2sub_mb4_sc_v1'
     submit(config)
 
     config.General.requestName = 'VdM2016_pp13TeV_cumulants_2sub_mb5_sc_v1'
-    config.Data.inputDataset = '/L1MinimumBias5/davidlw-RecoSkim2016_2016B_VdMScan_MB5_v1-958277e0fa44e2e92209aae3b47c3ed2/USER'
+    config.Data.inputDataset = '/L1MinimumBias5/davidlw-RecoSkim2016_2016B_VdMScan_MB5_v3-958277e0fa44e2e92209aae3b47c3ed2/USER'
     config.Data.outputDatasetTag = 'pp13TeV_VdM2016_cumulants_2sub_mb5_sc_v1'
     submit(config)
 
     config.General.requestName = 'VdM2016_pp13TeV_cumulants_2sub_mb6_sc_v1'
-    config.Data.inputDataset = '/L1MinimumBias6/davidlw-RecoSkim2016_2016B_VdMScan_MB6_v1-958277e0fa44e2e92209aae3b47c3ed2/USER'
+    config.Data.inputDataset = '/L1MinimumBias6/davidlw-RecoSkim2016_2016B_VdMScan_MB6_v3-958277e0fa44e2e92209aae3b47c3ed2/USER'
     config.Data.outputDatasetTag = 'pp13TeV_VdM2016_cumulants_2sub_mb6_sc_v1'
     submit(config)
 
     config.General.requestName = 'VdM2016_pp13TeV_cumulants_2sub_mb7_sc_v1'
-    config.Data.inputDataset = '/L1MinimumBias7/davidlw-RecoSkim2016_2016B_VdMScan_MB7_v1-958277e0fa44e2e92209aae3b47c3ed2/USER'
+    config.Data.inputDataset = '/L1MinimumBias7/davidlw-RecoSkim2016_2016B_VdMScan_MB7_v3-958277e0fa44e2e92209aae3b47c3ed2/USER'
     config.Data.outputDatasetTag = 'pp13TeV_VdM2016_cumulants_2sub_mb7_sc_v1'
     submit(config)
 
     config.General.requestName = 'VdM2016_pp13TeV_cumulants_2sub_mb8_sc_v1'
-    config.Data.inputDataset = '/L1MinimumBias8/davidlw-RecoSkim2016_2016B_VdMScan_MB8_v1-958277e0fa44e2e92209aae3b47c3ed2/USER'
+    config.Data.inputDataset = '/L1MinimumBias8/davidlw-RecoSkim2016_2016B_VdMScan_MB8_v3-958277e0fa44e2e92209aae3b47c3ed2/USER'
     config.Data.outputDatasetTag = 'pp13TeV_VdM2016_cumulants_2sub_mb8_sc_v1'
     submit(config)
 
     config.General.requestName = 'VdM2016_pp13TeV_cumulants_2sub_mb9_sc_v1'
-    config.Data.inputDataset = '/L1MinimumBias9/davidlw-RecoSkim2016_2016B_VdMScan_MB9_v1-958277e0fa44e2e92209aae3b47c3ed2/USER'
+    config.Data.inputDataset = '/L1MinimumBias9/davidlw-RecoSkim2016_2016B_VdMScan_MB9_v3-958277e0fa44e2e92209aae3b47c3ed2/USER'
     config.Data.outputDatasetTag = 'pp13TeV_VdM2016_cumulants_2sub_mb9_sc_v1'
     submit(config)
 
