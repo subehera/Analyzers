@@ -1,6 +1,6 @@
 #!/bin/bash
 
-for i in `ls -d CumulantHM/*2sub*`
+for i in `ls -d Cumulant*/*`
 do
 
    echo " " 
