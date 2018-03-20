@@ -18,8 +18,12 @@ namespace jacksub
       std::vector<TString> brnames;
       brnames.push_back(Form("%sC%d%d%d_17",  suffix.c_str(), harm0, harm0, 2));
       brnames.push_back(Form("%sC%d%d%d_51",  suffix.c_str(), harm0, harm1, 4));
-      brnames.push_back(Form("%sC%d%d%d_119", suffix.c_str(), harm0, harm1, 6));
-      brnames.push_back(Form("%sC%d%d%d",     suffix.c_str(), harm0, harm1, 8));
+
+      if( harm0 == harm1 )
+      {
+         brnames.push_back(Form("%sC%d%d%d_119", suffix.c_str(), harm0, harm1, 6));
+         brnames.push_back(Form("%sC%d%d%d",     suffix.c_str(), harm0, harm1, 8));
+      }
 
       if( ( nsub <= 2 && harm0 != harm1 ) || ( nsub > 2 ) )
       {
@@ -66,6 +70,8 @@ namespace jacksub
    {
       LOG_S(INFO) << "Trying to get branch 'Noff'";
 
+      ch->SetBranchStatus("*", 0);
+      ch->SetBranchStatus("Noff", 1);
       if(!ch->GetBranch("Noff"))
       {
          LOG_S(ERROR) << "Branch 'Noff' does not exist!!! Code stopped";
@@ -77,6 +83,7 @@ namespace jacksub
          ch->SetBranchAddress("Noff", &noff);
       }
       LOG_S(INFO) << "Trying to get branch 'Mult'";
+      ch->SetBranchStatus("Mult", 1);
       if(!ch->GetBranch("Mult"))
       {
          LOG_S(ERROR) << "Branch 'Mult' does not exist!!! Code stopped";
@@ -94,6 +101,7 @@ namespace jacksub
       for(int ibr = 0; ibr < static_cast<int>(brnames.size()); ibr++)
       {
          LOG_S(INFO) << "Trying to get branch '" << brnames[ibr].Data() << "'"; 
+         ch->SetBranchStatus(brnames[ibr].Data(), 1);
          if(!ch->GetBranch(brnames[ibr]))
          {
             LOG_S(ERROR) << "Branch '" << brnames[ibr] << "' does not exist!!! Code stopped";
@@ -105,6 +113,7 @@ namespace jacksub
             ch->SetBranchAddress(brnames[ibr], &CNM[ibr]);
          }
          LOG_S(INFO) << "Trying to get branch '" << wbrnames[ibr].Data() << "'";
+         ch->SetBranchStatus(wbrnames[ibr].Data(), 1);
          if(!ch->GetBranch(wbrnames[ibr]))
          {
             LOG_S(ERROR) << "Branch '" << wbrnames[ibr].Data() << "' does not exist!!! Code stopped";
@@ -213,16 +222,16 @@ namespace jacksub
       while ( (ch->GetEntry(ievt) && ievt <= analyzedEvts) ||
               (ch->GetEntry(ievt) && analyzedEvts == -1)      ) 
       {
-         if(!(ievt%1000))
-         {
-            std::cout << 
-            "\rievt = " << ievt 
-            <<
-            ", tree number = " << ch->GetTreeNumber()
-            <<
-            " ~~~> " << std::setprecision(3) << (static_cast<double>(ch->GetTreeNumber())/static_cast<double>(ntrees))*100.  << " %" 
-            << std::flush;
-         }
+         //if(!(ievt%1000))
+         //{
+         //   std::cout << 
+         //   "\rievt = " << ievt 
+         //   <<
+         //   ", tree number = " << ch->GetTreeNumber()
+         //   <<
+         //   " ~~~> " << std::setprecision(3) << (static_cast<double>(ch->GetTreeNumber())/static_cast<double>(ntrees))*100.  << " %" 
+         //   << std::flush;
+         //}
         
          //Skip event if out of range
          if(noff < noffmin || noff >= noffmax)
@@ -355,11 +364,13 @@ namespace jacksub
            int analyzedEvts, int nsub,
            int nSubSamp) 
    {
-      LOG_S(INFO) << "~~~~ Processing to sub sample resampling now ~~~~";
+      LOG_S(INFO) << "~~~~ Processing to jacknife sub sample resampling now ~~~~";
       LOG_S(INFO) << "Number of trees in the TChain: " << ch->GetNtrees();
       LOG_S(INFO) << "Maximum cumulant order to be computed: " << cumumaxorder;
+      LOG_S(INFO) << "Number of sub-events: " << nSubSamp;
 
-      int nbranches = ch->GetNbranches();
+      //int nbranches = ch->GetNbranches();
+      int nbranches = 10;
       LOG_S(INFO) << "Number of branches in TTrees: "<< nbranches;
 
       //init vectors
@@ -541,7 +552,7 @@ namespace jacksub
       LOG_S(INFO) << "Calculation done";
 
       LOG_S(INFO) << "Filling Histograms with errors";
-      double scale = (double) (nSubSamp-1.) / (double) nSubSamp;
+      double scale = (double) nSubSamp / (double) (nSubSamp-1.);
       for(int iord = 0; iord < hcN.size(); ++iord)
       {
         for(int ibin = 0; ibin < hcN[iord]->GetNbinsX(); ++ibin)
@@ -592,55 +603,55 @@ namespace jacksub
        LOG_S(INFO) << "Histograms are written";
 
        // -- Free memory from huge vectors
-       for(int i = 0; i < qNM.size(); ++i)
-       {
-          for(int j = 0; j < qNM[i].size(); ++j)
-          {
-             for(int k = 0; k < qNM[i][j].size(); ++j)
-             {
-                qNM[i][j][k].clear();
-                wqNM[i][j][k].clear();
-             }
-             qNM[i][j].clear();
-             wqNM[i][j].clear();
-          }
-          qNM[i].clear();
-          wqNM[i].clear();
-       }
-       qNM.clear();
-       wqNM.clear();
-       std::vector< std::vector< std::vector< std::vector<double> > > >().swap(qNM);       
-       std::vector< std::vector< std::vector< std::vector<double> > > >().swap(wqNM);
+       //for(int i = 0; i < qNM.size(); ++i)
+       //{
+       //   for(int j = 0; j < qNM[i].size(); ++j)
+       //   {
+       //      for(int k = 0; k < qNM[i][j].size(); ++j)
+       //      {
+       //         qNM[i][j][k].clear();
+       //         wqNM[i][j][k].clear();
+       //      }
+       //      qNM[i][j].clear();
+       //      wqNM[i][j].clear();
+       //   }
+       //   qNM[i].clear();
+       //   wqNM[i].clear();
+       //}
+       //qNM.clear();
+       //wqNM.clear();
+       //std::vector< std::vector< std::vector< std::vector<double> > > >().swap(qNM);       
+       //std::vector< std::vector< std::vector< std::vector<double> > > >().swap(wqNM);
 
-       for(int i = 0; i < cNM.size(); ++i)
-       {
-         for(int j = 0; j < cNM[i].size(); ++j)
-         {
-           cNM[i][j].clear();
-           wcNM[i][j].clear();
-         }
-         cNM[i].clear();
-         wcNM[i].clear();
-       }
-       cNM.clear();
-       wcNM.clear();
-       std::vector< std::vector< std::vector<double> > >().swap(cNM);       
-       std::vector< std::vector< std::vector<double> > >().swap(wcNM); 
+       //for(int i = 0; i < cNM.size(); ++i)
+       //{
+       //  for(int j = 0; j < cNM[i].size(); ++j)
+       //  {
+       //    cNM[i][j].clear();
+       //    wcNM[i][j].clear();
+       //  }
+       //  cNM[i].clear();
+       //  wcNM[i].clear();
+       //}
+       //cNM.clear();
+       //wcNM.clear();
+       //std::vector< std::vector< std::vector<double> > >().swap(cNM);       
+       //std::vector< std::vector< std::vector<double> > >().swap(wcNM); 
 
-       for(int i = 0; i < cNMreb.size(); ++i)
-       {
-         for(int j = 0; j < cNMreb[i].size(); ++j)
-         {
-           cNMreb[i][j].clear();
-           wcNMreb[i][j].clear();
-         }
-         cNMreb[i].clear();
-         wcNMreb[i].clear();
-       }
-       cNMreb.clear();
-       wcNMreb.clear();
-       std::vector< std::vector< std::vector<double> > >().swap(cNMreb);       
-       std::vector< std::vector< std::vector<double> > >().swap(wcNMreb); 
+       //for(int i = 0; i < cNMreb.size(); ++i)
+       //{
+       //  for(int j = 0; j < cNMreb[i].size(); ++j)
+       //  {
+       //    cNMreb[i][j].clear();
+       //    wcNMreb[i][j].clear();
+       //  }
+       //  cNMreb[i].clear();
+       //  wcNMreb[i].clear();
+       //}
+       //cNMreb.clear();
+       //wcNMreb.clear();
+       //std::vector< std::vector< std::vector<double> > >().swap(cNMreb);       
+       //std::vector< std::vector< std::vector<double> > >().swap(wcNMreb); 
    }
 }
 

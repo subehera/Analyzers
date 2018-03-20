@@ -107,11 +107,11 @@ void cumulant(const std::vector< std::vector< std::vector<double> > > &qNM,
       switch(order)
       {
          case 0:
-            if( wqNM[4][inoff][iref] != 0. )
+            if( wqNM[2][inoff][iref] != 0. )
             {
-               cNM[order][inoff]  += ( qNM[4][inoff][iref] / wqNM[4][inoff][iref] ) // <<2>>_33 not really useful in the case of symmetic cumulant
-                                      *wqNM[4][inoff][iref];
-               wcNM[order][inoff] += wqNM[4][inoff][iref];
+               cNM[order][inoff]  += ( qNM[2][inoff][iref] / wqNM[2][inoff][iref] ) // <<2>>_33 not really useful in the case of symmetic cumulant
+                                      *wqNM[2][inoff][iref];
+               wcNM[order][inoff] += wqNM[2][inoff][iref];
             }
             break;
          case 1:
@@ -119,7 +119,7 @@ void cumulant(const std::vector< std::vector< std::vector<double> > > &qNM,
             {
                cNM[order][inoff]  += ( qNM[1][inoff][iref] / wqNM[1][inoff][iref] -  // <<4>>-<<34>>*<<17>>
                                        qNM[0][inoff][iref] / wqNM[0][inoff][iref]
-                                      *qNM[6][inoff][iref] / wqNM[6][inoff][iref]
+                                      *qNM[4][inoff][iref] / wqNM[4][inoff][iref]
                                       )
                                       *wqNM[1][inoff][iref];
                wcNM[order][inoff] += wqNM[1][inoff][iref];
@@ -454,9 +454,9 @@ void uncumulant(const std::vector< std::vector< std::vector<double> > > &qNM,
          case 0:
             if( wqNM[4][inoff][iref] != 0. )
             {
-               cNM[order][inoff]  -= ( qNM[4][inoff][iref] / wqNM[4][inoff][iref] ) // <<2>>_33 not really useful in the case of symmetic cumulant
-                                      *wqNM[4][inoff][iref];
-               wcNM[order][inoff] -= wqNM[4][inoff][iref];
+               cNM[order][inoff]  -= ( qNM[2][inoff][iref] / wqNM[2][inoff][iref] ) // <<2>>_33 not really useful in the case of symmetic cumulant
+                                      *wqNM[2][inoff][iref];
+               wcNM[order][inoff] -= wqNM[2][inoff][iref];
             }
             break;
          case 1:
@@ -464,7 +464,7 @@ void uncumulant(const std::vector< std::vector< std::vector<double> > > &qNM,
             {
                cNM[order][inoff]  -= ( qNM[1][inoff][iref] / wqNM[1][inoff][iref] -  // <<4>>-<<33>>*<<18>>-<<34>>*<<17>>
                                        qNM[0][inoff][iref] / wqNM[0][inoff][iref]
-                                      *qNM[6][inoff][iref] / wqNM[6][inoff][iref]
+                                      *qNM[4][inoff][iref] / wqNM[4][inoff][iref]
                                       )
                                       *wqNM[1][inoff][iref];
                wcNM[order][inoff] -= wqNM[1][inoff][iref];

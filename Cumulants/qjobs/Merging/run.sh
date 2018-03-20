@@ -65,7 +65,7 @@ eval `scramv1 runtime -sh`
 
 cd $OUT_DIR
 mkdir "${PD}_${nsub}_v${version}"
-OUT_MERGED="$OUT_DIR/${PD}_${nsub}_v${version}"
+OUT_MERGED=$OUT_DIR/${PD}_${nsub}_v${version}
 
 tdir=`mktemp -d`
 echo $tdir
@@ -79,15 +79,27 @@ cd $tdir
 iter=0
 nmerge=0
 j=""
+
+if test -z "$trg"; then
+   ls ${DATA_DIR}/${PD}/*${trg}*${nsub}*_v${version}/*/*/*.root >> processedfiles_${PD}_MB_${nsub}_v${version}.txt
+else
+   ls ${DATA_DIR}/${PD}/*${trg}*${nsub}*_v${version}/*/*/*.root >> processedfiles_${PD}_${trg}_${nsub}_v${version}.txt
+fi
+
 for i in `ls ${DATA_DIR}/${PD}/*${trg}*${nsub}*_v${version}/*/*/*.root`
 do
    j="$j $i"
    iter=$((iter+1))
 
    if [ $iter -gt 10 ]; then
-      echo "hadd -O cumulant_${system}_${PD}_${trg}_${nsub}_v${version}_submerging${nmerge}.root$j"
-      hadd -O cumulant_${system}_${PD}_${trg}_${nsub}_v${version}_submerging${nmerge}.root$j
-      mv cumulant_${system}_${PD}_${trg}_${nsub}_v${version}_submerging${nmerge}.root ${OUT_MERGED}
+      outfilesub="cumulant_${system}_${PD}_${trg}_${nsub}_v${version}_submerging${nmerge}.root"
+      if test -z "$trg"; then
+         outfilesub="cumulant_${system}_${PD}_MB_${nsub}_v${version}_submerging${nmerge}.root"
+      fi
+
+      echo "hadd -O ${outfilesub}$j"
+      hadd -O ${outfilesub}$j
+      mv  ${outfilesub} ${OUT_MERGED}
       echo ""
       iter=0
       nmerge=$((nmerge+1))
@@ -95,9 +107,15 @@ do
    fi
 done
 
-echo "hadd -O cumulant_${system}_${PD}_${trg}_${nsub}_v${version}_submerging${nmerge}.root$j"
-hadd -O cumulant_${system}_${PD}_${trg}_${nsub}_v${version}_submerging${nmerge}.root$j 
-mv cumulant_${system}_${PD}_${trg}_${nsub}_v${version}_submerging${nmerge}.root ${OUT_MERGED}
+outfilesub="cumulant_${system}_${PD}_${trg}_${nsub}_v${version}_submerging${nmerge}.root"
+if test -z "$trg"; then
+   outfilesub="cumulant_${system}_${PD}_MB_${nsub}_v${version}_submerging${nmerge}.root"
+fi
+
+echo "hadd -O ${outfilesub}$j"
+hadd -O ${outfilesub}$j 
+mv  ${outfilesub} ${OUT_MERGED}
+
 echo ""
 
 
@@ -108,14 +126,21 @@ echo ""
 iter=0
 nmerge=0
 j=""
-for i in `ls ${OUT_MERGED}/cumulant_${system}_${PD}_${trg}_${nsub}_v${version}_submerging*.root`
+
+for i in `ls ${OUT_MERGED}/cumulant_${system}_${PD}*_${nsub}_v${version}_submerging*.root`
 do
    j="$j $i"
    iter=$((iter+1))
 
    if [ $iter -gt 10 ]; then
-      echo "hadd -O cumulant_${system}_${PD}_${trg}_${nsub}_v${version}_macromerging${nmerge}.root$j"
-      hadd -O cumulant_${system}_${PD}_${trg}_${nsub}_v${version}_macromerging${nmerge}.root$j
+      outfilemacro="cumulant_${system}_${PD}_${trg}_${nsub}_v${version}_macromerging${nmerge}.root"
+      if test -z "$trg"; then
+         outfilemacro="cumulant_${system}_${PD}_MB_${nsub}_v${version}_macromerging${nmerge}.root"
+      fi
+
+      echo "hadd -O ${outfilemacro}$j"
+      hadd -O ${outfilemacro}$j
+      mv  ${outfilemacro} ${OUT_MERGED}
       echo ""
       iter=0
       nmerge=$((nmerge+1))
@@ -123,20 +148,42 @@ do
    fi
 done
 
-echo "hadd -O cumulant_${system}_${PD}_${trg}_${nsub}_v${version}_macromerging${nmerge}.root$j"
-hadd -O cumulant_${system}_${PD}_${trg}_${nsub}_v${version}_macromerging${nmerge}.root$j 
-mv cumulant_${system}_${PD}_${trg}_${nsub}_v${version}_macromerging${nmerge}.root ${OUT_MERGED}
-echo ""
+outfilemacro="cumulant_${system}_${PD}_${trg}_${nsub}_v${version}_macromerging${nmerge}.root"
+if test -z "$trg"; then
+   outfilemacro="cumulant_${system}_${PD}_MB_${nsub}_v${version}_macromerging${nmerge}.root"
+fi
 
-rm ${OUT_MERGED}/cumulant_${system}_${PD}_${trg}_${nsub}_v${version}_submerging*.root
+echo "hadd -O ${outfilemacro}$j"
+hadd -O ${outfilemacro}$j 
+mv  ${outfilemacro} ${OUT_MERGED}
 
-#####
-##### Final merging in group of 10 ####
-#####
+if test -z "$trg"; then
+   rm ${OUT_MERGED}/cumulant_${system}_${PD}_MB_${nsub}_v${version}_submerging*.root
+else
+   rm ${OUT_MERGED}/cumulant_${system}_${PD}_${trg}_${nsub}_v${version}_submerging*.root
+fi
 
-hadd -O cumulant_${system}_${PD}_${trg}_${nsub}_v${version}_final.root ${OUT_MERGED}/cumulant_${system}_${PD}_${trg}_${nsub}_v${version}_macromerging*.root
-mv cumulant_${system}_${PD}_${trg}_${nsub}_v${version}_final.root ${OUT_MERGED}
-rm ${OUT_MERGED}/cumulant_${system}_${PD}_${trg}_${nsub}_v${version}_macromerging*.root
+####
+#### Final merging in group of 10 ####
+####
+
+outputfinal="cumulant_${system}_${PD}_${trg}_${nsub}_v${version}_final.root"
+if test -z "$trg"; then
+   outputfinal="cumulant_${system}_${PD}_MB_${nsub}_v${version}_final.root"
+fi
+
+echo "hadd -O ${outputfinal} ${OUT_MERGED}/cumulant_${system}_${PD}*_${nsub}_v${version}_macromerging*.root" 
+hadd -O ${outputfinal} ${OUT_MERGED}/cumulant_${system}_${PD}*_${nsub}_v${version}_macromerging*.root
+
+echo "mv ${outputfinal} ${OUT_MERGED}" 
+mv ${outputfinal} ${OUT_MERGED}
+mv processedfiles_${PD}_*_${nsub}_v${version}.txt ${OUT_MERGED}
+
+if test -z "$trg"; then
+   rm ${OUT_MERGED}/cumulant_${system}_${PD}_MB_${nsub}_v${version}_macromerging*.root
+else
+   rm ${OUT_MERGED}/cumulant_${system}_${PD}_${trg}_${nsub}_v${version}_macromerging*.root
+fi
 
 echo "Content of tmp dir folder: "
 echo $tdir

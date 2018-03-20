@@ -14,8 +14,12 @@ namespace utils
       std::vector<TString> brnames;
       brnames.push_back(Form("%sC%d%d%d_17",  suffix.c_str(), harm0, harm0, 2));
       brnames.push_back(Form("%sC%d%d%d_51",  suffix.c_str(), harm0, harm1, 4));
-      brnames.push_back(Form("%sC%d%d%d_119", suffix.c_str(), harm0, harm1, 6));
-      brnames.push_back(Form("%sC%d%d%d",     suffix.c_str(), harm0, harm1, 8));
+
+      if( harm0 == harm1 )
+      {
+         brnames.push_back(Form("%sC%d%d%d_119", suffix.c_str(), harm0, harm1, 6));
+         brnames.push_back(Form("%sC%d%d%d",     suffix.c_str(), harm0, harm1, 8));
+      }
 
       if( ( nsub <= 2 && harm0 != harm1 ) || ( nsub > 2 ) )
       {
@@ -62,6 +66,8 @@ namespace utils
    {
       LOG_S(INFO) << "Trying to get branch 'Noff'";
 
+      ch->SetBranchStatus("*", 0);
+      ch->SetBranchStatus("Noff", 1);
       if(!ch->GetBranch("Noff"))
       {
          LOG_S(ERROR) << "Branch 'Noff' does not exist!!! Code stopped";
@@ -73,6 +79,7 @@ namespace utils
          ch->SetBranchAddress("Noff", &noff);
       }
       LOG_S(INFO) << "Trying to get branch 'Mult'";
+      ch->SetBranchStatus("Mult", 1);
       if(!ch->GetBranch("Mult"))
       {
          LOG_S(ERROR) << "Branch 'Mult' does not exist!!! Code stopped";
@@ -87,9 +94,11 @@ namespace utils
       std::vector<TString> brnames  = SetupBranchName(harm0, harm1, nsub);
       std::vector<TString> wbrnames = SetupBranchName(harm0, harm1, nsub, "w");
 
+
       for(int ibr = 0; ibr < static_cast<int>(brnames.size()); ibr++)
       {
          LOG_S(INFO) << "Trying to get branch '" << brnames[ibr].Data() << "'"; 
+         ch->SetBranchStatus(brnames[ibr].Data(), 1);
          if(!ch->GetBranch(brnames[ibr]))
          {
             LOG_S(ERROR) << "Branch '" << brnames[ibr] << "' does not exist!!! Code stopped";
@@ -101,6 +110,7 @@ namespace utils
             ch->SetBranchAddress(brnames[ibr], &CNM[ibr]);
          }
          LOG_S(INFO) << "Trying to get branch '" << wbrnames[ibr].Data() << "'";
+         ch->SetBranchStatus(wbrnames[ibr].Data(), 1);
          if(!ch->GetBranch(wbrnames[ibr]))
          {
             LOG_S(ERROR) << "Branch '" << wbrnames[ibr].Data() << "' does not exist!!! Code stopped";
@@ -154,10 +164,11 @@ namespace utils
 
       // Loop over events
       int ievt = 0;
+      //int nevt = ch->GetEntriesFast();
       while ( (ch->GetEntry(ievt) && ievt <= analyzedEvts) ||
               (ch->GetEntry(ievt) && analyzedEvts == -1)      ) 
       {
-         if(!(ievt%1000))
+         if(!(ievt%10000000))
          {
             std::cout << 
             "\rievt = " << ievt 
@@ -166,6 +177,13 @@ namespace utils
             <<
             " ~~~> " << std::setprecision(3) << (static_cast<double>(ch->GetTreeNumber())/static_cast<double>(ntrees))*100.  << " %" 
             << std::flush;
+            //std::cout << 
+            //"\rievt = " << ievt 
+            //<<
+            //", nevt = " << nevt
+            //<<
+            //" ~~~> " << std::setprecision(3) << (static_cast<double>(ievt)/static_cast<double>(nevt))*100.  << " %" 
+            //<< std::flush;
          }
         
          //Skip event if out of range
@@ -339,9 +357,13 @@ namespace utils
            int analyzedEvts, int nsub) 
    {
       LOG_S(INFO) << "Number of trees in the TChain: " << ch->GetNtrees();
+      //if ( ch->GetNtrees() == 1 ) 
+      //   LOG_S(INFO) << "Number of events: " << ch->GetEntriesFast();
+      //LOG_S(INFO) << "Number of events: " << ch->GetEntries();
       LOG_S(INFO) << "Maximum cumulant order to be computed: " << cumumaxorder;
 
-      int nbranches = ch->GetNbranches();
+      //int nbranches = ch->GetNbranches();
+      int nbranches = 10;
       LOG_S(INFO) << "Number of branches in TTrees: "<< nbranches;
 
       //init vectors

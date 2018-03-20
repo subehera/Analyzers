@@ -18,8 +18,12 @@ namespace jacknife
       std::vector<TString> brnames;
       brnames.push_back(Form("%sC%d%d%d_17",  suffix.c_str(), harm0, harm0, 2));
       brnames.push_back(Form("%sC%d%d%d_51",  suffix.c_str(), harm0, harm1, 4));
-      brnames.push_back(Form("%sC%d%d%d_119", suffix.c_str(), harm0, harm1, 6));
-      brnames.push_back(Form("%sC%d%d%d",     suffix.c_str(), harm0, harm1, 8));
+
+      if( harm0 == harm1 )
+      {
+         brnames.push_back(Form("%sC%d%d%d_119", suffix.c_str(), harm0, harm1, 6));
+         brnames.push_back(Form("%sC%d%d%d",     suffix.c_str(), harm0, harm1, 8));
+      }
 
       if( ( nsub <= 2 && harm0 != harm1 ) || ( nsub > 2 ) )
       {
@@ -66,6 +70,8 @@ namespace jacknife
    {
       LOG_S(INFO) << "Trying to get branch 'Noff'";
 
+      ch->SetBranchStatus("*", 0);
+      ch->SetBranchStatus("Noff", 1);
       if(!ch->GetBranch("Noff"))
       {
          LOG_S(ERROR) << "Branch 'Noff' does not exist!!! Code stopped";
@@ -77,6 +83,7 @@ namespace jacknife
          ch->SetBranchAddress("Noff", &noff);
       }
       LOG_S(INFO) << "Trying to get branch 'Mult'";
+      ch->SetBranchStatus("Mult", 1);
       if(!ch->GetBranch("Mult"))
       {
          LOG_S(ERROR) << "Branch 'Mult' does not exist!!! Code stopped";
@@ -94,6 +101,7 @@ namespace jacknife
       for(int ibr = 0; ibr < static_cast<int>(brnames.size()); ibr++)
       {
          LOG_S(INFO) << "Trying to get branch '" << brnames[ibr].Data() << "'"; 
+         ch->SetBranchStatus(brnames[ibr].Data(), 1);
          if(!ch->GetBranch(brnames[ibr]))
          {
             LOG_S(ERROR) << "Branch '" << brnames[ibr] << "' does not exist!!! Code stopped";
@@ -105,6 +113,7 @@ namespace jacknife
             ch->SetBranchAddress(brnames[ibr], &CNM[ibr]);
          }
          LOG_S(INFO) << "Trying to get branch '" << wbrnames[ibr].Data() << "'";
+         ch->SetBranchStatus(wbrnames[ibr].Data(), 1);
          if(!ch->GetBranch(wbrnames[ibr]))
          {
             LOG_S(ERROR) << "Branch '" << wbrnames[ibr].Data() << "' does not exist!!! Code stopped";
@@ -253,16 +262,16 @@ namespace jacknife
       while ( (ch->GetEntry(ievt) && ievt <= analyzedEvts) ||
               (ch->GetEntry(ievt) && analyzedEvts == -1)      ) 
       {
-         if(!(ievt%1000))
-         {
-            std::cout << 
-            "\rievt = " << ievt 
-            <<
-            ", tree number = " << ch->GetTreeNumber()
-            <<
-            " ~~~> " << std::setprecision(3) << (static_cast<double>(ch->GetTreeNumber())/static_cast<double>(ntrees))*100.  << " %" 
-            << std::flush;
-         }
+         //if(!(ievt%1000))
+         //{
+         //   std::cout << 
+         //   "\rievt = " << ievt 
+         //   <<
+         //   ", tree number = " << ch->GetTreeNumber()
+         //   <<
+         //   " ~~~> " << std::setprecision(3) << (static_cast<double>(ch->GetTreeNumber())/static_cast<double>(ntrees))*100.  << " %" 
+         //   << std::flush;
+         //}
         
          //Skip event if out of range
          if(noff < noffmin || noff >= noffmax)
@@ -410,7 +419,8 @@ namespace jacknife
       LOG_S(INFO) << "Number of trees in the TChain: " << ch->GetNtrees();
       LOG_S(INFO) << "Maximum cumulant order to be computed: " << cumumaxorder;
 
-      int nbranches = ch->GetNbranches();
+      //int nbranches = ch->GetNbranches();
+      int nbranches = 10;
       LOG_S(INFO) << "Number of branches in TTrees: "<< nbranches;
 
       //init vectors

@@ -18,8 +18,12 @@ namespace subsample
       std::vector<TString> brnames;
       brnames.push_back(Form("%sC%d%d%d_17",  suffix.c_str(), harm0, harm0, 2));
       brnames.push_back(Form("%sC%d%d%d_51",  suffix.c_str(), harm0, harm1, 4));
-      brnames.push_back(Form("%sC%d%d%d_119", suffix.c_str(), harm0, harm1, 6));
-      brnames.push_back(Form("%sC%d%d%d",     suffix.c_str(), harm0, harm1, 8));
+
+      if( harm0 == harm1 )
+      {
+         brnames.push_back(Form("%sC%d%d%d_119", suffix.c_str(), harm0, harm1, 6));
+         brnames.push_back(Form("%sC%d%d%d",     suffix.c_str(), harm0, harm1, 8));
+      }
 
       if( ( nsub <= 2 && harm0 != harm1 ) || ( nsub > 2 ) )
       {
@@ -213,16 +217,16 @@ namespace subsample
       while ( (ch->GetEntry(ievt) && ievt <= analyzedEvts) ||
               (ch->GetEntry(ievt) && analyzedEvts == -1)      ) 
       {
-         if(!(ievt%1000))
-         {
-            std::cout << 
-            "\rievt = " << ievt 
-            <<
-            ", tree number = " << ch->GetTreeNumber()
-            <<
-            " ~~~> " << std::setprecision(3) << (static_cast<double>(ch->GetTreeNumber())/static_cast<double>(ntrees))*100.  << " %" 
-            << std::flush;
-         }
+         //if(!(ievt%1000))
+         //{
+         //   std::cout << 
+         //   "\rievt = " << ievt 
+         //   <<
+         //   ", tree number = " << ch->GetTreeNumber()
+         //   <<
+         //   " ~~~> " << std::setprecision(3) << (static_cast<double>(ch->GetTreeNumber())/static_cast<double>(ntrees))*100.  << " %" 
+         //   << std::flush;
+         //}
         
          //Skip event if out of range
          if(noff < noffmin || noff >= noffmax)
