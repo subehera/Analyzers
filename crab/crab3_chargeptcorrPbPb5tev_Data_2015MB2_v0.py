@@ -18,5 +18,6 @@ config.Data.inputDBS = 'global'
 config.Data.splitting = 'LumiBased'
 config.Data.unitsPerJob = 10
 config.Data.outLFNDirBase = '/store/user/%s/' % (getUsernameFromSiteDB())
+#config.Data.outLFNDirBase = '/store/user/subehera/' 
 config.Data.publication = False
-config.Site.storageSite = 'T2_CH_CERN'
+config.Site.storageSite = 'T2_IN_TIFR'

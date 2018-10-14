@@ -21,7 +21,7 @@ process.maxEvents = cms.untracked.PSet(
 # Define the input file to run on in interactive mode
 process.source = cms.Source("PoolSource",
     fileNames = cms.untracked.vstring(
-        'root://cms-xrd-global.cern.ch//store/hidata/HIRun2015/HIMinimumBias2/AOD/25Aug2016-v1/90000/34CD034C-ED6F-E611-A55F-44A842124E15.root'
+        'root://cms-xrd-global.cern.ch//store/hidata/HIRun2013/HIMinimumBias2/AOD/25Aug2016-v1/90000/34CD034C-ED6F-E611-A55F-44A842124E15.root'
     )
 )
 

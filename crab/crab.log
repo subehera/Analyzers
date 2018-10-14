@@ -1,0 +1,345 @@
+DEBUG 2018-10-13 18:26:00,428: 	 Executing command: 'submit'
+DEBUG 2018-10-13 18:26:00,429: 	 Could not find CRAB cache file /afs/cern.ch/user/s/subehera/.crab3; creating a new one.
+DEBUG 2018-10-13 18:26:00,440: 	 Checking credentials
+DEBUG 2018-10-13 18:26:00,441: 	 Found proxy file /tmp/x509up_u118183
+DEBUG 2018-10-13 18:26:00,441: 	 Getting proxy life time left
+DEBUG 2018-10-13 18:26:01,247: 	 Executing : 
+ command : voms-proxy-info -file /tmp/x509up_u118183 -timeleft
+ output : 42148
+
+ error: 
+ retcode : 0
+DEBUG 2018-10-13 18:26:02,156: 	 Executing : 
+ command : voms-proxy-info -file /tmp/x509up_u118183 -actimeleft
+ output : 42147
+
+ error: 
+ retcode : 0
+DEBUG 2018-10-13 18:26:02,156: 	 Proxy valid for 11:42:28 hours
+INFO 2018-10-13 18:26:02,156: 	 Will use CRAB configuration file crab3_chargeptcorrPbPb5tev_Data_2015MB2_v0.py
+DEBUG 2018-10-13 18:26:02,157: 	 Loading CRAB configuration file.
+ERROR 2018-10-13 18:26:07,919: 	 Error while loading CRAB configuration:
+Failed to retrieve username from SiteDB. Your DN does not seem to be registered in SiteDB.
+Details follow:
+  Executed command: curl -s --capath /etc/grid-security/certificates --cert /tmp/x509up_u118183 --key /tmp/x509up_u118183 'https://cmsweb.cern.ch/sitedb/data/prod/whoami'
+    Stdout:
+      {"result": [
+       {"dn": "/DC=IN/DC=GARUDAINDIA/O=C-DAC/OU=CTSF/CN=Subash Chandra Behera (subash.chandra.behera@cern.ch)", "login": null, "method": "X509Proxy", "roles": {}, "name": null}
+      ]}
+      
+    Parsed username: null
+Note: Make sure you have the correct certificate mapped in SiteDB (you can check what is the certificate you currently have mapped in SiteDB by searching for your name in https://cmsweb.cern.ch/sitedb/prod/people). For instructions on how to map a certificate in SiteDB, see https://twiki.cern.ch/twiki/bin/viewauth/CMS/SiteDBForCRAB.
+Please refer to https://twiki.cern.ch/twiki/bin/view/CMSPublic/CRAB3CommonErrors#Syntax_error_in_CRAB_configurati
+See the ./crab.log file for more details.
+The documentation about the CRAB configuration file can be found in https://twiki.cern.ch/twiki/bin/view/CMSPublic/CRAB3ConfigurationFile
+ERROR 2018-10-13 18:26:07,919: 	 Caught exception
+Traceback (most recent call last):
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc493/cms/crabclient/3.3.1809-comp/bin/crab", line 160, in <module>
+    client()
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc493/cms/crabclient/3.3.1809-comp/bin/crab", line 146, in __call__
+    self.cmd = sub_cmd(self.logger, args[1:])
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc493/cms/crabclient/3.3.1809-comp/lib/python2.7/site-packages/CRABClient/Commands/submit.py", line 34, in __init__
+    SubCommand.__init__(self, logger, cmdargs, disable_interspersed_args=True)
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc493/cms/crabclient/3.3.1809-comp/lib/python2.7/site-packages/CRABClient/Commands/SubCommand.py", line 303, in __init__
+    self.loadConfig(self.options.config, self.args)
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc493/cms/crabclient/3.3.1809-comp/lib/python2.7/site-packages/CRABClient/Commands/SubCommand.py", line 84, in loadConfig
+    raise ConfigurationException(configmsg)
+ConfigurationException: Error while loading CRAB configuration:
+Failed to retrieve username from SiteDB. Your DN does not seem to be registered in SiteDB.
+Details follow:
+  Executed command: curl -s --capath /etc/grid-security/certificates --cert /tmp/x509up_u118183 --key /tmp/x509up_u118183 'https://cmsweb.cern.ch/sitedb/data/prod/whoami'
+    Stdout:
+      {"result": [
+       {"dn": "/DC=IN/DC=GARUDAINDIA/O=C-DAC/OU=CTSF/CN=Subash Chandra Behera (subash.chandra.behera@cern.ch)", "login": null, "method": "X509Proxy", "roles": {}, "name": null}
+      ]}
+      
+    Parsed username: null
+[1mNote[0m: Make sure you have the correct certificate mapped in SiteDB (you can check what is the certificate you currently have mapped in SiteDB by searching for your name in https://cmsweb.cern.ch/sitedb/prod/people). For instructions on how to map a certificate in SiteDB, see https://twiki.cern.ch/twiki/bin/viewauth/CMS/SiteDBForCRAB.
+Please refer to https://twiki.cern.ch/twiki/bin/view/CMSPublic/CRAB3CommonErrors#Syntax_error_in_CRAB_configurati
+See the ./crab.log file for more details.
+The documentation about the CRAB configuration file can be found in https://twiki.cern.ch/twiki/bin/view/CMSPublic/CRAB3ConfigurationFile
+DEBUG 2018-10-14 10:56:51,782: 	 Executing command: 'checkusername'
+DEBUG 2018-10-14 10:56:51,782: 	 Found CRAB cache file /afs/cern.ch/user/s/subehera/.crab3
+DEBUG 2018-10-14 10:56:51,793: 	 Checking credentials
+DEBUG 2018-10-14 10:56:51,794: 	 Found proxy file /tmp/x509up_u118183
+DEBUG 2018-10-14 10:56:51,794: 	 Getting proxy life time left
+DEBUG 2018-10-14 10:56:52,965: 	 Executing : 
+ command : voms-proxy-info -file /tmp/x509up_u118183 -timeleft
+ output : 86361
+
+ error: 
+ retcode : 0
+DEBUG 2018-10-14 10:56:53,978: 	 Executing : 
+ command : voms-proxy-info -file /tmp/x509up_u118183 -actimeleft
+ output : 86359
+
+ error: 
+ retcode : 0
+DEBUG 2018-10-14 10:56:53,979: 	 Proxy valid for 23:59:21 hours
+DEBUG 2018-10-14 10:56:54,097: 	 Executing : 
+ command : openssl x509 -in ~/.globus/usercert.pem -subject -noout
+ output : subject= /DC=IN/DC=GARUDAINDIA/O=C-DAC/OU=CTSF/CN=Subash Chandra Behera (subash.chandra.behera@cern.ch)
+
+ error: 
+ retcode : 0
+DEBUG 2018-10-14 10:56:54,097: 	 Checking credentials
+DEBUG 2018-10-14 10:56:54,099: 	 Found proxy file /tmp/x509up_u118183
+DEBUG 2018-10-14 10:56:54,099: 	 Getting proxy life time left
+DEBUG 2018-10-14 10:56:55,045: 	 Executing : 
+ command : voms-proxy-info -file /tmp/x509up_u118183 -timeleft
+ output : 86359
+
+ error: 
+ retcode : 0
+DEBUG 2018-10-14 10:56:56,072: 	 Executing : 
+ command : voms-proxy-info -file /tmp/x509up_u118183 -actimeleft
+ output : 86356
+
+ error: 
+ retcode : 0
+DEBUG 2018-10-14 10:56:56,072: 	 Proxy valid for 23:59:19 hours
+DEBUG 2018-10-14 10:56:56,072: 	 Command use: checkusername
+DEBUG 2018-10-14 10:56:56,072: 	 Options use: []
+DEBUG 2018-10-14 10:56:56,072: 	 Instance is None
+DEBUG 2018-10-14 10:56:56,072: 	 Server base url is None
+INFO 2018-10-14 10:56:56,072: 	 Retrieving DN from proxy...
+INFO 2018-10-14 10:56:58,556: 	 DN is: /DC=IN/DC=GARUDAINDIA/O=C-DAC/OU=CTSF/CN=Subash Chandra Behera (subash.chandra.behera@cern.ch)
+INFO 2018-10-14 10:56:58,556: 	 Retrieving username from SiteDB...
+ERROR 2018-10-14 10:57:02,960: 	 Error: Failed to retrieve username from SiteDB. Your DN does not seem to be registered in SiteDB.
+Details follow:
+  Executed command: curl -s --capath /etc/grid-security/certificates --cert /tmp/x509up_u118183 --key /tmp/x509up_u118183 'https://cmsweb.cern.ch/sitedb/data/prod/whoami'
+    Stdout:
+      {"result": [
+       {"dn": "/DC=IN/DC=GARUDAINDIA/O=C-DAC/OU=CTSF/CN=Subash Chandra Behera (subash.chandra.behera@cern.ch)", "login": null, "method": "X509Proxy", "roles": {}, "name": null}
+      ]}
+      
+    Parsed username: null
+Note: Make sure you have the correct certificate mapped in SiteDB (you can check what is the certificate you currently have mapped in SiteDB by searching for your name in https://cmsweb.cern.ch/sitedb/prod/people). For instructions on how to map a certificate in SiteDB, see https://twiki.cern.ch/twiki/bin/viewauth/CMS/SiteDBForCRAB.
+DEBUG 2018-10-14 11:21:40,385: 	 Executing command: 'submit'
+DEBUG 2018-10-14 11:21:40,386: 	 Found CRAB cache file /afs/cern.ch/user/s/subehera/.crab3
+DEBUG 2018-10-14 11:21:40,403: 	 Checking credentials
+DEBUG 2018-10-14 11:21:40,404: 	 Found proxy file /tmp/x509up_u118183
+DEBUG 2018-10-14 11:21:40,404: 	 Getting proxy life time left
+DEBUG 2018-10-14 11:21:41,525: 	 Executing : 
+ command : voms-proxy-info -file /tmp/x509up_u118183 -timeleft
+ output : 43080
+
+ error: 
+ retcode : 0
+DEBUG 2018-10-14 11:21:42,346: 	 Executing : 
+ command : voms-proxy-info -file /tmp/x509up_u118183 -actimeleft
+ output : 43079
+
+ error: 
+ retcode : 0
+DEBUG 2018-10-14 11:21:42,346: 	 Proxy valid for 11:58:00 hours
+INFO 2018-10-14 11:21:42,347: 	 Will use CRAB configuration file crab3_chargeptcorrPbPb5tev_Data_2015MB2_v0.py
+DEBUG 2018-10-14 11:21:42,347: 	 Loading CRAB configuration file.
+DEBUG 2018-10-14 11:21:42,352: 	 Will use CRAB Analysis plugin (i.e. will run an analysis job type).
+ERROR 2018-10-14 11:21:42,354: 	 Working area '/afs/cern.ch/user/s/subehera/CMSSW_7_5_8_patch5/src/Analyzers/ChargeDepAndPtCorr/crab/PbPb2015PixRecoAna_data/crab_PbPb5TeVPixReco_2015_MB2_v0' already exists 
+Please change the requestName in the config file
+ERROR 2018-10-14 11:21:42,355: 	 Caught exception
+Traceback (most recent call last):
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc493/cms/crabclient/3.3.1809-comp/bin/crab", line 160, in <module>
+    client()
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc493/cms/crabclient/3.3.1809-comp/bin/crab", line 146, in __call__
+    self.cmd = sub_cmd(self.logger, args[1:])
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc493/cms/crabclient/3.3.1809-comp/lib/python2.7/site-packages/CRABClient/Commands/submit.py", line 34, in __init__
+    SubCommand.__init__(self, logger, cmdargs, disable_interspersed_args=True)
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc493/cms/crabclient/3.3.1809-comp/lib/python2.7/site-packages/CRABClient/Commands/SubCommand.py", line 307, in __init__
+    getattr(self.configuration.General, 'requestName', None))
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc493/cms/crabclient/3.3.1809-comp/lib/python2.7/site-packages/CRABClient/ClientUtilities.py", line 404, in createWorkArea
+    raise ConfigException("Working area '%s' already exists \nPlease change the requestName in the config file" % fullpath)
+ConfigException: Working area '/afs/cern.ch/user/s/subehera/CMSSW_7_5_8_patch5/src/Analyzers/ChargeDepAndPtCorr/crab/PbPb2015PixRecoAna_data/crab_PbPb5TeVPixReco_2015_MB2_v0' already exists 
+Please change the requestName in the config file
+DEBUG 2018-10-14 11:24:46,619: 	 Executing command: 'submit'
+DEBUG 2018-10-14 11:24:46,619: 	 Found CRAB cache file /afs/cern.ch/user/s/subehera/.crab3
+DEBUG 2018-10-14 11:24:46,652: 	 Checking credentials
+DEBUG 2018-10-14 11:24:46,653: 	 Found proxy file /tmp/x509up_u118183
+DEBUG 2018-10-14 11:24:46,653: 	 Getting proxy life time left
+DEBUG 2018-10-14 11:24:47,780: 	 Executing : 
+ command : voms-proxy-info -file /tmp/x509up_u118183 -timeleft
+ output : 42894
+
+ error: 
+ retcode : 0
+DEBUG 2018-10-14 11:24:48,588: 	 Executing : 
+ command : voms-proxy-info -file /tmp/x509up_u118183 -actimeleft
+ output : 42893
+
+ error: 
+ retcode : 0
+DEBUG 2018-10-14 11:24:48,588: 	 Proxy valid for 11:54:54 hours
+INFO 2018-10-14 11:24:48,589: 	 Will use CRAB configuration file crab3_chargeptcorrPbPb5tev_Data_2015MB2_v0.py
+DEBUG 2018-10-14 11:24:48,589: 	 Loading CRAB configuration file.
+DEBUG 2018-10-14 11:24:48,597: 	 Will use CRAB Analysis plugin (i.e. will run an analysis job type).
+ERROR 2018-10-14 11:24:48,597: 	 Working area '/afs/cern.ch/user/s/subehera/CMSSW_7_5_8_patch5/src/Analyzers/ChargeDepAndPtCorr/crab/PbPb2015PixRecoAna_data/crab_PbPb5TeVPixReco_2015_MB2_v0' already exists 
+Please change the requestName in the config file
+ERROR 2018-10-14 11:24:48,598: 	 Caught exception
+Traceback (most recent call last):
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc493/cms/crabclient/3.3.1809-comp/bin/crab", line 160, in <module>
+    client()
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc493/cms/crabclient/3.3.1809-comp/bin/crab", line 146, in __call__
+    self.cmd = sub_cmd(self.logger, args[1:])
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc493/cms/crabclient/3.3.1809-comp/lib/python2.7/site-packages/CRABClient/Commands/submit.py", line 34, in __init__
+    SubCommand.__init__(self, logger, cmdargs, disable_interspersed_args=True)
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc493/cms/crabclient/3.3.1809-comp/lib/python2.7/site-packages/CRABClient/Commands/SubCommand.py", line 307, in __init__
+    getattr(self.configuration.General, 'requestName', None))
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc493/cms/crabclient/3.3.1809-comp/lib/python2.7/site-packages/CRABClient/ClientUtilities.py", line 404, in createWorkArea
+    raise ConfigException("Working area '%s' already exists \nPlease change the requestName in the config file" % fullpath)
+ConfigException: Working area '/afs/cern.ch/user/s/subehera/CMSSW_7_5_8_patch5/src/Analyzers/ChargeDepAndPtCorr/crab/PbPb2015PixRecoAna_data/crab_PbPb5TeVPixReco_2015_MB2_v0' already exists 
+Please change the requestName in the config file
+DEBUG 2018-10-14 11:26:11,645: 	 Executing command: 'submit'
+DEBUG 2018-10-14 11:26:11,645: 	 Found CRAB cache file /afs/cern.ch/user/s/subehera/.crab3
+DEBUG 2018-10-14 11:26:11,655: 	 Checking credentials
+DEBUG 2018-10-14 11:26:11,656: 	 Found proxy file /tmp/x509up_u118183
+DEBUG 2018-10-14 11:26:11,656: 	 Getting proxy life time left
+DEBUG 2018-10-14 11:26:12,563: 	 Executing : 
+ command : voms-proxy-info -file /tmp/x509up_u118183 -timeleft
+ output : 42809
+
+ error: 
+ retcode : 0
+DEBUG 2018-10-14 11:26:13,274: 	 Executing : 
+ command : voms-proxy-info -file /tmp/x509up_u118183 -actimeleft
+ output : 42808
+
+ error: 
+ retcode : 0
+DEBUG 2018-10-14 11:26:13,274: 	 Proxy valid for 11:53:29 hours
+INFO 2018-10-14 11:26:13,275: 	 Will use CRAB configuration file crab3_chargeptcorrPbPb5tev_Data_2015MB2_v0.py
+DEBUG 2018-10-14 11:26:13,275: 	 Loading CRAB configuration file.
+DEBUG 2018-10-14 11:26:13,286: 	 Will use CRAB Analysis plugin (i.e. will run an analysis job type).
+ERROR 2018-10-14 11:26:13,287: 	 Working area '/afs/cern.ch/user/s/subehera/CMSSW_7_5_8_patch5/src/Analyzers/ChargeDepAndPtCorr/crab/PbPb2015PixRecoAna_data/crab_PbPb5TeVPixReco_2015_MB2_v0' already exists 
+Please change the requestName in the config file
+ERROR 2018-10-14 11:26:13,287: 	 Caught exception
+Traceback (most recent call last):
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc493/cms/crabclient/3.3.1809-comp/bin/crab", line 160, in <module>
+    client()
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc493/cms/crabclient/3.3.1809-comp/bin/crab", line 146, in __call__
+    self.cmd = sub_cmd(self.logger, args[1:])
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc493/cms/crabclient/3.3.1809-comp/lib/python2.7/site-packages/CRABClient/Commands/submit.py", line 34, in __init__
+    SubCommand.__init__(self, logger, cmdargs, disable_interspersed_args=True)
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc493/cms/crabclient/3.3.1809-comp/lib/python2.7/site-packages/CRABClient/Commands/SubCommand.py", line 307, in __init__
+    getattr(self.configuration.General, 'requestName', None))
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc493/cms/crabclient/3.3.1809-comp/lib/python2.7/site-packages/CRABClient/ClientUtilities.py", line 404, in createWorkArea
+    raise ConfigException("Working area '%s' already exists \nPlease change the requestName in the config file" % fullpath)
+ConfigException: Working area '/afs/cern.ch/user/s/subehera/CMSSW_7_5_8_patch5/src/Analyzers/ChargeDepAndPtCorr/crab/PbPb2015PixRecoAna_data/crab_PbPb5TeVPixReco_2015_MB2_v0' already exists 
+Please change the requestName in the config file
+DEBUG 2018-10-14 11:27:05,914: 	 Executing command: 'checkusername'
+DEBUG 2018-10-14 11:27:05,914: 	 Found CRAB cache file /afs/cern.ch/user/s/subehera/.crab3
+DEBUG 2018-10-14 11:27:05,923: 	 Checking credentials
+DEBUG 2018-10-14 11:27:05,924: 	 Found proxy file /tmp/x509up_u118183
+DEBUG 2018-10-14 11:27:05,924: 	 Getting proxy life time left
+DEBUG 2018-10-14 11:27:06,730: 	 Executing : 
+ command : voms-proxy-info -file /tmp/x509up_u118183 -timeleft
+ output : 42755
+
+ error: 
+ retcode : 0
+DEBUG 2018-10-14 11:27:07,539: 	 Executing : 
+ command : voms-proxy-info -file /tmp/x509up_u118183 -actimeleft
+ output : 42754
+
+ error: 
+ retcode : 0
+DEBUG 2018-10-14 11:27:07,539: 	 Proxy valid for 11:52:35 hours
+DEBUG 2018-10-14 11:27:07,651: 	 Executing : 
+ command : openssl x509 -in ~/.globus/usercert.pem -subject -noout
+ output : subject= /DC=IN/DC=GARUDAINDIA/O=C-DAC/OU=CTSF/CN=Subash Chandra Behera (subash.chandra.behera@cern.ch)
+
+ error: 
+ retcode : 0
+DEBUG 2018-10-14 11:27:07,651: 	 Checking credentials
+DEBUG 2018-10-14 11:27:07,651: 	 Found proxy file /tmp/x509up_u118183
+DEBUG 2018-10-14 11:27:07,651: 	 Getting proxy life time left
+DEBUG 2018-10-14 11:27:08,458: 	 Executing : 
+ command : voms-proxy-info -file /tmp/x509up_u118183 -timeleft
+ output : 42753
+
+ error: 
+ retcode : 0
+DEBUG 2018-10-14 11:27:09,271: 	 Executing : 
+ command : voms-proxy-info -file /tmp/x509up_u118183 -actimeleft
+ output : 42752
+
+ error: 
+ retcode : 0
+DEBUG 2018-10-14 11:27:09,271: 	 Proxy valid for 11:52:33 hours
+DEBUG 2018-10-14 11:27:09,271: 	 Command use: checkusername
+DEBUG 2018-10-14 11:27:09,272: 	 Options use: []
+DEBUG 2018-10-14 11:27:09,272: 	 Instance is None
+DEBUG 2018-10-14 11:27:09,272: 	 Server base url is None
+INFO 2018-10-14 11:27:09,272: 	 Retrieving DN from proxy...
+INFO 2018-10-14 11:27:11,176: 	 DN is: /DC=IN/DC=GARUDAINDIA/O=C-DAC/OU=CTSF/CN=Subash Chandra Behera (subash.chandra.behera@cern.ch)
+INFO 2018-10-14 11:27:11,176: 	 Retrieving username from SiteDB...
+ERROR 2018-10-14 11:27:14,262: 	 Error: Failed to retrieve username from SiteDB. Your DN does not seem to be registered in SiteDB.
+Details follow:
+  Executed command: curl -s --capath /etc/grid-security/certificates --cert /tmp/x509up_u118183 --key /tmp/x509up_u118183 'https://cmsweb.cern.ch/sitedb/data/prod/whoami'
+    Stdout:
+      {"result": [
+       {"dn": "/DC=IN/DC=GARUDAINDIA/O=C-DAC/OU=CTSF/CN=Subash Chandra Behera (subash.chandra.behera@cern.ch)", "login": null, "method": "X509Proxy", "roles": {}, "name": null}
+      ]}
+      
+    Parsed username: null
+Note: Make sure you have the correct certificate mapped in SiteDB (you can check what is the certificate you currently have mapped in SiteDB by searching for your name in https://cmsweb.cern.ch/sitedb/prod/people). For instructions on how to map a certificate in SiteDB, see https://twiki.cern.ch/twiki/bin/viewauth/CMS/SiteDBForCRAB.
+DEBUG 2018-10-14 11:36:06,497: 	 Executing command: 'submit'
+DEBUG 2018-10-14 11:36:06,498: 	 Found CRAB cache file /afs/cern.ch/user/s/subehera/.crab3
+DEBUG 2018-10-14 11:36:06,518: 	 Checking credentials
+DEBUG 2018-10-14 11:36:06,519: 	 Found proxy file /tmp/x509up_u118183
+DEBUG 2018-10-14 11:36:06,519: 	 Getting proxy life time left
+DEBUG 2018-10-14 11:36:07,629: 	 Executing : 
+ command : voms-proxy-info -file /tmp/x509up_u118183 -timeleft
+ output : 42864
+
+ error: 
+ retcode : 0
+DEBUG 2018-10-14 11:36:08,436: 	 Executing : 
+ command : voms-proxy-info -file /tmp/x509up_u118183 -actimeleft
+ output : 42863
+
+ error: 
+ retcode : 0
+DEBUG 2018-10-14 11:36:08,437: 	 Proxy valid for 11:54:24 hours
+INFO 2018-10-14 11:36:08,437: 	 Will use CRAB configuration file crab3_chargeptcorrPbPb5tev_Data_2015MB2_v0.py
+DEBUG 2018-10-14 11:36:08,437: 	 Loading CRAB configuration file.
+ERROR 2018-10-14 11:36:15,188: 	 Error while loading CRAB configuration:
+Failed to retrieve username from SiteDB. Your DN does not seem to be registered in SiteDB.
+Details follow:
+  Executed command: curl -s --capath /etc/grid-security/certificates --cert /tmp/x509up_u118183 --key /tmp/x509up_u118183 'https://cmsweb.cern.ch/sitedb/data/prod/whoami'
+    Stdout:
+      {"result": [
+       {"dn": "/DC=IN/DC=GARUDAINDIA/O=C-DAC/OU=CTSF/CN=Subash Chandra Behera (subash.chandra.behera@cern.ch)", "login": null, "method": "X509Proxy", "roles": {}, "name": null}
+      ]}
+      
+    Parsed username: null
+Note: Make sure you have the correct certificate mapped in SiteDB (you can check what is the certificate you currently have mapped in SiteDB by searching for your name in https://cmsweb.cern.ch/sitedb/prod/people). For instructions on how to map a certificate in SiteDB, see https://twiki.cern.ch/twiki/bin/viewauth/CMS/SiteDBForCRAB.
+Please refer to https://twiki.cern.ch/twiki/bin/view/CMSPublic/CRAB3CommonErrors#Syntax_error_in_CRAB_configurati
+See the ./crab.log file for more details.
+The documentation about the CRAB configuration file can be found in https://twiki.cern.ch/twiki/bin/view/CMSPublic/CRAB3ConfigurationFile
+ERROR 2018-10-14 11:36:15,188: 	 Caught exception
+Traceback (most recent call last):
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc493/cms/crabclient/3.3.1809-comp/bin/crab", line 160, in <module>
+    client()
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc493/cms/crabclient/3.3.1809-comp/bin/crab", line 146, in __call__
+    self.cmd = sub_cmd(self.logger, args[1:])
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc493/cms/crabclient/3.3.1809-comp/lib/python2.7/site-packages/CRABClient/Commands/submit.py", line 34, in __init__
+    SubCommand.__init__(self, logger, cmdargs, disable_interspersed_args=True)
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc493/cms/crabclient/3.3.1809-comp/lib/python2.7/site-packages/CRABClient/Commands/SubCommand.py", line 303, in __init__
+    self.loadConfig(self.options.config, self.args)
+  File "/cvmfs/cms.cern.ch/crab3/slc6_amd64_gcc493/cms/crabclient/3.3.1809-comp/lib/python2.7/site-packages/CRABClient/Commands/SubCommand.py", line 84, in loadConfig
+    raise ConfigurationException(configmsg)
+ConfigurationException: Error while loading CRAB configuration:
+Failed to retrieve username from SiteDB. Your DN does not seem to be registered in SiteDB.
+Details follow:
+  Executed command: curl -s --capath /etc/grid-security/certificates --cert /tmp/x509up_u118183 --key /tmp/x509up_u118183 'https://cmsweb.cern.ch/sitedb/data/prod/whoami'
+    Stdout:
+      {"result": [
+       {"dn": "/DC=IN/DC=GARUDAINDIA/O=C-DAC/OU=CTSF/CN=Subash Chandra Behera (subash.chandra.behera@cern.ch)", "login": null, "method": "X509Proxy", "roles": {}, "name": null}
+      ]}
+      
+    Parsed username: null
+[1mNote[0m: Make sure you have the correct certificate mapped in SiteDB (you can check what is the certificate you currently have mapped in SiteDB by searching for your name in https://cmsweb.cern.ch/sitedb/prod/people). For instructions on how to map a certificate in SiteDB, see https://twiki.cern.ch/twiki/bin/viewauth/CMS/SiteDBForCRAB.
+Please refer to https://twiki.cern.ch/twiki/bin/view/CMSPublic/CRAB3CommonErrors#Syntax_error_in_CRAB_configurati
+See the ./crab.log file for more details.
+The documentation about the CRAB configuration file can be found in https://twiki.cern.ch/twiki/bin/view/CMSPublic/CRAB3ConfigurationFile
